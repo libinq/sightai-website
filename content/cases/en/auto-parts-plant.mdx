@@ -1,0 +1,29 @@
+export const meta = {
+  client: "An automotive parts manufacturer",
+  sector: "Manufacturing",
+  region: "East China",
+  summary: "Surface-defect detection on stamping lines, wired to MES to auto-reject NG parts.",
+  results: ["Defect escapes", "Per-part decision", "Decision accuracy"],
+};
+
+## Background
+
+A tier-1 supplier producing stamped body parts on multiple lines running three shifts.
+
+## Challenge
+
+- Manual inspection drifted with shifts and fatigue, letting defects escape downstream.
+- Frequent changeovers meant retuning rule-based vision every time.
+- NG parts were sorted by hand, with little traceability.
+
+## Solution
+
+- **Industrial Quality Inspection** — industrial cameras and lighting at each station, with millisecond edge decisions.
+- Reject signals sent to the PLC over Profinet; decisions and images written back to MES.
+- Hard cases fed back into the **SightAI Platform** for continuous training.
+
+## Results
+
+Figures above are sample data, to be replaced with customer-confirmed results before launch.
+
+> [TBD] Customer quote (requires written approval).

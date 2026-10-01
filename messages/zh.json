@@ -1,0 +1,834 @@
+{
+  "meta": {
+    "siteName": "SightAI 视觉智能",
+    "title": "SightAI 视觉智能 — 让机器看懂世界，让影像更真实",
+    "description": "SightAI 提供道路病害检测、工业质检、危险行为识别、第一视角防抖、色彩增强与 AI 数字人，支持云 API、私有化与边缘部署。",
+    "styleguideTitle": "设计系统"
+  },
+  "common": {
+    "bookDemo": "预约演示",
+    "viewProducts": "查看产品",
+    "requestPoc": "申请免费 PoC",
+    "learnMore": "了解详情",
+    "skipToContent": "跳到正文",
+    "placeholder": "待替换",
+    "close": "关闭",
+    "previous": "上一个",
+    "next": "下一个",
+    "sampleData": "示例数据：上线前替换为经核实的数据",
+    "on": "开",
+    "off": "关"
+  },
+  "nav": {
+    "home": "首页",
+    "products": "产品",
+    "solutions": "行业方案",
+    "cases": "客户案例",
+    "technology": "技术与研发",
+    "resources": "资源中心",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "menu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "language": "切换语言",
+    "theme": "切换深浅色",
+    "search": "搜索",
+    "mainNav": "主导航",
+    "allProducts": "全部产品",
+    "lines": {
+      "inspection": {
+        "title": "视觉检测",
+        "desc": "行业 CV 方案"
+      },
+      "enhancement": {
+        "title": "视频增强",
+        "desc": "画质与稳定"
+      },
+      "human": {
+        "title": "AI 数字人",
+        "desc": "播报与交互"
+      },
+      "platform": {
+        "title": "平台",
+        "desc": "贯穿全部产品"
+      }
+    }
+  },
+  "products": {
+    "road-inspection": {
+      "name": "道路病害检测",
+      "short": "裂缝、坑槽、车辙识别与深度分级，自动生成巡检报告"
+    },
+    "quality-inspection": {
+      "name": "工业质检",
+      "short": "表面缺陷毫秒级判定，小样本训练，对接 PLC / MES"
+    },
+    "safety-behavior": {
+      "name": "危险行为识别",
+      "short": "安全帽、闯入、烟火等实时告警，边缘部署"
+    },
+    "fpv-stabilization": {
+      "name": "第一视角防抖",
+      "short": "头戴、胸挂与 FPV 画面稳定，保留临场感"
+    },
+    "color-enhancement": {
+      "name": "色彩校正与增强",
+      "short": "白平衡、低光去噪、HDR、超分与多机位匹配"
+    },
+    "digital-human": {
+      "name": "AI 数字人",
+      "short": "形象定制、语音克隆、多语种播报与实时交互"
+    },
+    "platform": {
+      "name": "SightAI 平台",
+      "short": "标注、训练、评测、部署、监控一体化"
+    }
+  },
+  "command": {
+    "open": "搜索站内内容",
+    "placeholder": "搜索产品、方案、页面…",
+    "empty": "没有找到相关结果",
+    "products": "产品",
+    "pages": "页面",
+    "actions": "操作",
+    "switchLang": "Switch to English",
+    "toggleTheme": "切换深浅色"
+  },
+  "cta": {
+    "eyebrow": "下一步",
+    "title": "用你的数据跑一次 PoC",
+    "desc": "提供一段真实视频或一批样本图片，我们在约定周期内交付检测结果与评测报告，再决定是否部署。",
+    "primary": "申请免费 PoC",
+    "secondary": "预约演示"
+  },
+  "footer": {
+    "tagline": "让机器看懂世界，让影像更真实。",
+    "productsCol": "产品",
+    "solutionsCol": "行业方案",
+    "resourcesCol": "资源",
+    "companyCol": "公司",
+    "whitepapers": "白皮书",
+    "docs": "开发文档",
+    "news": "新闻动态",
+    "contactCol": "联系",
+    "email": "邮箱",
+    "phone": "电话",
+    "address": "地址",
+    "icp": "ICP 备案号",
+    "privacy": "隐私政策",
+    "cookies": "Cookie 设置",
+    "rights": "保留所有权利。"
+  },
+  "industries": {
+    "transport": {
+      "name": "交通基建",
+      "desc": "道路巡检、桥隧病害、交通事件"
+    },
+    "manufacturing": {
+      "name": "制造",
+      "desc": "表面缺陷、装配校验、良率分析"
+    },
+    "energy": {
+      "name": "能源化工",
+      "desc": "EHS 合规、烟火识别、周界入侵"
+    },
+    "construction": {
+      "name": "建筑工地",
+      "desc": "安全帽反光衣、临边防护、机械作业"
+    },
+    "media": {
+      "name": "媒体与内容",
+      "desc": "防抖、调色、超分与数字人播报"
+    },
+    "retail": {
+      "name": "零售与金融",
+      "desc": "数字人导览、客服与营销内容"
+    }
+  },
+  "classes": {
+    "crack": "裂缝",
+    "pothole": "坑槽",
+    "rutting": "车辙",
+    "patch": "修补",
+    "marking_wear": "标线磨损",
+    "scratch": "划痕",
+    "dent": "凹坑",
+    "stain": "污渍",
+    "missing_part": "漏装",
+    "no_helmet": "未戴安全帽",
+    "no_vest": "未穿反光衣",
+    "zone_intrusion": "闯入危险区域",
+    "smoke": "烟雾",
+    "person": "人员",
+    "fall": "跌倒",
+    "climbing": "攀爬",
+    "solder_bridge": "焊锡桥接",
+    "missing_component": "元件缺失",
+    "short_shot": "缺料",
+    "flash": "飞边"
+  },
+  "severity": {
+    "low": "轻",
+    "medium": "中",
+    "high": "重"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "视觉检测 · 视频增强 · AI 数字人",
+      "title": "让机器看懂世界，\n让影像更真实。",
+      "subtitle": "SightAI 为交通、制造、能源与媒体行业提供视觉检测、视频增强与 AI 数字人能力，可按云端 API、私有化或边缘盒子方式交付。",
+      "live": "实时识别",
+      "camera": "CAM-03 · 车载前视",
+      "latency": "推理延迟",
+      "objects": "当前目标",
+      "simulated": "模拟数据流",
+      "canvasLabel": "道路巡检画面，叠加实时病害检测框、类别与置信度（模拟演示）"
+    },
+    "logos": {
+      "title": "服务于全球体育赛事、政府与公共机构"
+    },
+    "capabilities": {
+      "eyebrow": "产品矩阵",
+      "title": "三条产品线，一套视觉底座",
+      "desc": "检测、增强与数字人共享同一套数据、训练与部署平台，模型可以在不同场景之间复用。",
+      "inspection": {
+        "title": "视觉检测",
+        "desc": "把巡检、质检和安全监管中的“人眼判断”变成可追溯的结构化数据。",
+        "tag": "road · line · site"
+      },
+      "enhancement": {
+        "title": "视频增强",
+        "desc": "稳定剧烈抖动的第一视角画面，统一多机位色彩，让低光与低分辨率素材可用。",
+        "tag": "stabilize · grade · upscale"
+      },
+      "human": {
+        "title": "AI 数字人",
+        "desc": "3 分钟素材定制形象与声音，接入大模型后可用于直播、客服与培训讲解。",
+        "tag": "avatar · voice · llm"
+      }
+    },
+    "demo": {
+      "eyebrow": "交互演示",
+      "title": "看见 SightAI 所见",
+      "desc": "选择一个场景，开启 AI 识别。检测框按推理顺序出现，右侧列表与画面联动。",
+      "scenes": {
+        "road": "道路",
+        "line": "产线",
+        "site": "工地"
+      },
+      "toggle": "开启 AI 识别",
+      "results": "检测结果",
+      "summary": "检出 {count} 个目标 · 耗时 {ms} ms",
+      "idle": "开启 AI 识别后显示检测结果",
+      "colClass": "类别",
+      "colConf": "置信度",
+      "colBox": "坐标",
+      "colSeverity": "严重度",
+      "hint": "点击列表项可高亮画面中对应的检测框",
+      "sceneAlt": {
+        "road": "沥青路面示意画面，含裂缝与坑槽",
+        "line": "产线传送带上的金属工件示意画面",
+        "site": "建筑工地作业人员示意画面"
+      }
+    },
+    "compare": {
+      "eyebrow": "视频增强",
+      "title": "拖动分割线，看处理前后的差异",
+      "desc": "支持鼠标拖动、触摸滑动与键盘方向键。",
+      "stabilization": "第一视角防抖",
+      "color": "色彩增强",
+      "before": "原始",
+      "after": "SightAI",
+      "sliderLabel": "前后对比分割位置",
+      "stabNote": "左侧为未处理的头戴相机画面，右侧为轨迹平滑后的结果（示意动画）。",
+      "colorNote": "低光、偏色素材经自动白平衡、曝光映射与去噪后的结果（示意画面）。"
+    },
+    "metrics": {
+      "eyebrow": "关键数据",
+      "title": "用可复核的数字说话"
+    },
+    "deploy": {
+      "eyebrow": "部署方式",
+      "title": "部署在你的数据所在的地方",
+      "desc": "同一模型可在三种形态之间迁移，接口保持一致。",
+      "cloud": {
+        "title": "云 API",
+        "desc": "按调用计费，几分钟接入，适合验证与弹性业务。",
+        "points": [
+          "REST / gRPC / SDK",
+          "自动扩缩容",
+          "按量计费"
+        ]
+      },
+      "onprem": {
+        "title": "私有化部署",
+        "desc": "部署在客户机房或专有云，数据不出域，支持信创适配。",
+        "points": [
+          "数据不出域",
+          "信创环境适配",
+          "统一权限与审计"
+        ]
+      },
+      "edge": {
+        "title": "边缘盒子",
+        "desc": "在摄像头旁完成推理，弱网可用，只回传结构化结果。",
+        "points": [
+          "本地实时推理",
+          "断网缓存续传",
+          "远程模型升级"
+        ]
+      },
+      "diagram": {
+        "camera": "摄像头",
+        "model": "模型",
+        "app": "业务系统",
+        "cloud": "云端",
+        "dc": "机房",
+        "box": "边缘盒子"
+      }
+    },
+    "industries": {
+      "eyebrow": "行业方案",
+      "title": "按行业组合产品能力"
+    },
+    "cases": {
+      "eyebrow": "客户案例",
+      "title": "已在真实场景中运行",
+      "anonymized": "客户名称已匿名化",
+      "viewAll": "查看全部 9 个案例"
+    }
+  },
+  "metrics": {
+    "classes": {
+      "label": "可识别类别",
+      "note": "检测 + 行为模型合计，含定制类别"
+    },
+    "latency": {
+      "label": "平均推理延迟",
+      "note": "1080p 单帧，边缘设备"
+    },
+    "nodes": {
+      "label": "部署节点",
+      "note": "边缘盒子与私有化节点累计"
+    },
+    "accuracy": {
+      "label": "道路病害识别准确率",
+      "note": "内部测试集 mAP@0.5"
+    }
+  },
+  "styleguide": {
+    "title": "设计系统",
+    "desc": "SightAI 官网的设计令牌与基础组件。",
+    "colors": "颜色令牌",
+    "type": "字号阶梯",
+    "components": "组件",
+    "motifs": "视觉母题"
+  },
+  "notFound": {
+    "title": "这个页面还没有内容",
+    "desc": "页面可能正在建设中，或链接已失效。",
+    "back": "返回首页"
+  },
+  "product": {
+    "breadcrumb": "产品",
+    "lineLabel": "产品线",
+    "painsEyebrow": "痛点与方案",
+    "painsTitle": "传统方式与 SightAI 的差别",
+    "before": "传统方式",
+    "after": "SightAI",
+    "capEyebrow": "核心能力",
+    "capTitle": "{name}能做什么",
+    "howEyebrow": "工作原理",
+    "howTitle": "从采集到集成的五个环节",
+    "demoEyebrow": "交互演示",
+    "demoTitle": "动手看看它怎么工作",
+    "demoNote": "演示使用模拟数据，用于说明处理逻辑。",
+    "specsEyebrow": "技术规格",
+    "specsTitle": "参数一览",
+    "cloud": "云端",
+    "edge": "边缘 / 本地",
+    "param": "参数",
+    "specsNote": "性能数据为示例，实际表现取决于硬件与场景，PoC 阶段提供实测报告。",
+    "scenariosEyebrow": "应用场景",
+    "scenariosTitle": "适用于这些场景",
+    "casesEyebrow": "相关案例",
+    "casesTitle": "客户正在这样使用",
+    "faqEyebrow": "常见问题",
+    "faqTitle": "关于{name}",
+    "whitepaper": "下载产品白皮书",
+    "loading": "正在加载演示…"
+  },
+  "productsIndex": {
+    "eyebrow": "产品",
+    "title": "7 个产品，覆盖检测、增强与数字人",
+    "desc": "三条产品线共享同一套数据、训练与部署平台。按场景选择单个产品，或组合成完整方案。"
+  },
+  "solutions": {
+    "eyebrow": "行业方案",
+    "title": "按行业组合视觉 AI 能力",
+    "desc": "每个行业的场景、合规要求与部署条件不同。下面是我们最常交付的组合方式。",
+    "challenges": "典型问题",
+    "products": "推荐产品",
+    "cases": "相关案例",
+    "items": {
+      "transport": {
+        "long": "道路、桥梁与隧道的日常巡检，以及交通事件的实时发现。",
+        "points": [
+          "人工巡查覆盖慢、标准不一",
+          "病害位置与严重度难以量化",
+          "巡检结果难以对接养护流程"
+        ]
+      },
+      "manufacturing": {
+        "long": "产线表面缺陷检测、装配完整性校验与良率分析。",
+        "points": [
+          "人工目检疲劳导致漏检",
+          "换型频繁，规则算法维护成本高",
+          "缺陷原因难以追溯"
+        ]
+      },
+      "energy": {
+        "long": "石化、电力与新能源场站的 EHS 合规与周界安全。",
+        "points": [
+          "装置区严禁烟火，需早期发现",
+          "承包商 PPE 穿戴难以监管",
+          "视频数据须留在内网"
+        ]
+      },
+      "construction": {
+        "long": "工地人员安全、临边防护与机械作业区管理。",
+        "points": [
+          "安全帽、反光衣穿戴不规范",
+          "临边与塔吊作业区闯入风险",
+          "多工地分散，难以统一管理"
+        ]
+      },
+      "media": {
+        "long": "赛事转播、内容制作与档案修复，以及多语种内容生产。",
+        "points": [
+          "第一视角素材抖动、多机位色彩不一",
+          "档案素材分辨率低",
+          "多语种内容产能不足"
+        ]
+      },
+      "retail": {
+        "long": "门店、营业厅与政务大厅的数字人导览、客服与营销内容。",
+        "points": [
+          "重复咨询占用大量人力",
+          "营销内容更新频繁",
+          "多语种服务能力不足"
+        ]
+      }
+    }
+  },
+  "cases": {
+    "eyebrow": "客户案例",
+    "title": "SightAI 在真实场景中的运行",
+    "desc": "从全球体育赛事到省级路网与国家公园。具名客户已获授权展示；匿名案例为示例，上线前替换。",
+    "all": "全部",
+    "named": "具名客户",
+    "anonymized": "匿名示例",
+    "needsReview": "案例内容待客户确认",
+    "sampleBadge": "示例案例",
+    "results": "成效",
+    "tbd": "待替换",
+    "back": "返回案例列表",
+    "productsUsed": "使用的产品",
+    "sector": "行业",
+    "region": "地区",
+    "readCase": "阅读案例",
+    "filterLabel": "按产品线筛选",
+    "more": "更多案例"
+  },
+  "technology": {
+    "eyebrow": "技术与研发",
+    "title": "可复核的视觉 AI 工程",
+    "desc": "从模型、部署架构到数据安全，我们把每一层都做成可测量、可审计的工程。",
+    "modelsTitle": "模型能力",
+    "models": [
+      {
+        "title": "检测与分割",
+        "desc": "面向小目标、细长目标（裂缝、划痕）优化的检测与实例分割模型。"
+      },
+      {
+        "title": "行为理解",
+        "desc": "人体姿态与时序建模，识别跌倒、攀爬、闯入等动作。"
+      },
+      {
+        "title": "视频增强",
+        "desc": "运动估计、低光增强、HDR 与超分辨率模型。"
+      },
+      {
+        "title": "生成式数字人",
+        "desc": "形象、语音与口型生成，可对接大模型实现实时交互。"
+      }
+    ],
+    "archTitle": "云-边-端部署架构",
+    "archDesc": "同一模型经平台编译后发布到不同硬件，接口保持一致。",
+    "layers": [
+      {
+        "name": "端",
+        "desc": "摄像头、工业相机、车载与运动相机"
+      },
+      {
+        "name": "边",
+        "desc": "边缘盒子就地推理，弱网缓存续传"
+      },
+      {
+        "name": "云 / 私有化",
+        "desc": "模型训练、评测、设备与版本管理"
+      },
+      {
+        "name": "业务系统",
+        "desc": "养护、MES、EHS、媒资与直播平台"
+      }
+    ],
+    "securityTitle": "数据安全与合规",
+    "security": [
+      {
+        "title": "数据不出域",
+        "desc": "支持私有化与边缘部署，视频与结果保存在客户环境。"
+      },
+      {
+        "title": "加密传输与存储",
+        "desc": "传输与存储全程加密，密钥由客户管理。"
+      },
+      {
+        "title": "权限与审计",
+        "desc": "角色权限、操作日志，对接企业 SSO / LDAP。"
+      },
+      {
+        "title": "隐私保护",
+        "desc": "人脸与车牌可自动模糊，原图访问需授权。"
+      },
+      {
+        "title": "合规适配",
+        "desc": "按 PIPL、GDPR、PDPA 等法规要求配置数据处理流程。"
+      },
+      {
+        "title": "生成内容标识",
+        "desc": "数字人生成内容支持按法规要求添加标识。"
+      }
+    ],
+    "certNote": "认证与资质信息【待替换】：上线前补充已取得的认证证书。"
+  },
+  "resources": {
+    "eyebrow": "资源中心",
+    "title": "白皮书、文档与新闻",
+    "desc": "了解产品细节、接入方式与公司动态。",
+    "whitepapersTitle": "白皮书",
+    "whitepapers": [
+      {
+        "title": "道路病害智能巡检技术白皮书",
+        "desc": "车载采集、深度测量与严重度分级方法。"
+      },
+      {
+        "title": "工业表面缺陷检测实践指南",
+        "desc": "成像方案、小样本训练与产线集成。"
+      },
+      {
+        "title": "边缘视觉安全监测部署指南",
+        "desc": "摄像头接入、告警规则与隐私保护。"
+      },
+      {
+        "title": "视频增强与 AI 数字人内容生产",
+        "desc": "防抖、调色与多语种内容生产流程。"
+      }
+    ],
+    "request": "申请下载",
+    "docsTitle": "开发文档",
+    "docs": [
+      {
+        "title": "API 参考",
+        "desc": "REST 与 gRPC 接口说明"
+      },
+      {
+        "title": "SDK",
+        "desc": "Python / JavaScript / C++"
+      },
+      {
+        "title": "部署指南",
+        "desc": "云端、私有化与边缘盒子"
+      },
+      {
+        "title": "发布说明",
+        "desc": "版本更新与兼容性"
+      }
+    ],
+    "docsNote": "文档门户正在建设中，如需接入资料请联系我们获取。",
+    "contactForDocs": "获取文档",
+    "newsTitle": "新闻动态",
+    "newsPlaceholder": "【待替换】新闻标题",
+    "newsDesc": "上线前替换为已发布的公司新闻与媒体报道。"
+  },
+  "about": {
+    "eyebrow": "关于我们",
+    "title": "让机器看懂世界，让影像更真实",
+    "desc": "SightAI 专注视觉 AI，把检测、增强与生成能力做成可部署、可验证的产品，服务交通、制造、能源、体育赛事与公共机构。",
+    "whatTitle": "我们做什么",
+    "what": [
+      {
+        "title": "视觉检测",
+        "desc": "把巡检、质检与安全监管中的人工判断变成结构化数据。"
+      },
+      {
+        "title": "视频增强",
+        "desc": "让抖动、低光、低分辨率素材变得可用。"
+      },
+      {
+        "title": "AI 数字人",
+        "desc": "以可控、可标识的方式生产多语种内容。"
+      }
+    ],
+    "principlesTitle": "我们的原则",
+    "principles": [
+      {
+        "title": "用数据说话",
+        "desc": "每个指标都注明口径，PoC 阶段给出实测报告。"
+      },
+      {
+        "title": "部署在客户的数据所在处",
+        "desc": "云、私有化与边缘一致的能力与接口。"
+      },
+      {
+        "title": "隐私优先",
+        "desc": "默认最小化采集，人脸与车牌可自动模糊。"
+      },
+      {
+        "title": "长期可维护",
+        "desc": "平台化交付，模型可持续迭代。"
+      }
+    ],
+    "companyTitle": "公司信息",
+    "companyNote": "团队介绍、发展历程与办公地址【待替换】。",
+    "privacyTitle": "隐私政策",
+    "privacy": "我们仅在提供服务所必需的范围内收集与处理个人信息，并遵循《个人信息保护法》（PIPL）、GDPR、PDPA 等适用法规。通过本网站表单提交的信息仅用于回复您的咨询与安排演示，不会出售给第三方。您可随时联系我们查询、更正或删除您的个人信息。完整隐私政策【待替换】。",
+    "cookiesTitle": "Cookie 设置",
+    "cookies": "本网站使用必要 Cookie 保证基本功能。分析类 Cookie 仅在您同意后启用，用于了解网站使用情况。",
+    "cookiesButton": "修改 Cookie 偏好"
+  },
+  "contact": {
+    "eyebrow": "联系我们",
+    "title": "预约演示或申请 PoC",
+    "desc": "告诉我们你的场景，我们会在 2 个工作日内联系你，安排演示或基于你的数据开展 PoC。",
+    "steps": [
+      "感兴趣的产品",
+      "场景与需求",
+      "联系方式"
+    ],
+    "stepOf": "第 {current} 步，共 {total} 步",
+    "productsLabel": "选择感兴趣的产品（可多选）",
+    "industry": "所属行业",
+    "industryPlaceholder": "请选择行业",
+    "industryOther": "其他",
+    "scenario": "场景描述",
+    "scenarioPlaceholder": "例如：需要对 500 公里城市道路每月巡检一次，识别坑槽与裂缝…",
+    "dataScale": "数据规模",
+    "dataScalePlaceholder": "请选择",
+    "dataScales": {
+      "small": "PoC / 少量样本",
+      "medium": "单个站点或产线",
+      "large": "多站点 / 全域"
+    },
+    "deployment": "期望部署方式",
+    "deployments": {
+      "cloud": "云 API",
+      "onprem": "私有化",
+      "edge": "边缘盒子",
+      "unsure": "暂不确定"
+    },
+    "name": "姓名",
+    "company": "公司 / 机构",
+    "jobTitle": "职位",
+    "email": "工作邮箱",
+    "phone": "电话",
+    "country": "国家 / 地区",
+    "consent": "我同意 SightAI 依据隐私政策处理以上信息，用于回复咨询与安排演示（符合 PIPL / PDPA / GDPR 的要求）。",
+    "privacyLink": "查看隐私政策",
+    "next": "下一步",
+    "back": "上一步",
+    "submit": "提交",
+    "submitting": "提交中…",
+    "errors": {
+      "products": "请至少选择一个产品",
+      "industry": "请选择行业",
+      "scenario": "请简单描述你的场景（至少 10 个字）",
+      "deployment": "请选择部署方式",
+      "required": "此项为必填",
+      "email": "请输入有效的邮箱地址",
+      "phone": "请输入有效的电话号码",
+      "consent": "请勾选同意后提交",
+      "server": "提交失败，请稍后再试，或发送邮件至 {email}"
+    },
+    "successTitle": "已收到你的需求",
+    "successDesc": "我们会在 2 个工作日内与你联系。接下来：",
+    "successSteps": [
+      "解决方案工程师确认场景与数据情况",
+      "安排 30 分钟在线演示",
+      "如需 PoC，约定数据范围、周期与评测指标"
+    ],
+    "again": "再提交一份",
+    "home": "返回首页",
+    "sideTitle": "其他联系方式",
+    "pocNote": "PoC 通常需要：一段真实场景视频或一批样本图片，以及你关心的评测指标。"
+  },
+  "cookie": {
+    "text": "我们使用必要 Cookie 保证网站运行；分析 Cookie 仅在你同意后启用。",
+    "accept": "全部接受",
+    "necessary": "仅必要",
+    "label": "Cookie 偏好"
+  },
+  "demos": {
+    "pause": "暂停",
+    "play": "继续",
+    "road": {
+      "filters": "筛选病害",
+      "colorBy": "着色",
+      "type": "类型",
+      "severity": "严重度",
+      "depth": "深度",
+      "chainage": "桩号",
+      "coords": "坐标",
+      "segment": "路段",
+      "total": "合计",
+      "selected": "选中病害",
+      "segmentStats": "路段统计",
+      "clickHint": "点击地图上的病害点查看详情",
+      "mapLabel": "模拟巡检路线地图，病害点可用键盘选择",
+      "mapNote": "模拟巡检路线 · 12.4 km · 示意底图",
+      "thresholdNote": "分级深度阈值为示例，按当地养护规范配置【待替换】"
+    },
+    "conveyor": {
+      "typeLabel": "工件类型",
+      "types": {
+        "metal": "金属件",
+        "pcb": "PCB",
+        "molded": "注塑件"
+      },
+      "gate": "AI 检测工位",
+      "yield": "实时良率",
+      "takt": "平均判定耗时",
+      "inspected": "已检工件"
+    },
+    "wall": {
+      "privacy": "隐私模式（人脸模糊）",
+      "timeline": "告警时间线",
+      "empty": "等待告警事件…"
+    },
+    "trajectory": {
+      "raw": "原始画面",
+      "stabilized": "防抖后",
+      "curve": "相机运动轨迹（水平方向）",
+      "curveLabel": "原始抖动轨迹与平滑后轨迹的实时曲线",
+      "strength": "平滑强度",
+      "rmsRaw": "原始残余抖动",
+      "rmsStab": "处理后残余抖动",
+      "crop": "画面裁切"
+    },
+    "histogram": {
+      "modesLabel": "增强模式",
+      "modes": {
+        "awb": "自动白平衡",
+        "lowlight": "低光增强",
+        "hdr": "HDR 还原",
+        "sr": "超分辨率",
+        "match": "多机位匹配"
+      },
+      "desc": {
+        "awb": "偏色素材：估计场景光源后校正色温，直方图三通道重新对齐。",
+        "lowlight": "低光素材：亮度整体偏左且噪点多，增强后亮部与暗部细节同时恢复。",
+        "hdr": "高反差素材：高光与暗部被截断，HDR 还原后两端细节重新展开。",
+        "sr": "低分辨率素材：边缘与纹理模糊，超分重建后细节更清晰。",
+        "match": "多机位素材：与参考机位色调不一致，匹配后统一到同一色彩风格。"
+      },
+      "histogram": "RGB 直方图",
+      "channels": "Canvas 实时计算"
+    },
+    "avatar": {
+      "avatar": "形象",
+      "language": "播报语种",
+      "langNote": "语种以项目实际支持为准【按实际】",
+      "scene": "场景",
+      "scenes": {
+        "live": "直播",
+        "service": "客服导览",
+        "training": "培训讲解"
+      },
+      "inputLabel": "输入一句话，让数字人播报",
+      "placeholder": "输入播报内容…",
+      "speak": "播报",
+      "subtitleHint": "点击播报按钮开始",
+      "aiLabel": "AI 生成内容",
+      "productCard": "今日推荐",
+      "infoPanel": "服务时间",
+      "flow": [
+        "拍摄约 3 分钟真人素材",
+        "训练形象、声音与口型模型",
+        "审核后交付视频、直播或 API"
+      ]
+    },
+    "arch": {
+      "flowLabel": "平台流程，选择节点查看说明",
+      "copy": "复制",
+      "copied": "已复制",
+      "apiTitle": "API 示例",
+      "apiNote": "示例代码用于说明接入方式，正式接口以 API 文档为准。",
+      "nodes": {
+        "data": {
+          "title": "数据",
+          "desc": "接入图片、视频流与业务系统数据，按项目与场景统一管理。",
+          "points": [
+            "RTSP / 文件 / 对象存储",
+            "数据脱敏",
+            "版本化数据集"
+          ]
+        },
+        "label": {
+          "title": "标注",
+          "desc": "模型预标注 + 人工校验，支持多人协作与质检。",
+          "points": [
+            "检测框 / 分割 / 关键点",
+            "预标注提效",
+            "标注质检"
+          ]
+        },
+        "train": {
+          "title": "训练",
+          "desc": "基于预置行业模型微调，小样本即可起训。",
+          "points": [
+            "行业预训练模型",
+            "增量训练",
+            "超参自动搜索"
+          ]
+        },
+        "eval": {
+          "title": "评测",
+          "desc": "统一评测集与指标看板，新旧版本对比后再发布。",
+          "points": [
+            "mAP / 召回 / 误报",
+            "分场景报告",
+            "版本对比"
+          ]
+        },
+        "deploy": {
+          "title": "部署",
+          "desc": "同一模型一键发布到云端、私有化服务器或边缘盒子。",
+          "points": [
+            "云 / 私有化 / 边缘",
+            "灰度发布",
+            "远程升级"
+          ]
+        },
+        "monitor": {
+          "title": "监控",
+          "desc": "监控推理性能与数据漂移，难例自动回流到标注环节。",
+          "points": [
+            "延迟与吞吐",
+            "漂移检测",
+            "难例回流"
+          ]
+        }
+      }
+    }
+  }
+}

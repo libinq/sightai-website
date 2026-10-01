@@ -1,0 +1,834 @@
+{
+  "meta": {
+    "siteName": "SightAI",
+    "title": "SightAI — Vision AI that sees, understands, and enhances the physical world",
+    "description": "SightAI detects road defects, production flaws and unsafe behavior, stabilizes and color-corrects video, and powers AI digital humans. Deploy via cloud API, on-prem, or edge.",
+    "styleguideTitle": "Design system"
+  },
+  "common": {
+    "bookDemo": "Book a demo",
+    "viewProducts": "Explore products",
+    "requestPoc": "Request a free PoC",
+    "learnMore": "Learn more",
+    "skipToContent": "Skip to content",
+    "placeholder": "TBD",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "sampleData": "Sample data — replace with verified figures before launch",
+    "on": "On",
+    "off": "Off"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "solutions": "Solutions",
+    "cases": "Customers",
+    "technology": "Technology",
+    "resources": "Resources",
+    "about": "About",
+    "contact": "Contact",
+    "menu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Change language",
+    "theme": "Toggle theme",
+    "search": "Search",
+    "mainNav": "Main navigation",
+    "allProducts": "All products",
+    "lines": {
+      "inspection": {
+        "title": "Vision Inspection",
+        "desc": "Industry CV solutions"
+      },
+      "enhancement": {
+        "title": "Video Enhancement",
+        "desc": "Stability and image quality"
+      },
+      "human": {
+        "title": "AI Digital Human",
+        "desc": "Presenters and agents"
+      },
+      "platform": {
+        "title": "Platform",
+        "desc": "Under every product"
+      }
+    }
+  },
+  "products": {
+    "road-inspection": {
+      "name": "Road Defect Detection",
+      "short": "Find cracks, potholes and rutting. Measure depth. Report automatically."
+    },
+    "quality-inspection": {
+      "name": "Industrial Quality Inspection",
+      "short": "Millisecond surface-defect calls. Few-shot training. PLC/MES ready."
+    },
+    "safety-behavior": {
+      "name": "Safety Behavior Recognition",
+      "short": "Real-time alerts for PPE, intrusion, smoke and fire — at the edge."
+    },
+    "fpv-stabilization": {
+      "name": "FPV Stabilization",
+      "short": "Steady head-mounted and drone footage without losing the POV."
+    },
+    "color-enhancement": {
+      "name": "Color & Enhancement",
+      "short": "White balance, low-light denoise, HDR, upscaling, camera matching."
+    },
+    "digital-human": {
+      "name": "AI Digital Human",
+      "short": "Custom avatars, voice cloning, multilingual and LLM-driven."
+    },
+    "platform": {
+      "name": "SightAI Platform",
+      "short": "Label, train, evaluate, deploy and monitor in one place."
+    }
+  },
+  "command": {
+    "open": "Search the site",
+    "placeholder": "Search products, solutions, pages…",
+    "empty": "No results found",
+    "products": "Products",
+    "pages": "Pages",
+    "actions": "Actions",
+    "switchLang": "切换到中文",
+    "toggleTheme": "Toggle light / dark"
+  },
+  "cta": {
+    "eyebrow": "Next step",
+    "title": "Run a PoC on your own data",
+    "desc": "Send us a real video or a batch of sample images. We return detections and an evaluation report on an agreed timeline — then you decide.",
+    "primary": "Request a free PoC",
+    "secondary": "Book a demo"
+  },
+  "footer": {
+    "tagline": "Vision AI that sees, understands, and enhances the physical world.",
+    "productsCol": "Products",
+    "solutionsCol": "Solutions",
+    "resourcesCol": "Resources",
+    "companyCol": "Company",
+    "whitepapers": "Whitepapers",
+    "docs": "Developer docs",
+    "news": "News",
+    "contactCol": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "icp": "ICP license",
+    "privacy": "Privacy policy",
+    "cookies": "Cookie settings",
+    "rights": "All rights reserved."
+  },
+  "industries": {
+    "transport": {
+      "name": "Transport",
+      "desc": "Road surveys, bridges and tunnels, incidents"
+    },
+    "manufacturing": {
+      "name": "Manufacturing",
+      "desc": "Surface defects, assembly checks, yield"
+    },
+    "energy": {
+      "name": "Energy & Chemicals",
+      "desc": "EHS compliance, smoke and fire, perimeter"
+    },
+    "construction": {
+      "name": "Construction",
+      "desc": "PPE, edge protection, heavy machinery"
+    },
+    "media": {
+      "name": "Media",
+      "desc": "Stabilize, grade, upscale, present"
+    },
+    "retail": {
+      "name": "Retail & Finance",
+      "desc": "Digital guides, service desks, marketing"
+    }
+  },
+  "classes": {
+    "crack": "Crack",
+    "pothole": "Pothole",
+    "rutting": "Rutting",
+    "patch": "Patch",
+    "marking_wear": "Marking wear",
+    "scratch": "Scratch",
+    "dent": "Dent",
+    "stain": "Stain",
+    "missing_part": "Missing part",
+    "no_helmet": "No helmet",
+    "no_vest": "No hi-vis vest",
+    "zone_intrusion": "Zone intrusion",
+    "smoke": "Smoke",
+    "person": "Person",
+    "fall": "Fall",
+    "climbing": "Climbing",
+    "solder_bridge": "Solder bridge",
+    "missing_component": "Missing component",
+    "short_shot": "Short shot",
+    "flash": "Flash"
+  },
+  "severity": {
+    "low": "Low",
+    "medium": "Med",
+    "high": "High"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Inspection · Enhancement · Digital Humans",
+      "title": "Vision AI that sees, understands, and enhances the physical world.",
+      "subtitle": "Detect road defects, catch production flaws, flag unsafe behavior, and fix shaky or flat footage. Run it as a cloud API, on-prem, or on an edge box.",
+      "live": "Live",
+      "camera": "CAM-03 · vehicle front",
+      "latency": "Latency",
+      "objects": "Objects",
+      "simulated": "Simulated stream",
+      "canvasLabel": "Road survey footage with live defect bounding boxes, classes and confidence scores (simulated demo)"
+    },
+    "logos": {
+      "title": "Trusted by global sports bodies, governments and public institutions"
+    },
+    "capabilities": {
+      "eyebrow": "Products",
+      "title": "Three product lines. One vision stack.",
+      "desc": "Inspection, enhancement and digital humans share one data, training and deployment platform — so models carry over between use cases.",
+      "inspection": {
+        "title": "Vision Inspection",
+        "desc": "Turn eyeball checks in road surveys, QC and site safety into structured, auditable data.",
+        "tag": "road · line · site"
+      },
+      "enhancement": {
+        "title": "Video Enhancement",
+        "desc": "Steady violent POV shake, match color across cameras, and rescue low-light, low-res footage.",
+        "tag": "stabilize · grade · upscale"
+      },
+      "human": {
+        "title": "AI Digital Human",
+        "desc": "Build a presenter from three minutes of footage. Connect an LLM for live commerce, support and training.",
+        "tag": "avatar · voice · llm"
+      }
+    },
+    "demo": {
+      "eyebrow": "Interactive demo",
+      "title": "See what SightAI sees",
+      "desc": "Pick a scene and switch on detection. Boxes appear in inference order; the result list stays linked to the image.",
+      "scenes": {
+        "road": "Road",
+        "line": "Production line",
+        "site": "Job site"
+      },
+      "toggle": "AI detection",
+      "results": "Detections",
+      "summary": "{count} objects · {ms} ms",
+      "idle": "Turn on detection to see results",
+      "colClass": "Class",
+      "colConf": "Conf.",
+      "colBox": "Box",
+      "colSeverity": "Severity",
+      "hint": "Select a row to highlight its box",
+      "sceneAlt": {
+        "road": "Illustrated asphalt surface with cracks and potholes",
+        "line": "Illustrated conveyor carrying metal parts",
+        "site": "Illustrated construction site with workers"
+      }
+    },
+    "compare": {
+      "eyebrow": "Video enhancement",
+      "title": "Drag the divider. See the difference.",
+      "desc": "Works with mouse, touch and arrow keys.",
+      "stabilization": "FPV stabilization",
+      "color": "Color enhancement",
+      "before": "Original",
+      "after": "SightAI",
+      "sliderLabel": "Before / after divider position",
+      "stabNote": "Left: raw head-mounted footage. Right: after trajectory smoothing (illustrative animation).",
+      "colorNote": "Low-light, color-cast footage after auto white balance, tone mapping and denoise (illustrative)."
+    },
+    "metrics": {
+      "eyebrow": "By the numbers",
+      "title": "Numbers you can check"
+    },
+    "deploy": {
+      "eyebrow": "Deployment",
+      "title": "Deploy where your data lives",
+      "desc": "The same model moves between all three — with the same API.",
+      "cloud": {
+        "title": "Cloud API",
+        "desc": "Pay per call. Integrate in minutes. Best for pilots and bursty workloads.",
+        "points": [
+          "REST / gRPC / SDK",
+          "Autoscaling",
+          "Usage-based pricing"
+        ]
+      },
+      "onprem": {
+        "title": "On-premises",
+        "desc": "Runs in your data center or private cloud. Data never leaves your network.",
+        "points": [
+          "Data stays in-house",
+          "Air-gap ready",
+          "Central access control & audit"
+        ]
+      },
+      "edge": {
+        "title": "Edge box",
+        "desc": "Infer next to the camera. Works on weak links. Ships only structured results.",
+        "points": [
+          "Real-time local inference",
+          "Store-and-forward offline",
+          "Remote model updates"
+        ]
+      },
+      "diagram": {
+        "camera": "Camera",
+        "model": "Model",
+        "app": "Your app",
+        "cloud": "Cloud",
+        "dc": "Data center",
+        "box": "Edge box"
+      }
+    },
+    "industries": {
+      "eyebrow": "Solutions",
+      "title": "Built for your industry"
+    },
+    "cases": {
+      "eyebrow": "Customers",
+      "title": "Running in the real world",
+      "anonymized": "Customer names anonymized",
+      "viewAll": "All 9 customer stories"
+    }
+  },
+  "metrics": {
+    "classes": {
+      "label": "Detectable classes",
+      "note": "Detection + behavior models, incl. custom classes"
+    },
+    "latency": {
+      "label": "Avg. inference latency",
+      "note": "1080p frame on an edge device"
+    },
+    "nodes": {
+      "label": "Deployed nodes",
+      "note": "Edge boxes and on-prem nodes, cumulative"
+    },
+    "accuracy": {
+      "label": "Road defect accuracy",
+      "note": "Internal test set, mAP@0.5"
+    }
+  },
+  "styleguide": {
+    "title": "Design system",
+    "desc": "Design tokens and base components for the SightAI website.",
+    "colors": "Color tokens",
+    "type": "Type scale",
+    "components": "Components",
+    "motifs": "Visual motifs"
+  },
+  "notFound": {
+    "title": "Nothing here yet",
+    "desc": "This page may still be under construction, or the link is out of date.",
+    "back": "Back to home"
+  },
+  "product": {
+    "breadcrumb": "Products",
+    "lineLabel": "Product line",
+    "painsEyebrow": "Before and after",
+    "painsTitle": "The old way vs. SightAI",
+    "before": "The old way",
+    "after": "SightAI",
+    "capEyebrow": "Capabilities",
+    "capTitle": "What {name} does",
+    "howEyebrow": "How it works",
+    "howTitle": "Five steps from capture to integration",
+    "demoEyebrow": "Interactive demo",
+    "demoTitle": "See it work",
+    "demoNote": "The demo uses simulated data to illustrate the processing logic.",
+    "specsEyebrow": "Specifications",
+    "specsTitle": "At a glance",
+    "cloud": "Cloud",
+    "edge": "Edge / on-prem",
+    "param": "Parameter",
+    "specsNote": "Performance figures are indicative; real results depend on hardware and scene. The PoC includes a measured report.",
+    "scenariosEyebrow": "Use cases",
+    "scenariosTitle": "Where it fits",
+    "casesEyebrow": "Customers",
+    "casesTitle": "How customers use it",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "About {name}",
+    "whitepaper": "Download the whitepaper",
+    "loading": "Loading demo…"
+  },
+  "productsIndex": {
+    "eyebrow": "Products",
+    "title": "Seven products for inspection, enhancement and digital humans",
+    "desc": "All three product lines share one data, training and deployment platform. Pick one product or combine them into a full solution."
+  },
+  "solutions": {
+    "eyebrow": "Solutions",
+    "title": "Vision AI, assembled for your industry",
+    "desc": "Every industry has its own scenes, compliance rules and deployment constraints. These are the combinations we deliver most often.",
+    "challenges": "Typical problems",
+    "products": "Recommended products",
+    "cases": "Customer stories",
+    "items": {
+      "transport": {
+        "long": "Routine surveys of roads, bridges and tunnels, plus real-time incident detection.",
+        "points": [
+          "Manual surveys are slow and inconsistent",
+          "Defect location and severity are hard to quantify",
+          "Results don't flow into maintenance"
+        ]
+      },
+      "manufacturing": {
+        "long": "Surface-defect inspection, assembly verification and yield analytics.",
+        "points": [
+          "Fatigue causes missed defects",
+          "Frequent changeovers make rule-based vision costly",
+          "Root causes are hard to trace"
+        ]
+      },
+      "energy": {
+        "long": "EHS compliance and perimeter security for petrochemical, power and renewable sites.",
+        "points": [
+          "Smoke and flame must be caught early",
+          "Contractor PPE is hard to police",
+          "Video must stay on the internal network"
+        ]
+      },
+      "construction": {
+        "long": "Worker safety, edge protection and heavy-machinery zones on job sites.",
+        "points": [
+          "Hard hats and vests not worn consistently",
+          "Intrusion into edge and crane zones",
+          "Scattered sites, no central view"
+        ]
+      },
+      "media": {
+        "long": "Sports broadcast, content production, archive restoration and multilingual output.",
+        "points": [
+          "Shaky POV footage, mismatched cameras",
+          "Low-resolution archives",
+          "Not enough capacity for every language"
+        ]
+      },
+      "retail": {
+        "long": "Digital-human guides, service desks and marketing content for stores, branches and public service halls.",
+        "points": [
+          "Repetitive questions tie up staff",
+          "Marketing content changes constantly",
+          "Limited multilingual service"
+        ]
+      }
+    }
+  },
+  "cases": {
+    "eyebrow": "Customers",
+    "title": "SightAI in the real world",
+    "desc": "From global sports to regional road networks and national parks. Named customers appear with permission; anonymized stories are samples to be replaced before launch.",
+    "all": "All",
+    "named": "Named customers",
+    "anonymized": "Anonymized samples",
+    "needsReview": "Pending customer approval",
+    "sampleBadge": "Sample story",
+    "results": "Results",
+    "tbd": "TBD",
+    "back": "All customer stories",
+    "productsUsed": "Products used",
+    "sector": "Industry",
+    "region": "Region",
+    "readCase": "Read the story",
+    "filterLabel": "Filter by product line",
+    "more": "More stories"
+  },
+  "technology": {
+    "eyebrow": "Technology",
+    "title": "Vision AI engineering you can verify",
+    "desc": "Models, deployment architecture and data security — every layer built to be measured and audited.",
+    "modelsTitle": "Model capabilities",
+    "models": [
+      {
+        "title": "Detection & segmentation",
+        "desc": "Tuned for small and thin targets such as cracks and scratches."
+      },
+      {
+        "title": "Behavior understanding",
+        "desc": "Pose and temporal models for falls, climbing and intrusion."
+      },
+      {
+        "title": "Video enhancement",
+        "desc": "Motion estimation, low-light, HDR and super-resolution models."
+      },
+      {
+        "title": "Generative digital humans",
+        "desc": "Appearance, voice and lip-sync generation, LLM-ready."
+      }
+    ],
+    "archTitle": "Device–edge–cloud architecture",
+    "archDesc": "The platform compiles one model for each hardware target, behind one API.",
+    "layers": [
+      {
+        "name": "Device",
+        "desc": "CCTV, industrial, vehicle and action cameras"
+      },
+      {
+        "name": "Edge",
+        "desc": "Local inference with store-and-forward"
+      },
+      {
+        "name": "Cloud / on-prem",
+        "desc": "Training, evaluation, device and version management"
+      },
+      {
+        "name": "Your systems",
+        "desc": "Maintenance, MES, EHS, media and streaming platforms"
+      }
+    ],
+    "securityTitle": "Security & compliance",
+    "security": [
+      {
+        "title": "Data stays in-house",
+        "desc": "On-prem and edge deployment keep footage and results in your environment."
+      },
+      {
+        "title": "Encrypted end to end",
+        "desc": "Encryption in transit and at rest, with customer-managed keys."
+      },
+      {
+        "title": "Access & audit",
+        "desc": "Role-based access, audit logs, enterprise SSO / LDAP."
+      },
+      {
+        "title": "Privacy protection",
+        "desc": "Automatic face and plate blurring; raw frames need authorization."
+      },
+      {
+        "title": "Regulatory fit",
+        "desc": "Processing configured for PIPL, GDPR, PDPA and similar laws."
+      },
+      {
+        "title": "AI content labels",
+        "desc": "Digital-human output can carry AI-generated labels as required."
+      }
+    ],
+    "certNote": "Certifications [TBD]: add certificates held before launch."
+  },
+  "resources": {
+    "eyebrow": "Resources",
+    "title": "Whitepapers, docs and news",
+    "desc": "Product details, integration guides and company updates.",
+    "whitepapersTitle": "Whitepapers",
+    "whitepapers": [
+      {
+        "title": "AI road defect surveys",
+        "desc": "Vehicle capture, depth measurement and severity grading."
+      },
+      {
+        "title": "Industrial surface inspection in practice",
+        "desc": "Imaging, few-shot training and line integration."
+      },
+      {
+        "title": "Deploying edge vision for site safety",
+        "desc": "Camera onboarding, alert rules and privacy."
+      },
+      {
+        "title": "Video enhancement & digital-human production",
+        "desc": "Stabilization, grading and multilingual workflows."
+      }
+    ],
+    "request": "Request download",
+    "docsTitle": "Developer docs",
+    "docs": [
+      {
+        "title": "API reference",
+        "desc": "REST and gRPC"
+      },
+      {
+        "title": "SDKs",
+        "desc": "Python / JavaScript / C++"
+      },
+      {
+        "title": "Deployment guide",
+        "desc": "Cloud, on-prem and edge box"
+      },
+      {
+        "title": "Release notes",
+        "desc": "Versions and compatibility"
+      }
+    ],
+    "docsNote": "Our docs portal is in progress. Contact us for integration material.",
+    "contactForDocs": "Get the docs",
+    "newsTitle": "News",
+    "newsPlaceholder": "[TBD] News headline",
+    "newsDesc": "Replace with published company news and press coverage before launch."
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "Vision AI that sees, understands, and enhances the physical world",
+    "desc": "SightAI builds deployable, verifiable vision AI — detection, enhancement and generation — for transport, manufacturing, energy, sports and the public sector.",
+    "whatTitle": "What we do",
+    "what": [
+      {
+        "title": "Vision inspection",
+        "desc": "Turn eyeball judgment in surveys, QC and safety into structured data."
+      },
+      {
+        "title": "Video enhancement",
+        "desc": "Make shaky, dark and low-res footage usable."
+      },
+      {
+        "title": "AI digital humans",
+        "desc": "Produce multilingual content in a controlled, labeled way."
+      }
+    ],
+    "principlesTitle": "How we work",
+    "principles": [
+      {
+        "title": "Show the numbers",
+        "desc": "Every metric states its basis; every PoC ends with a measured report."
+      },
+      {
+        "title": "Deploy where the data lives",
+        "desc": "Same capabilities and API across cloud, on-prem and edge."
+      },
+      {
+        "title": "Privacy first",
+        "desc": "Minimal collection by default, with automatic face and plate blurring."
+      },
+      {
+        "title": "Built to last",
+        "desc": "Platform delivery so models keep improving."
+      }
+    ],
+    "companyTitle": "Company",
+    "companyNote": "Team, history and office addresses [TBD].",
+    "privacyTitle": "Privacy policy",
+    "privacy": "We collect and process personal data only as needed to provide our services, in line with PIPL, GDPR, PDPA and other applicable laws. Information submitted through this site is used only to answer your inquiry and arrange demos, and is never sold. Contact us at any time to access, correct or delete your data. Full privacy policy [TBD].",
+    "cookiesTitle": "Cookie settings",
+    "cookies": "This site uses essential cookies to work. Analytics cookies are enabled only with your consent.",
+    "cookiesButton": "Change cookie preferences"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Book a demo or request a PoC",
+    "desc": "Tell us about your use case. We'll reply within two business days to schedule a demo or a PoC on your data.",
+    "steps": [
+      "Products",
+      "Use case",
+      "Your details"
+    ],
+    "stepOf": "Step {current} of {total}",
+    "productsLabel": "Which products interest you? (select any)",
+    "industry": "Industry",
+    "industryPlaceholder": "Select an industry",
+    "industryOther": "Other",
+    "scenario": "Describe your use case",
+    "scenarioPlaceholder": "e.g. Survey 500 km of city roads monthly and flag potholes and cracks…",
+    "dataScale": "Scale",
+    "dataScalePlaceholder": "Select",
+    "dataScales": {
+      "small": "PoC / small sample",
+      "medium": "One site or line",
+      "large": "Multi-site / network-wide"
+    },
+    "deployment": "Preferred deployment",
+    "deployments": {
+      "cloud": "Cloud API",
+      "onprem": "On-premises",
+      "edge": "Edge box",
+      "unsure": "Not sure yet"
+    },
+    "name": "Full name",
+    "company": "Company / organization",
+    "jobTitle": "Job title",
+    "email": "Work email",
+    "phone": "Phone",
+    "country": "Country / region",
+    "consent": "I agree that SightAI may process this information under its privacy policy to answer my inquiry and arrange a demo (PIPL / PDPA / GDPR compliant).",
+    "privacyLink": "Read the privacy policy",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Submit",
+    "submitting": "Submitting…",
+    "errors": {
+      "products": "Select at least one product",
+      "industry": "Select an industry",
+      "scenario": "Describe your use case (at least 10 characters)",
+      "deployment": "Select a deployment option",
+      "required": "Required",
+      "email": "Enter a valid email address",
+      "phone": "Enter a valid phone number",
+      "consent": "Please accept to continue",
+      "server": "Something went wrong. Try again later or email {email}"
+    },
+    "successTitle": "Thanks — we've got it",
+    "successDesc": "We'll be in touch within two business days. What happens next:",
+    "successSteps": [
+      "A solutions engineer reviews your use case and data",
+      "We schedule a 30-minute online demo",
+      "For a PoC, we agree on data scope, timeline and success metrics"
+    ],
+    "again": "Submit another request",
+    "home": "Back to home",
+    "sideTitle": "Other ways to reach us",
+    "pocNote": "A PoC typically needs one real video or a batch of sample images, plus the metrics you care about."
+  },
+  "cookie": {
+    "text": "We use essential cookies to run this site. Analytics cookies are used only with your consent.",
+    "accept": "Accept all",
+    "necessary": "Essential only",
+    "label": "Cookie preferences"
+  },
+  "demos": {
+    "pause": "Pause",
+    "play": "Resume",
+    "road": {
+      "filters": "Filter defects",
+      "colorBy": "Color by",
+      "type": "Type",
+      "severity": "Severity",
+      "depth": "Depth",
+      "chainage": "Chainage",
+      "coords": "Coordinates",
+      "segment": "Segment",
+      "total": "Total",
+      "selected": "Selected defect",
+      "segmentStats": "Segment statistics",
+      "clickHint": "Select a defect on the map to see details",
+      "mapLabel": "Simulated survey route map; defects can be selected with the keyboard",
+      "mapNote": "Simulated route · 12.4 km · schematic basemap",
+      "thresholdNote": "Depth thresholds are examples, configured to local standards [TBD]"
+    },
+    "conveyor": {
+      "typeLabel": "Part type",
+      "types": {
+        "metal": "Metal part",
+        "pcb": "PCB",
+        "molded": "Molded part"
+      },
+      "gate": "AI inspection station",
+      "yield": "Live yield",
+      "takt": "Avg. decision time",
+      "inspected": "Parts inspected"
+    },
+    "wall": {
+      "privacy": "Privacy mode (blur faces)",
+      "timeline": "Alert timeline",
+      "empty": "Waiting for alerts…"
+    },
+    "trajectory": {
+      "raw": "Raw",
+      "stabilized": "Stabilized",
+      "curve": "Camera trajectory (horizontal)",
+      "curveLabel": "Live plot of the raw shaky trajectory and the smoothed trajectory",
+      "strength": "Smoothing strength",
+      "rmsRaw": "Residual shake, raw",
+      "rmsStab": "Residual shake, processed",
+      "crop": "Crop"
+    },
+    "histogram": {
+      "modesLabel": "Enhancement mode",
+      "modes": {
+        "awb": "Auto white balance",
+        "lowlight": "Low light",
+        "hdr": "HDR",
+        "sr": "Super-resolution",
+        "match": "Camera matching"
+      },
+      "desc": {
+        "awb": "Color cast: the light source is estimated and temperature corrected, re-aligning the three channels.",
+        "lowlight": "Low light: the histogram sits far left with heavy noise. Enhancement restores both highlights and shadows.",
+        "hdr": "High contrast: highlights and shadows are clipped. HDR recovery spreads both ends back out.",
+        "sr": "Low resolution: edges and textures are soft. Super-resolution rebuilds the detail.",
+        "match": "Multi-camera: this angle doesn't match the reference. Matching brings it to one look."
+      },
+      "histogram": "RGB histogram",
+      "channels": "computed live on canvas"
+    },
+    "avatar": {
+      "avatar": "Presenter",
+      "language": "Language",
+      "langNote": "Supported languages depend on the project [TBD]",
+      "scene": "Setting",
+      "scenes": {
+        "live": "Live commerce",
+        "service": "Service desk",
+        "training": "Training"
+      },
+      "inputLabel": "Type a sentence for the presenter to say",
+      "placeholder": "Type something…",
+      "speak": "Speak",
+      "subtitleHint": "Press speak to start",
+      "aiLabel": "AI-generated",
+      "productCard": "Today's pick",
+      "infoPanel": "Opening hours",
+      "flow": [
+        "Record ~3 min of a real presenter",
+        "Train appearance, voice and lip sync",
+        "Review and deliver as video, stream or API"
+      ]
+    },
+    "arch": {
+      "flowLabel": "Platform pipeline; select a step for details",
+      "copy": "Copy",
+      "copied": "Copied",
+      "apiTitle": "API examples",
+      "apiNote": "Illustrative samples. The API reference is authoritative.",
+      "nodes": {
+        "data": {
+          "title": "Data",
+          "desc": "Ingest images, video streams and business data, organized by project and scene.",
+          "points": [
+            "RTSP / files / object storage",
+            "De-identification",
+            "Versioned datasets"
+          ]
+        },
+        "label": {
+          "title": "Label",
+          "desc": "Model pre-labeling plus human review, with team workflows and QA.",
+          "points": [
+            "Boxes / masks / keypoints",
+            "Faster with pre-labels",
+            "Label QA"
+          ]
+        },
+        "train": {
+          "title": "Train",
+          "desc": "Fine-tune pre-built industry models from just a few samples.",
+          "points": [
+            "Industry pre-trained models",
+            "Incremental training",
+            "Auto hyper-parameter search"
+          ]
+        },
+        "eval": {
+          "title": "Evaluate",
+          "desc": "Shared test sets and dashboards — compare versions before release.",
+          "points": [
+            "mAP / recall / false alarms",
+            "Per-scene reports",
+            "Version diffs"
+          ]
+        },
+        "deploy": {
+          "title": "Deploy",
+          "desc": "Publish one model to cloud, on-prem servers or edge boxes in one click.",
+          "points": [
+            "Cloud / on-prem / edge",
+            "Staged rollout",
+            "Remote updates"
+          ]
+        },
+        "monitor": {
+          "title": "Monitor",
+          "desc": "Track latency and data drift; hard cases flow back to labeling.",
+          "points": [
+            "Latency & throughput",
+            "Drift detection",
+            "Hard-case feedback"
+          ]
+        }
+      }
+    }
+  }
+}
