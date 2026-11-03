@@ -148,7 +148,7 @@ export function CapabilityDetailView({ id }: { id: string }) {
 
       <div className="grid gap-6 xl:grid-cols-3">
         <Panel className="xl:col-span-2" title={t("console.capabilities.detail.livePreview")} bodyClassName="p-0">
-          <CapabilityVisual capability={cap} label={cap.media ? t("common.realFootage") : undefined} fit="contain" className="aspect-video rounded-b-[var(--radius-card)]" />
+          <CapabilityVisual id={cap.id} labeled fit="contain" className="aspect-video rounded-b-[var(--radius-card)]" />
         </Panel>
         <Panel title={t("console.capabilities.detail.config")}>
           {subscribed ? (

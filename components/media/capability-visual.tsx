@@ -1,5 +1,8 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import type { Capability, VisualKey } from "@/content/industries";
+import { getCapability, type VisualKey } from "@/content/industries";
 import { DemoMedia } from "./demo-media";
 
 /* Procedural stand-ins for capabilities that don't have real footage yet (see public/media/README.md). */
@@ -269,18 +272,29 @@ export function ProceduralVisual({ visual, className }: { visual: VisualKey; cla
   );
 }
 
-/** Real footage when we have it, otherwise the procedural visual. */
+/**
+ * Real footage when we have it (or footage of the same technology, labelled as such),
+ * otherwise the procedural visual.
+ */
 export function CapabilityVisual({
-  capability,
-  label,
+  id,
+  labeled = false,
   className,
   fit,
 }: {
-  capability: Capability;
-  label?: string;
+  /** capability id — an id, not the object, so server pages can render this client component */
+  id: string;
+  /** show the "real footage" / "same-technology demo" badge */
+  labeled?: boolean;
   className?: string;
   fit?: "cover" | "contain";
 }) {
-  if (capability.media) return <DemoMedia media={capability.media} label={label} className={className} fit={fit} />;
+  const t = useTranslations("common");
+  const capability = getCapability(id);
+  if (!capability) return null;
+  if (capability.media) {
+    const label = labeled ? (capability.related ? t("relatedFootage") : t("realFootage")) : undefined;
+    return <DemoMedia media={capability.media} label={label} className={className} fit={fit} />;
+  }
   return <ProceduralVisual visual={capability.visual ?? "heatmap"} className={className} />;
 }

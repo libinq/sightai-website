@@ -4,16 +4,8 @@ import { useTranslations } from "next-intl";
 import { Palette, Video } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BeforeAfter } from "./before-after";
-import { DuskScene, TrailScene } from "./scene-art";
-
-function Reticle() {
-  return (
-    <svg viewBox="0 0 100 100" className="pointer-events-none absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 opacity-70" aria-hidden>
-      <path d="M50 0v38M50 62v38M0 50h38M62 50h38" stroke="#e8edf2" strokeWidth="1.5" />
-      <circle cx="50" cy="50" r="6" fill="none" stroke="#e8edf2" strokeWidth="1.5" />
-    </svg>
-  );
-}
+import { DemoMedia } from "@/components/media/demo-media";
+import { DuskScene } from "./scene-art";
 
 export function EnhanceCompare() {
   const t = useTranslations("home.compare");
@@ -31,28 +23,11 @@ export function EnhanceCompare() {
       </TabsList>
 
       <TabsContent value="stab">
-        <BeforeAfter
-          className="aspect-[16/9]"
-          beforeLabel={t("before")}
-          afterLabel={t("after")}
-          sliderLabel={t("sliderLabel")}
-          before={
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-0 animate-[jitter_0.9s_steps(10)_infinite]">
-                <TrailScene className="size-full" />
-              </div>
-              <Reticle />
-            </div>
-          }
-          after={
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-0 animate-[drift_6s_ease-in-out_infinite]">
-                <TrailScene className="size-full" />
-              </div>
-              <Reticle />
-            </div>
-          }
-        />
+        <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-line">
+          <DemoMedia media="refcam" fit="contain" controls className="aspect-[1280/448]" />
+          <span className="absolute left-3 top-3 rounded bg-black/70 px-2 py-0.5 font-mono text-[11px] text-white">{t("before")} · {t("realLabel")}</span>
+          <span className="absolute right-3 top-3 rounded bg-black/70 px-2 py-0.5 font-mono text-[11px] text-accent">{t("after")}</span>
+        </div>
         <p className="mt-3 text-xs text-text-3">{t("stabNote")}</p>
       </TabsContent>
 

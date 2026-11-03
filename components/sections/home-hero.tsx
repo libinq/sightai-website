@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Container, Eyebrow, GridBackdrop } from "@/components/visual/primitives";
-import { HeroDetection } from "@/components/demo/hero-detection";
+import { HeroReel } from "@/components/media/hero-reel";
 
 export function HomeHero() {
   const t = useTranslations();
@@ -45,17 +45,7 @@ export function HomeHero() {
           <div className="relative rounded-[14px] border border-line bg-bg-1 p-2 shadow-2xl shadow-black/40">
             <div aria-hidden className="ruler-x absolute -top-3 left-6 right-6 h-2" />
             <div aria-hidden className="ruler-y absolute -left-3 bottom-6 top-6 hidden w-2 sm:block" />
-            <HeroDetection
-              className="aspect-[16/10] rounded-[10px]"
-              labels={{
-                live: t("home.hero.live"),
-                camera: t("home.hero.camera"),
-                latency: t("home.hero.latency"),
-                objects: t("home.hero.objects"),
-                simulated: t("home.hero.simulated"),
-                canvasLabel: t("home.hero.canvasLabel"),
-              }}
-            />
+            <HeroReel />
           </div>
         </div>
       </Container>

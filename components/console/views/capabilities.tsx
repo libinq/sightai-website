@@ -135,7 +135,7 @@ export function CapabilitiesView() {
           return (
             <li key={cap.id} className={cn("group flex flex-col overflow-hidden rounded-[var(--radius-card)] border bg-bg-1 transition-colors", subscribed ? "border-accent/40" : "border-line hover:border-line-strong")}>
               <Link href={`/console/capabilities/${cap.id}`} className="relative block" tabIndex={-1} aria-hidden>
-                <CapabilityVisual capability={cap} className="aspect-[16/8]" />
+                <CapabilityVisual id={cap.id} className="aspect-[16/8]" />
                 {subscribed && (
                   <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-accent-2/90 px-2 py-0.5 text-[11px] font-medium text-black">
                     <Check className="size-3" aria-hidden />

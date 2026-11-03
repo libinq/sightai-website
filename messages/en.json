@@ -26,7 +26,8 @@
     "contactSales": "Contact sales",
     "realFootage": "Real footage",
     "builtOn": "Built on",
-    "includedIn": "Included in"
+    "includedIn": "Included in",
+    "relatedFootage": "Same-technology demo"
   },
   "nav": {
     "home": "Home",
@@ -222,9 +223,9 @@
       }
     },
     "demo": {
-      "eyebrow": "Interactive demo",
+      "eyebrow": "Real footage",
       "title": "See what SightAI sees",
-      "desc": "Pick a scene and switch on detection. Boxes appear in inference order; the result list stays linked to the image.",
+      "desc": "SightAI running on roads, production lines, campuses, stores and pitches. Click a card for the matching industry solution.",
       "scenes": {
         "road": "Road",
         "line": "Production line",
@@ -247,15 +248,16 @@
     },
     "compare": {
       "eyebrow": "Video enhancement",
-      "title": "Drag the divider. See the difference.",
-      "desc": "Works with mouse, touch and arrow keys.",
+      "title": "Before and after, side by side",
+      "desc": "Original on the left, SightAI output on the right.",
       "stabilization": "FPV stabilization",
       "color": "Color enhancement",
       "before": "Original",
       "after": "SightAI",
       "sliderLabel": "Before / after divider position",
-      "stabNote": "Left: raw head-mounted footage. Right: after trajectory smoothing (illustrative animation).",
-      "colorNote": "Low-light, color-cast footage after auto white balance, tone mapping and denoise (illustrative)."
+      "stabNote": "Chest-mounted referee RefCam at a FIFA match: original on the left (note the gyro trace below), stabilized output on the right.",
+      "colorNote": "Low-light, color-cast footage after auto white balance, tone mapping and denoising (illustration — real footage to come).",
+      "realLabel": "Real footage"
     },
     "metrics": {
       "eyebrow": "By the numbers",
@@ -403,8 +405,9 @@
     "faqTitle": "About {name}",
     "whitepaper": "Download the whitepaper",
     "loading": "Loading demo…",
-    "appsTitle": "Real footage & industry applications",
-    "appsDesc": "Footage from real deployments, and the industry capabilities built on this technology that you can subscribe to in the console."
+    "appsTitle": "Industry applications built on this",
+    "appsDesc": "These industry capabilities run on this technology and can be subscribed to in the console.",
+    "footageNote": "Footage from real deployments — pause or scrub to inspect the details."
   },
   "productsIndex": {
     "eyebrow": "Products",

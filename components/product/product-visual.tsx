@@ -1,5 +1,7 @@
 import { DuskScene, LineScene, RoadScene, SiteScene, TrailScene } from "@/components/demo/scene-art";
 import { LINE_COLOR, type ProductLine } from "@/content/products";
+import { PRODUCT_MEDIA } from "@/content/media";
+import { DemoMedia } from "@/components/media/demo-media";
 
 type Box = [x: number, y: number, w: number, h: number, label: string];
 
@@ -68,8 +70,17 @@ function PlatformArt() {
   );
 }
 
-export function ProductVisual({ slug, line }: { slug: string; line: ProductLine }) {
+export function ProductVisual({ slug, line, realLabel }: { slug: string; line: ProductLine; realLabel: string }) {
   const color = LINE_COLOR[line];
+  // real footage wins over the procedural scene
+  const footage = PRODUCT_MEDIA[slug]?.[0];
+  if (footage) {
+    return (
+      <div className="relative aspect-[8/5] overflow-hidden rounded-[10px] bg-black">
+        <DemoMedia media={footage} label={realLabel} className="absolute inset-0 size-full" />
+      </div>
+    );
+  }
   let art: React.ReactNode;
   switch (slug) {
     case "road-inspection":

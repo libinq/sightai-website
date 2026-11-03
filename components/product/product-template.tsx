@@ -111,7 +111,7 @@ export async function ProductPageTemplate({ product, locale }: { product: Produc
           <div className="lg:col-span-6">
             <div className="relative rounded-[14px] border border-line bg-bg-1 p-2 shadow-2xl shadow-black/40">
               <div aria-hidden className="ruler-x absolute -top-3 left-6 right-6 h-2" />
-              <ProductVisual slug={product.slug} line={product.line} />
+              <ProductVisual slug={product.slug} line={product.line} realLabel={t("common.realFootage")} />
             </div>
           </div>
         </Container>
@@ -183,29 +183,36 @@ export async function ProductPageTemplate({ product, locale }: { product: Produc
       {/* 5. Product-specific demo */}
       <Section aria-labelledby="demo-title">
         <Container>
-          <SectionHeading id="demo-title" eyebrow={t("product.demoEyebrow")} title={t("product.demoTitle")} desc={t("product.demoNote")} />
-          <div className="mt-12">
-            <ProductDemo demo={product.demo} />
-          </div>
+          <SectionHeading
+            id="demo-title"
+            eyebrow={footage.length > 0 ? t("common.realFootage") : t("product.demoEyebrow")}
+            title={t("product.demoTitle")}
+            desc={footage.length > 0 ? t("product.footageNote") : t("product.demoNote")}
+          />
+          {/* real footage replaces the simulated interactive module whenever we have it */}
+          {footage.length > 0 ? (
+            <div className={footage.length > 1 ? "mt-12 grid gap-5 md:grid-cols-2" : "mt-12"}>
+              {footage.map((key, i) => (
+                <Card key={key} className={footage.length > 2 && i === 0 ? "overflow-hidden md:col-span-2" : "overflow-hidden"}>
+                  <DemoMedia media={key} label={t("common.realFootage")} fit="contain" controls className={key === "avatar" ? "aspect-[4/3]" : "aspect-video"} />
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-12">
+              <ProductDemo demo={product.demo} />
+            </div>
+          )}
         </Container>
       </Section>
 
-      {/* 5b. Real footage + industry applications built on this technology */}
-      {(footage.length > 0 || applications.length > 0) && (
+      {/* 5b. Industry applications built on this technology */}
+      {applications.length > 0 && (
         <Section aria-labelledby="footage-title" className="border-t border-line">
           <Container>
-            <SectionHeading id="footage-title" eyebrow={t("common.realFootage")} title={t("product.appsTitle")} desc={t("product.appsDesc")} />
-            {footage.length > 0 && (
-              <div className={footage.length > 1 ? "mt-12 grid gap-5 md:grid-cols-2" : "mt-12"}>
-                {footage.map((key, i) => (
-                  <Card key={key} className={footage.length > 2 && i === 0 ? "overflow-hidden md:col-span-2" : "overflow-hidden"}>
-                    <DemoMedia media={key} label={t("common.realFootage")} fit="contain" controls className="aspect-video" />
-                  </Card>
-                ))}
-              </div>
-            )}
+            <SectionHeading id="footage-title" eyebrow={t("nav.industries")} title={t("product.appsTitle")} desc={t("product.appsDesc")} />
             {applications.length > 0 && (
-              <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {applications.map((cap) => {
                   const ind = INDUSTRIES.find((i) => i.key === cap.industry)!;
                   return (

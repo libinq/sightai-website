@@ -49,7 +49,7 @@ export default async function IndustriesPage({ params }: { params: Promise<{ loc
                       <ul className="mt-5 flex flex-wrap gap-2 border-t border-line pt-4">
                         {caps.map((cap) => (
                           <li key={cap.id}>
-                            <Badge tone={cap.media ? "accent" : "neutral"}>{pick(cap, locale).name}</Badge>
+                            <Badge tone={cap.media && !cap.related ? "accent" : "neutral"}>{pick(cap, locale).name}</Badge>
                           </li>
                         ))}
                       </ul>

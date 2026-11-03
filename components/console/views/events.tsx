@@ -34,7 +34,7 @@ function EventDetail({ e, onClose }: { e: EventItem; onClose: () => void }) {
     >
       {cap && (
         <div className="relative overflow-hidden rounded-[8px] border border-line">
-          <CapabilityVisual capability={cap} className="aspect-video" />
+          <CapabilityVisual id={cap.id} className="aspect-video" />
           <span className="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 font-mono text-[10px] text-white">{t("snapshot")}</span>
         </div>
       )}
