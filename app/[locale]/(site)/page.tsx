@@ -7,8 +7,9 @@ import {
   CompareSection,
   DemoSection,
   DeploySection,
-  IndustriesSection,
+  IndustryShowcaseSection,
   MetricsSection,
+  SaasSection,
 } from "@/components/sections/home-sections";
 import { CtaBand } from "@/components/sections/cta-band";
 import { SITE_URL } from "@/lib/site";
@@ -33,12 +34,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
       <HomeHero />
       <LogoWall />
+      <IndustryShowcaseSection />
       <Capabilities />
       <DemoSection />
       <CompareSection />
+      <SaasSection />
       <MetricsSection />
       <DeploySection />
-      <IndustriesSection />
       <CasesSection />
       <CtaBand />
     </>

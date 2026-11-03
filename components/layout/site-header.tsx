@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Link, usePathname } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
@@ -21,6 +20,7 @@ import { Logo } from "./logo";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { CommandMenu } from "./command-menu";
+import { AuthActions } from "./auth-actions";
 
 const MENU_COLUMNS: ProductLine[] = ["inspection", "enhancement", "human"];
 
@@ -159,11 +159,7 @@ function MobileNav() {
           <div className="sticky bottom-0 flex items-center gap-3 border-t border-line bg-bg-0 p-4">
             <LocaleSwitcher />
             <ThemeToggle />
-            <Button asChild className="flex-1">
-              <Link href="/contact" onClick={close}>
-                {t("common.bookDemo")}
-              </Link>
-            </Button>
+            <AuthActions compact onNavigate={close} />
           </div>
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
@@ -263,7 +259,7 @@ export function SiteHeader() {
             {NAV_PAGES.map((p) => {
               const active = pathname.startsWith(p.href);
               return (
-                <li key={p.key}>
+                <li key={p.key} className={"wide" in p ? "hidden xl:list-item" : undefined}>
                   <Link
                     href={p.href}
                     aria-current={active ? "page" : undefined}
@@ -286,9 +282,7 @@ export function SiteHeader() {
             <LocaleSwitcher />
             <ThemeToggle />
           </div>
-          <Button asChild size="sm" className="ml-2 hidden sm:inline-flex">
-            <Link href="/contact">{t("common.bookDemo")}</Link>
-          </Button>
+          <AuthActions />
           <MobileNav />
         </div>
       </div>

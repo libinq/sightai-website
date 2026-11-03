@@ -3,10 +3,15 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Container, GridBackdrop } from "@/components/visual/primitives";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 export default function NotFound() {
   const t = useTranslations("notFound");
   return (
+    <>
+    <SiteHeader />
+    <main id="main" tabIndex={-1} className="outline-none">
     <section className="relative flex min-h-[70vh] items-center overflow-hidden pt-24">
       <GridBackdrop />
       <Container className="relative">
@@ -21,5 +26,8 @@ export default function NotFound() {
         </Button>
       </Container>
     </section>
+    </main>
+    <SiteFooter />
+    </>
   );
 }

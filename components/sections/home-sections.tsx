@@ -1,7 +1,12 @@
 import { useLocale, useTranslations } from "next-intl";
 import { listCases } from "@/content/cases";
 import {
+  ArrowRight,
   ArrowUpRight,
+  BadgeCheck,
+  Building,
+  Cctv,
+  LayoutDashboard,
   Clapperboard,
   Cloud,
   Construction,
@@ -22,6 +27,8 @@ import { INDUSTRIES } from "@/lib/site";
 import { SeeDemo } from "@/components/demo/see-demo";
 import { EnhanceCompare } from "@/components/demo/enhance-compare";
 import { CasesCarousel } from "./cases-carousel";
+import { Button } from "@/components/ui/button";
+import { IndustryShowcase } from "@/components/industries/industry-showcase";
 
 /* ---------------- 4. See what SightAI sees ---------------- */
 export function DemoSection() {
@@ -247,6 +254,121 @@ export function CasesSection() {
           </Link>
         </div>
         <CasesCarousel items={items} />
+      </Container>
+    </Section>
+  );
+}
+
+/* ---------------- Industry applications ---------------- */
+export function IndustryShowcaseSection() {
+  const t = useTranslations("home.industryShowcase");
+  return (
+    <Section id="industries" aria-labelledby="indsc-title" className="scroll-mt-16 border-t border-line">
+      <Container>
+        <SectionHeading id="indsc-title" eyebrow={t("eyebrow")} title={t("title")} desc={t("desc")} />
+        <div className="mt-12">
+          <IndustryShowcase />
+        </div>
+      </Container>
+    </Section>
+  );
+}
+
+/* ---------------- SaaS console ---------------- */
+function ConsolePreview() {
+  const bars = [38, 52, 44, 61, 58, 72, 66, 80, 74, 88, 82, 95];
+  return (
+    <div aria-hidden className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-bg-0 shadow-2xl shadow-black/40">
+      <div className="flex h-8 items-center gap-1.5 border-b border-line px-3">
+        {["bg-danger", "bg-warn", "bg-accent-2"].map((c) => (
+          <span key={c} className={`size-2 rounded-full ${c} opacity-70`} />
+        ))}
+        <span className="ml-3 font-mono text-[10px] text-text-3">console.sightai</span>
+      </div>
+      <div className="grid grid-cols-[88px_1fr] md:grid-cols-[120px_1fr]">
+        <div className="space-y-2 border-r border-line p-3">
+          {[70, 55, 62, 48, 58, 40].map((w, i) => (
+            <div key={i} className={`h-2 rounded-full ${i === 0 ? "bg-accent/70" : "bg-bg-2"}`} style={{ width: `${w}%` }} />
+          ))}
+        </div>
+        <div className="space-y-3 p-3">
+          <div className="grid grid-cols-4 gap-2">
+            {["var(--viz-1)", "var(--viz-2)", "var(--viz-3)", "var(--viz-4)"].map((c) => (
+              <div key={c} className="rounded-md border border-line bg-bg-1 p-2">
+                <div className="h-1.5 w-1/2 rounded-full bg-bg-2" />
+                <div className="mt-2 h-3 w-3/4 rounded-sm" style={{ background: c, opacity: 0.8 }} />
+              </div>
+            ))}
+          </div>
+          <div className="flex h-28 items-end gap-1 rounded-md border border-line bg-bg-1 p-2">
+            {bars.map((h, i) => (
+              <div key={i} className="flex-1 rounded-t-[3px] bg-viz-1" style={{ height: `${h}%` }} />
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1.5 rounded-md border border-line bg-bg-1 p-2">
+              {["bg-danger", "bg-warn", "bg-accent-2"].map((c) => (
+                <div key={c} className="flex items-center gap-1.5">
+                  <span className={`size-1.5 rounded-full ${c}`} />
+                  <div className="h-1.5 flex-1 rounded-full bg-bg-2" />
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-6 gap-0.5 rounded-md border border-line bg-bg-1 p-2">
+              {Array.from({ length: 18 }, (_, i) => (
+                <div key={i} className="aspect-square rounded-[2px] bg-accent" style={{ opacity: 0.15 + ((i * 37) % 80) / 100 }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function SaasSection() {
+  const t = useTranslations("home.saas");
+  const steps = t.raw("steps") as { title: string; desc: string }[];
+  const icons = [Building, BadgeCheck, Cctv, LayoutDashboard];
+  return (
+    <Section aria-labelledby="saas-title" className="border-t border-line bg-bg-1/40">
+      <Container className="grid items-center gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <SectionHeading id="saas-title" eyebrow={t("eyebrow")} title={t("title")} desc={t("desc")} />
+          <ol className="mt-8 space-y-4">
+            {steps.map((s, i) => {
+              const Icon = icons[i];
+              return (
+                <li key={s.title} className="flex gap-4">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-line bg-bg-1 text-accent">
+                    <Icon className="size-4" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="flex items-center gap-2 font-medium text-text-1">
+                      <span className="font-mono text-xs text-text-3">0{i + 1}</span>
+                      {s.title}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-text-2">{s.desc}</span>
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <Link href="/register">
+                {t("cta")}
+                <ArrowRight aria-hidden />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link href="/pricing">{t("secondary")}</Link>
+            </Button>
+          </div>
+        </div>
+        <Reveal className="lg:col-span-7">
+          <ConsolePreview />
+        </Reveal>
       </Container>
     </Section>
   );

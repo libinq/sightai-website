@@ -17,7 +17,16 @@
     "next": "Next",
     "sampleData": "Sample data — replace with verified figures before launch",
     "on": "On",
-    "off": "Off"
+    "off": "Off",
+    "startTrial": "Start 14-day free trial",
+    "watchDemo": "Watch demo",
+    "subscribe": "Subscribe",
+    "subscribed": "Subscribed",
+    "perMonth": "/ mo",
+    "contactSales": "Contact sales",
+    "realFootage": "Real footage",
+    "builtOn": "Built on",
+    "includedIn": "Included in"
   },
   "nav": {
     "home": "Home",
@@ -52,7 +61,12 @@
         "title": "Platform",
         "desc": "Under every product"
       }
-    }
+    },
+    "industries": "Industries",
+    "pricing": "Pricing",
+    "login": "Sign in",
+    "signup": "Start free",
+    "console": "Open console"
   },
   "products": {
     "road-inspection": {
@@ -176,7 +190,7 @@
     "hero": {
       "eyebrow": "Inspection · Enhancement · Digital Humans",
       "title": "Vision AI that sees, understands, and enhances the physical world.",
-      "subtitle": "Detect road defects, catch production flaws, flag unsafe behavior, and fix shaky or flat footage. Run it as a cloud API, on-prem, or on an edge box.",
+      "subtitle": "SightAI is vision AI as a service for education, retail, sports and manufacturing QC — subscribe to ready-made industry capabilities powered by our detection, enhancement and digital-human engines, in the cloud, on-prem or at the edge.",
       "live": "Live",
       "camera": "CAM-03 · vehicle front",
       "latency": "Latency",
@@ -296,6 +310,38 @@
       "title": "Running in the real world",
       "anonymized": "Customer names anonymized",
       "viewAll": "All 9 customer stories"
+    },
+    "industryShowcase": {
+      "eyebrow": "Industries",
+      "title": "Four industries. Vision AI that works out of the box.",
+      "desc": "Every capability is assembled from SightAI's detection, enhancement and avatar technology. Sign in to subscribe, connect cameras and open the dashboards.",
+      "explore": "Explore {name}",
+      "capabilities": "{count} subscribable capabilities"
+    },
+    "saas": {
+      "eyebrow": "SaaS console",
+      "title": "Sign in, subscribe, connect video, see the data.",
+      "desc": "Start with a free trial. Subscribe to capabilities, connect video sources, handle incidents and read dashboards in one console — no servers to buy.",
+      "steps": [
+        {
+          "title": "Sign up and pick an industry",
+          "desc": "Create an org in a minute; we suggest a capability bundle"
+        },
+        {
+          "title": "Subscribe",
+          "desc": "Billed per camera, store or station; switch on and off anytime"
+        },
+        {
+          "title": "Connect video",
+          "desc": "RTSP / ONVIF / GB28181 / upload, or an edge appliance"
+        },
+        {
+          "title": "Dashboards & alerts",
+          "desc": "Live events, industry dashboards, API and webhooks"
+        }
+      ],
+      "cta": "Start free",
+      "secondary": "See pricing"
     }
   },
   "metrics": {
@@ -356,7 +402,9 @@
     "faqEyebrow": "FAQ",
     "faqTitle": "About {name}",
     "whitepaper": "Download the whitepaper",
-    "loading": "Loading demo…"
+    "loading": "Loading demo…",
+    "appsTitle": "Real footage & industry applications",
+    "appsDesc": "Footage from real deployments, and the industry capabilities built on this technology that you can subscribe to in the console."
   },
   "productsIndex": {
     "eyebrow": "Products",
@@ -829,6 +877,507 @@
           ]
         }
       }
+    }
+  },
+  "industriesPage": {
+    "eyebrow": "Industries",
+    "title": "A catalog of vision AI, organized by industry",
+    "desc": "Education, retail, sports and manufacturing QC — 16 subscribable capabilities, each mapped to the technology it runs on and shown with real footage.",
+    "pains": "Challenges",
+    "capabilities": "Subscribable capabilities",
+    "features": "Key features",
+    "techStack": "Runs on",
+    "tryInConsole": "Subscribe in console",
+    "otherIndustries": "Other industries",
+    "unit": "Billed per",
+    "from": "from",
+    "tier": "Minimum plan"
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Subscribe as you go. Start free.",
+    "desc": "Your platform plan sets source, API and seat limits; industry capabilities are added per unit.",
+    "monthly": "Monthly",
+    "custom": "Custom",
+    "popular": "Most popular",
+    "choose": "Choose {name}",
+    "addonsTitle": "Capability add-on pricing",
+    "addonsDesc": "Add to any plan. Prices are per unit per month.",
+    "capability": "Capability",
+    "industry": "Industry",
+    "unit": "Unit",
+    "price": "Price",
+    "minTier": "Min. plan",
+    "faqTitle": "FAQ",
+    "faqs": [
+      {
+        "q": "Will I be charged when the trial ends?",
+        "a": "No. The account becomes read-only until you choose a plan."
+      },
+      {
+        "q": "Can I deploy on-premises?",
+        "a": "Yes. Enterprise supports on-prem and edge appliances with the same capabilities and console."
+      },
+      {
+        "q": "Where is video stored?",
+        "a": "Cloud tenants store data in the region they choose. With edge or on-prem deployment, raw video never leaves your network."
+      },
+      {
+        "q": "How do invoices work?",
+        "a": "Maintain billing details under Plan & billing; invoices are downloadable once each monthly bill closes."
+      }
+    ],
+    "note": "Sample prices — replace with official pricing before launch."
+  },
+  "auth": {
+    "loginTitle": "Sign in to SightAI Console",
+    "loginDesc": "Manage subscriptions, video sources, events and dashboards.",
+    "registerTitle": "Create your org — 14 days free",
+    "registerDesc": "No credit card. Every Starter capability during the trial.",
+    "email": "Work email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters",
+    "name": "Full name",
+    "company": "Organization",
+    "industry": "Industry",
+    "industryOptions": {
+      "education": "Education",
+      "retail": "Retail",
+      "sports": "Sports",
+      "manufacturing": "Manufacturing",
+      "other": "Other"
+    },
+    "consent": "I agree to the Terms of Service and Privacy Policy",
+    "login": "Sign in",
+    "register": "Create account",
+    "loggingIn": "Signing in…",
+    "registering": "Creating…",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "toRegister": "Sign up free",
+    "toLogin": "Sign in",
+    "demoTitle": "Demo account",
+    "demoDesc": "Explore everything with a pre-filled Pro demo org",
+    "useDemo": "Fill in",
+    "forgot": "Forgot your password? Ask your admin.",
+    "backHome": "Back to site",
+    "sideTitle": "One console for four industries",
+    "sidePoints": [
+      "16 industry capabilities on demand",
+      "Live events with graded alerts",
+      "Industry dashboards",
+      "REST API & webhooks"
+    ],
+    "errors": {
+      "required": "Required",
+      "email": "Enter a valid email",
+      "password": "At least 8 characters",
+      "consent": "Please accept the terms",
+      "invalid_credentials": "Email or password is incorrect",
+      "email_taken": "This email is already registered — sign in instead",
+      "network": "Network error, please retry"
+    }
+  },
+  "console": {
+    "brand": "Console",
+    "nav": {
+      "overview": "Overview",
+      "capabilities": "Capabilities",
+      "analytics": "Dashboards",
+      "sources": "Video sources",
+      "events": "Events",
+      "apiKeys": "API keys",
+      "billing": "Plan & billing",
+      "settings": "Settings",
+      "groupOperate": "Operate",
+      "groupBuild": "Build",
+      "groupAccount": "Account"
+    },
+    "topbar": {
+      "search": "Search capabilities, sources, events…",
+      "notifications": "Notifications",
+      "logout": "Sign out",
+      "profile": "Profile",
+      "site": "Back to site",
+      "plan": "Plan",
+      "trialLeft": "{days} trial days left",
+      "upgrade": "Upgrade"
+    },
+    "range": {
+      "label": "Range",
+      "24h": "24 h",
+      "7d": "7 days",
+      "30d": "30 days"
+    },
+    "overview": {
+      "greeting": "Hello, {name}",
+      "subtitle": "{org} · here's what's happening",
+      "kpi": {
+        "streams": "Sources online",
+        "events": "Events today",
+        "apiCalls": "API calls",
+        "latency": "Avg. inference latency",
+        "uptime": "Availability",
+        "capabilities": "Active capabilities"
+      },
+      "vsPrev": "vs. previous",
+      "callsTrend": "API calls",
+      "callsTrendDesc": "Split by industry of subscribed capability",
+      "eventsByType": "Events by type",
+      "latencyTitle": "Inference latency",
+      "latencyDesc": "P50 / P95, ms",
+      "recentEvents": "Latest events",
+      "viewAll": "View all",
+      "sourceHealth": "Source health",
+      "usage": "Usage this month",
+      "quickStart": "Quick start",
+      "quick": {
+        "subscribe": "Subscribe to a capability",
+        "source": "Connect a video source",
+        "key": "Create an API key",
+        "analytics": "Open dashboards"
+      },
+      "empty": "No capabilities yet — subscribe to one to get started."
+    },
+    "capabilities": {
+      "title": "Capabilities",
+      "desc": "Browse every capability by industry and switch on what you need. Then bind video sources and watch the dashboards fill.",
+      "all": "All",
+      "onlySubscribed": "Subscribed only",
+      "subscribe": "Subscribe",
+      "unsubscribe": "Disable",
+      "manage": "Manage",
+      "needPlan": "Requires {tier}",
+      "upgradeTo": "Upgrade to {tier}",
+      "subscribedToast": "Subscribed to “{name}”",
+      "unsubscribedToast": "Disabled “{name}”",
+      "planToast": "Switched to {plan}",
+      "confirmUnsub": "Streams will stop being processed for this capability; past events are kept. Disable it?",
+      "detail": {
+        "back": "Back to capabilities",
+        "livePreview": "Live preview",
+        "config": "Configuration",
+        "sensitivity": "Sensitivity",
+        "threshold": "Confidence threshold",
+        "notify": "Alert channels",
+        "channels": {
+          "app": "Console",
+          "sms": "SMS",
+          "webhook": "Webhook",
+          "email": "Email"
+        },
+        "schedule": "Armed schedule",
+        "scheduleOptions": {
+          "always": "Always",
+          "school": "School hours 07:00–18:00",
+          "night": "Night 18:00–07:00"
+        },
+        "privacy": "Face blurring",
+        "save": "Save",
+        "saved": "Configuration saved",
+        "boundSources": "Bound sources",
+        "bind": "Bind a source",
+        "noSources": "No sources bound yet",
+        "stats": "Events, last 7 days",
+        "events": "Recent events",
+        "techStack": "Runs on",
+        "notSubscribed": "Not subscribed",
+        "notSubscribedDesc": "Subscribe to configure, bind sources and receive events."
+      }
+    },
+    "analytics": {
+      "title": "Dashboards",
+      "desc": "Business metrics by industry. Data comes from subscribed capabilities; unsubscribed ones show sample data.",
+      "sample": "Sample data",
+      "education": {
+        "incidents": "Safety incidents",
+        "bullying": "Bullying alerts",
+        "screened": "People screened",
+        "response": "Avg. response time",
+        "byHour": "Incidents by hour",
+        "byZone": "Risk by zone",
+        "zones": [
+          "Corridors",
+          "Stairwells",
+          "Dorms",
+          "Playground",
+          "Canteen",
+          "Gate screening"
+        ],
+        "trend": "Incidents, last 30 days",
+        "types": {
+          "fight": "Fights",
+          "crowding": "Crowding",
+          "fall": "Falls",
+          "contraband": "Contraband",
+          "intrusion": "Intrusion"
+        }
+      },
+      "retail": {
+        "footfall": "Footfall",
+        "conversion": "Entry conversion",
+        "oos": "Out-of-stock SKUs",
+        "fullness": "Shelf fullness",
+        "heatmap": "Dwell heatmap (hour × zone)",
+        "zones": [
+          "Entrance",
+          "Fresh",
+          "Drinks",
+          "Household",
+          "Snacks",
+          "Checkout"
+        ],
+        "funnel": "Conversion funnel",
+        "funnelSteps": [
+          "Passers-by",
+          "Entered",
+          "Dwell > 30s",
+          "Picked up",
+          "Checkout"
+        ],
+        "stores": "Out-of-stock by store",
+        "avatar": "Avatar sessions"
+      },
+      "sports": {
+        "highlights": "Highlights generated",
+        "views": "Highlight views",
+        "refcam": "RefCam live hours",
+        "enhanced": "Enhanced hours",
+        "timeline": "Match highlight timeline",
+        "moments": {
+          "goal": "Goal",
+          "save": "Save",
+          "foul": "Foul",
+          "shot": "Shot"
+        },
+        "platforms": "Views by platform",
+        "platformNames": [
+          "TikTok",
+          "YouTube",
+          "Website",
+          "App",
+          "X"
+        ],
+        "matches": "Recent matches"
+      },
+      "manufacturing": {
+        "inspected": "Parts inspected",
+        "yield": "First-pass yield",
+        "ng": "NG parts",
+        "takt": "Avg. takt",
+        "pareto": "Defect Pareto",
+        "defects": {
+          "scratch": "Scratch",
+          "dent": "Dent",
+          "stain": "Stain",
+          "label": "Label",
+          "level": "Fill level",
+          "cap": "Cap"
+        },
+        "lines": "Yield by line",
+        "road": "Road defects (this month)",
+        "roadTypes": {
+          "crack": "Cracks",
+          "pothole": "Potholes",
+          "rutting": "Rutting"
+        },
+        "km": "Km surveyed"
+      }
+    },
+    "sources": {
+      "title": "Video sources",
+      "desc": "Cameras, screening gates, line cameras and edge appliances. RTSP / ONVIF / GB28181 / SRT / file upload.",
+      "add": "Connect source",
+      "search": "Search by name or location",
+      "cols": {
+        "name": "Name",
+        "location": "Location",
+        "protocol": "Protocol",
+        "resolution": "Resolution",
+        "capability": "Capability",
+        "status": "Status",
+        "fps": "FPS"
+      },
+      "status": {
+        "online": "Online",
+        "offline": "Offline",
+        "degraded": "Degraded"
+      },
+      "form": {
+        "title": "Connect a video source",
+        "name": "Name",
+        "location": "Location",
+        "protocol": "Protocol",
+        "url": "Stream URL",
+        "capability": "Bind capability",
+        "none": "Not now",
+        "submit": "Connect",
+        "cancel": "Cancel",
+        "added": "Connected “{name}”"
+      },
+      "remove": "Remove",
+      "removed": "Removed “{name}”",
+      "empty": "No matching sources",
+      "quota": "Source quota {used} / {total}",
+      "unlimited": "unlimited"
+    },
+    "events": {
+      "title": "Events",
+      "desc": "Every alert from every capability. Filter by severity, capability and status; acknowledge and resolve.",
+      "cols": {
+        "time": "Time",
+        "type": "Event",
+        "capability": "Capability",
+        "source": "Source",
+        "severity": "Severity",
+        "confidence": "Confidence",
+        "status": "Status"
+      },
+      "severity": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "status": {
+        "open": "Open",
+        "ack": "Acknowledged",
+        "resolved": "Resolved"
+      },
+      "all": "All",
+      "ack": "Acknowledge",
+      "resolve": "Resolve",
+      "export": "Export CSV",
+      "empty": "No matching events",
+      "detail": "Event detail",
+      "snapshot": "Snapshot",
+      "total": "{count} events",
+      "types": {
+        "fight": "Fight",
+        "push": "Pushing",
+        "crowding": "Crowding",
+        "fall": "Fall",
+        "running": "Chasing",
+        "loitering": "Loitering",
+        "knife": "Knife",
+        "lighter": "Lighter",
+        "concealed_object": "Concealed item",
+        "zone_intrusion": "Zone intrusion",
+        "climbing": "Climbing",
+        "smoke": "Fire / smoke",
+        "queue_long": "Long queue",
+        "zone_hot": "Zone crowding",
+        "out_of_stock": "Out of stock",
+        "misplaced": "Misplaced item",
+        "price_tag": "Missing price tag",
+        "session": "Avatar session",
+        "handoff": "Staff handoff",
+        "skip_scan": "Skip-scan",
+        "concealment": "Blocked scan",
+        "stream_live": "Stream live",
+        "stream_drop": "Signal lost",
+        "job_done": "Job done",
+        "highlight_ready": "Highlight ready",
+        "published": "Published",
+        "ng_part": "NG part",
+        "line_stop": "Line stop",
+        "pothole": "Pothole",
+        "crack": "Crack",
+        "rutting": "Rutting",
+        "no_helmet": "No helmet",
+        "no_vest": "No vest",
+        "missing_part": "Missing part",
+        "wrong_part": "Wrong part"
+      }
+    },
+    "apiKeys": {
+      "title": "API keys",
+      "desc": "Call SightAI capabilities from your systems, or receive events by webhook.",
+      "create": "Create key",
+      "name": "Key name",
+      "namePlaceholder": "e.g. Production MES integration",
+      "cols": {
+        "name": "Name",
+        "key": "Key",
+        "created": "Created",
+        "lastUsed": "Last used",
+        "calls": "30-day calls"
+      },
+      "revoke": "Revoke",
+      "revoked": "Revoked “{name}”",
+      "created": "Key created. Copy it now — it won't be shown in full again.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "never": "Never",
+      "example": "Example request",
+      "webhook": "Webhook URL",
+      "webhookDesc": "We POST JSON here for each event, signed in the X-SightAI-Signature header.",
+      "webhookSave": "Save",
+      "webhookSaved": "Webhook saved",
+      "docs": "API docs"
+    },
+    "billing": {
+      "title": "Plan & billing",
+      "desc": "Manage your platform plan, capability add-ons and invoices.",
+      "current": "Current plan",
+      "change": "Change plan",
+      "currentBadge": "Current",
+      "switchTo": "Switch",
+      "contact": "Contact sales",
+      "usage": "Usage this month",
+      "usageItems": {
+        "streams": "Video sources",
+        "apiCalls": "API calls",
+        "seats": "Seats",
+        "storage": "Event storage"
+      },
+      "addons": "Subscribed capabilities",
+      "addonsEmpty": "No capabilities yet",
+      "estimate": "Estimated this month",
+      "base": "Platform plan",
+      "addonTotal": "Capability add-ons",
+      "invoices": "Invoices",
+      "cols": {
+        "period": "Period",
+        "amount": "Amount",
+        "status": "Status",
+        "invoice": "Invoice"
+      },
+      "paid": "Paid",
+      "download": "Download",
+      "demoNote": "Demo environment — no real charges."
+    },
+    "settings": {
+      "title": "Settings",
+      "profile": "Profile & organization",
+      "name": "Name",
+      "company": "Organization",
+      "email": "Sign-in email",
+      "save": "Save",
+      "saved": "Saved",
+      "team": "Team",
+      "invite": "Invite",
+      "invitePlaceholder": "Member email",
+      "invited": "Invitation sent to {email}",
+      "roles": {
+        "owner": "Owner",
+        "admin": "Admin",
+        "operator": "Operator",
+        "viewer": "Viewer"
+      },
+      "security": "Security",
+      "securityItems": [
+        "Two-factor auth (SSO on Enterprise)",
+        "Sign-in IP allowlist",
+        "Audit log kept 365 days"
+      ],
+      "region": "Data region",
+      "regionValue": "Asia Pacific · Singapore (sample)",
+      "pending": "Pending"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "markRead": "Mark all read",
+      "empty": "No new notifications"
     }
   }
 }

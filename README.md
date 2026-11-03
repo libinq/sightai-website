@@ -34,3 +34,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## SaaS console
+
+- Public site: `/[locale]` (home with industry showcase), `/industries`, `/industries/{education|retail|sports|manufacturing}`, `/pricing`.
+- Auth: `/[locale]/login`, `/[locale]/register` → signed httpOnly cookie (`AUTH_SECRET`, required in production). Users are stored in `.data/users.json` (gitignored; memory fallback on read-only filesystems) — swap `lib/auth/users.ts` for a real database before production.
+- Demo org (Pro plan): `demo@sightai.example` / `sightai-demo` (seeded in `lib/auth/users.ts`, shown on the sign-in page).
+- Console: `/[locale]/console` — overview, capability subscriptions (server-side via `/api/account`), industry dashboards, events, video sources, API keys, plan & billing, settings. Sources / events / keys are deterministic demo data persisted per user in `localStorage` (`lib/console/mock.ts`).
+- Catalog & prices: `content/industries.ts` (16 capabilities) and `content/plans.ts` — all prices are placeholders (TODO: verify before launch).
