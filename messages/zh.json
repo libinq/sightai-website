@@ -17,7 +17,16 @@
     "next": "下一个",
     "sampleData": "示例数据：上线前替换为经核实的数据",
     "on": "开",
-    "off": "关"
+    "off": "关",
+    "startTrial": "免费试用 14 天",
+    "watchDemo": "观看演示",
+    "subscribe": "订阅",
+    "subscribed": "已订阅",
+    "perMonth": "/ 月",
+    "contactSales": "联系销售",
+    "realFootage": "真实演示画面",
+    "builtOn": "技术能力",
+    "includedIn": "包含于"
   },
   "nav": {
     "home": "首页",
@@ -52,7 +61,12 @@
         "title": "平台",
         "desc": "贯穿全部产品"
       }
-    }
+    },
+    "industries": "行业应用",
+    "pricing": "价格",
+    "login": "登录",
+    "signup": "免费试用",
+    "console": "进入控制台"
   },
   "products": {
     "road-inspection": {
@@ -176,7 +190,7 @@
     "hero": {
       "eyebrow": "视觉检测 · 视频增强 · AI 数字人",
       "title": "让机器看懂世界，\n让影像更真实。",
-      "subtitle": "SightAI 为交通、制造、能源与媒体行业提供视觉检测、视频增强与 AI 数字人能力，可按云端 API、私有化或边缘盒子方式交付。",
+      "subtitle": "SightAI 是面向教育、零售、体育与生产质检的视觉 AI SaaS：订阅即用的行业能力，背后是视觉检测、视频增强与 AI 数字人三大技术引擎，支持云端、私有化与边缘部署。",
       "live": "实时识别",
       "camera": "CAM-03 · 车载前视",
       "latency": "推理延迟",
@@ -296,6 +310,38 @@
       "title": "已在真实场景中运行",
       "anonymized": "客户名称已匿名化",
       "viewAll": "查看全部 9 个案例"
+    },
+    "industryShowcase": {
+      "eyebrow": "行业应用",
+      "title": "四大行业，开箱即用的视觉 AI 能力",
+      "desc": "每一项能力都由 SightAI 的检测、增强与数字人技术组合而成，登录控制台即可按需订阅、接入摄像头、查看看板。",
+      "explore": "查看{name}方案",
+      "capabilities": "{count} 项可订阅能力"
+    },
+    "saas": {
+      "eyebrow": "SaaS 控制台",
+      "title": "登录即用：订阅能力、接入视频、看见数据",
+      "desc": "从免费试用开始，在一个控制台里完成能力订阅、视频源接入、事件处置与经营看板，不需要采购服务器。",
+      "steps": [
+        {
+          "title": "注册并选择行业",
+          "desc": "1 分钟创建组织，自动推荐行业能力组合"
+        },
+        {
+          "title": "订阅能力",
+          "desc": "按路数 / 门店 / 工位计费，随时开通与停用"
+        },
+        {
+          "title": "接入视频源",
+          "desc": "RTSP / ONVIF / GB28181 / 文件上传，或部署边缘盒子"
+        },
+        {
+          "title": "看板与告警",
+          "desc": "实时事件、行业看板、API 与 Webhook 推送"
+        }
+      ],
+      "cta": "免费开始",
+      "secondary": "查看价格"
     }
   },
   "metrics": {
@@ -356,7 +402,9 @@
     "faqEyebrow": "常见问题",
     "faqTitle": "关于{name}",
     "whitepaper": "下载产品白皮书",
-    "loading": "正在加载演示…"
+    "loading": "正在加载演示…",
+    "appsTitle": "真实画面与行业应用",
+    "appsDesc": "来自实际项目的演示画面，以及基于这项技术构建、可在控制台直接订阅的行业能力。"
   },
   "productsIndex": {
     "eyebrow": "产品",
@@ -829,6 +877,507 @@
           ]
         }
       }
+    }
+  },
+  "industriesPage": {
+    "eyebrow": "行业应用",
+    "title": "面向行业的视觉 AI 能力目录",
+    "desc": "教育、零售、体育、生产质检四大行业，16 项可订阅能力。每项能力都标注了所依赖的技术能力与真实演示画面。",
+    "pains": "行业痛点",
+    "capabilities": "可订阅能力",
+    "features": "核心功能",
+    "techStack": "依赖的技术能力",
+    "tryInConsole": "在控制台中订阅",
+    "otherIndustries": "其他行业",
+    "unit": "计费单位",
+    "from": "起",
+    "tier": "最低套餐"
+  },
+  "pricing": {
+    "eyebrow": "价格",
+    "title": "按需订阅，从免费试用开始",
+    "desc": "平台套餐决定视频源、调用量与席位上限；行业能力按单位叠加订阅。",
+    "monthly": "按月",
+    "custom": "定制",
+    "popular": "最受欢迎",
+    "choose": "选择 {name}",
+    "addonsTitle": "行业能力加购价",
+    "addonsDesc": "在任意套餐上叠加订阅，价格为单位月价。",
+    "capability": "能力",
+    "industry": "行业",
+    "unit": "计费单位",
+    "price": "单价",
+    "minTier": "最低套餐",
+    "faqTitle": "常见问题",
+    "faqs": [
+      {
+        "q": "试用结束后会自动扣费吗？",
+        "a": "不会。试用期结束后账号进入只读状态，需要手动选择套餐才会开始计费。"
+      },
+      {
+        "q": "可以私有化部署吗？",
+        "a": "可以。Enterprise 套餐支持私有化与边缘盒子部署，能力与控制台功能保持一致。"
+      },
+      {
+        "q": "视频数据存储在哪里？",
+        "a": "云端版本默认存储在所选区域的数据中心；边缘与私有化部署时，原始视频不出本地网络。"
+      },
+      {
+        "q": "如何开具发票？",
+        "a": "在控制台「套餐与账单」中维护开票信息，月度账单生成后可自助下载发票。"
+      }
+    ],
+    "note": "价格为示例，上线前替换为正式报价。"
+  },
+  "auth": {
+    "loginTitle": "登录 SightAI 控制台",
+    "loginDesc": "管理能力订阅、视频源、事件与看板。",
+    "registerTitle": "创建组织，免费试用 14 天",
+    "registerDesc": "无需信用卡。试用期内可订阅全部 Starter 能力。",
+    "email": "工作邮箱",
+    "password": "密码",
+    "passwordHint": "至少 8 位",
+    "name": "姓名",
+    "company": "组织 / 公司名称",
+    "industry": "所属行业",
+    "industryOptions": {
+      "education": "教育",
+      "retail": "零售",
+      "sports": "体育",
+      "manufacturing": "生产制造",
+      "other": "其他"
+    },
+    "consent": "我已阅读并同意服务条款与隐私政策",
+    "login": "登录",
+    "register": "创建账号",
+    "loggingIn": "登录中…",
+    "registering": "创建中…",
+    "noAccount": "还没有账号？",
+    "hasAccount": "已有账号？",
+    "toRegister": "免费注册",
+    "toLogin": "直接登录",
+    "demoTitle": "演示账号",
+    "demoDesc": "使用预置的 Pro 演示组织体验全部功能",
+    "useDemo": "一键填入",
+    "forgot": "忘记密码？请联系管理员",
+    "backHome": "返回官网",
+    "sideTitle": "一个控制台，覆盖四大行业",
+    "sidePoints": [
+      "16 项行业能力随订随用",
+      "实时事件与多级告警",
+      "行业经营看板",
+      "REST API 与 Webhook"
+    ],
+    "errors": {
+      "required": "此项为必填",
+      "email": "请输入有效的邮箱地址",
+      "password": "密码至少 8 位",
+      "consent": "请先同意服务条款",
+      "invalid_credentials": "邮箱或密码不正确",
+      "email_taken": "该邮箱已注册，请直接登录",
+      "network": "网络异常，请稍后重试"
+    }
+  },
+  "console": {
+    "brand": "控制台",
+    "nav": {
+      "overview": "概览",
+      "capabilities": "能力订阅",
+      "analytics": "行业看板",
+      "sources": "视频源",
+      "events": "事件中心",
+      "apiKeys": "API 密钥",
+      "billing": "套餐与账单",
+      "settings": "设置",
+      "groupOperate": "运营",
+      "groupBuild": "开发",
+      "groupAccount": "账户"
+    },
+    "topbar": {
+      "search": "搜索能力、视频源、事件…",
+      "notifications": "通知",
+      "logout": "退出登录",
+      "profile": "个人设置",
+      "site": "返回官网",
+      "plan": "当前套餐",
+      "trialLeft": "试用剩余 {days} 天",
+      "upgrade": "升级"
+    },
+    "range": {
+      "label": "时间范围",
+      "24h": "24 小时",
+      "7d": "7 天",
+      "30d": "30 天"
+    },
+    "overview": {
+      "greeting": "你好，{name}",
+      "subtitle": "{org} · 以下为最近数据概览",
+      "kpi": {
+        "streams": "在线视频源",
+        "events": "今日事件",
+        "apiCalls": "API 调用",
+        "latency": "平均推理时延",
+        "uptime": "服务可用性",
+        "capabilities": "已订阅能力"
+      },
+      "vsPrev": "较上期",
+      "callsTrend": "API 调用趋势",
+      "callsTrendDesc": "按订阅能力所属行业拆分",
+      "eventsByType": "事件类型分布",
+      "latencyTitle": "推理时延分位",
+      "latencyDesc": "P50 / P95，毫秒",
+      "recentEvents": "最新事件",
+      "viewAll": "查看全部",
+      "sourceHealth": "视频源健康度",
+      "usage": "本月用量",
+      "quickStart": "快速开始",
+      "quick": {
+        "subscribe": "订阅一项能力",
+        "source": "接入视频源",
+        "key": "创建 API 密钥",
+        "analytics": "查看行业看板"
+      },
+      "empty": "还没有订阅能力，先去能力市场开通一项吧。"
+    },
+    "capabilities": {
+      "title": "能力订阅",
+      "desc": "按行业浏览全部能力，按需开通。订阅后即可绑定视频源并在看板中查看数据。",
+      "all": "全部",
+      "onlySubscribed": "只看已订阅",
+      "subscribe": "订阅",
+      "unsubscribe": "停用",
+      "manage": "管理",
+      "needPlan": "需要 {tier} 套餐",
+      "upgradeTo": "升级到 {tier}",
+      "subscribedToast": "已订阅「{name}」",
+      "unsubscribedToast": "已停用「{name}」",
+      "planToast": "已切换到 {plan} 套餐",
+      "confirmUnsub": "停用后将不再处理该能力的视频流，历史事件保留。确定停用？",
+      "detail": {
+        "back": "返回能力列表",
+        "livePreview": "实时预览",
+        "config": "参数配置",
+        "sensitivity": "检测灵敏度",
+        "threshold": "置信度阈值",
+        "notify": "告警推送",
+        "channels": {
+          "app": "控制台",
+          "sms": "短信",
+          "webhook": "Webhook",
+          "email": "邮件"
+        },
+        "schedule": "布防时段",
+        "scheduleOptions": {
+          "always": "全天",
+          "school": "上课时段 07:00–18:00",
+          "night": "夜间 18:00–07:00"
+        },
+        "privacy": "人脸脱敏",
+        "save": "保存配置",
+        "saved": "配置已保存",
+        "boundSources": "已绑定视频源",
+        "bind": "绑定视频源",
+        "noSources": "尚未绑定视频源",
+        "stats": "近 7 天事件",
+        "events": "最近事件",
+        "techStack": "依赖的技术能力",
+        "notSubscribed": "尚未订阅该能力",
+        "notSubscribedDesc": "订阅后可配置参数、绑定视频源并接收事件。"
+      }
+    },
+    "analytics": {
+      "title": "行业看板",
+      "desc": "按行业查看业务指标。数据由已订阅能力产生；未订阅的能力显示为示例数据。",
+      "sample": "示例数据",
+      "education": {
+        "incidents": "安全事件",
+        "bullying": "霸凌预警",
+        "screened": "安检人次",
+        "response": "平均响应时长",
+        "byHour": "事件时段分布",
+        "byZone": "区域风险排行",
+        "zones": [
+          "教学楼走廊",
+          "楼梯间",
+          "宿舍区",
+          "操场",
+          "食堂",
+          "校门安检"
+        ],
+        "trend": "近 30 天事件趋势",
+        "types": {
+          "fight": "肢体冲突",
+          "crowding": "异常聚集",
+          "fall": "跌倒",
+          "contraband": "违禁品",
+          "intrusion": "区域闯入"
+        }
+      },
+      "retail": {
+        "footfall": "进店客流",
+        "conversion": "进店转化率",
+        "oos": "缺货 SKU",
+        "fullness": "货架满陈率",
+        "heatmap": "店内停留热力（按小时 × 区域）",
+        "zones": [
+          "入口",
+          "生鲜",
+          "饮料",
+          "日化",
+          "零食",
+          "收银"
+        ],
+        "funnel": "转化漏斗",
+        "funnelSteps": [
+          "过店",
+          "进店",
+          "停留 > 30s",
+          "试用 / 拿取",
+          "收银"
+        ],
+        "stores": "门店缺货排行",
+        "avatar": "数字导购会话"
+      },
+      "sports": {
+        "highlights": "已生成集锦",
+        "views": "集锦播放量",
+        "refcam": "RefCam 直播时长",
+        "enhanced": "增强处理时长",
+        "timeline": "比赛高光时间线",
+        "moments": {
+          "goal": "进球",
+          "save": "扑救",
+          "foul": "犯规",
+          "shot": "射门"
+        },
+        "platforms": "分发平台播放量",
+        "platformNames": [
+          "抖音",
+          "YouTube",
+          "官网",
+          "App",
+          "微博"
+        ],
+        "matches": "最近场次"
+      },
+      "manufacturing": {
+        "inspected": "检测件数",
+        "yield": "一次良率",
+        "ng": "NG 件数",
+        "takt": "平均节拍",
+        "pareto": "缺陷帕累托",
+        "defects": {
+          "scratch": "划痕",
+          "dent": "凹坑",
+          "stain": "污渍",
+          "label": "标签异常",
+          "level": "液位异常",
+          "cap": "瓶盖异常"
+        },
+        "lines": "产线良率",
+        "road": "道路病害（本月巡检）",
+        "roadTypes": {
+          "crack": "裂缝",
+          "pothole": "坑槽",
+          "rutting": "车辙"
+        },
+        "km": "巡检里程"
+      }
+    },
+    "sources": {
+      "title": "视频源",
+      "desc": "管理摄像头、安检门、产线相机与边缘盒子。支持 RTSP / ONVIF / GB28181 / SRT / 文件上传。",
+      "add": "接入视频源",
+      "search": "按名称或位置搜索",
+      "cols": {
+        "name": "名称",
+        "location": "位置",
+        "protocol": "协议",
+        "resolution": "分辨率",
+        "capability": "绑定能力",
+        "status": "状态",
+        "fps": "帧率"
+      },
+      "status": {
+        "online": "在线",
+        "offline": "离线",
+        "degraded": "异常"
+      },
+      "form": {
+        "title": "接入视频源",
+        "name": "名称",
+        "location": "位置",
+        "protocol": "接入协议",
+        "url": "流地址",
+        "capability": "绑定能力",
+        "none": "暂不绑定",
+        "submit": "接入",
+        "cancel": "取消",
+        "added": "已接入「{name}」"
+      },
+      "remove": "移除",
+      "removed": "已移除「{name}」",
+      "empty": "没有匹配的视频源",
+      "quota": "视频源配额 {used} / {total}",
+      "unlimited": "不限"
+    },
+    "events": {
+      "title": "事件中心",
+      "desc": "所有能力产生的告警事件。可按严重度、能力、状态筛选，并完成确认与处置。",
+      "cols": {
+        "time": "时间",
+        "type": "事件",
+        "capability": "能力",
+        "source": "视频源",
+        "severity": "严重度",
+        "confidence": "置信度",
+        "status": "状态"
+      },
+      "severity": {
+        "low": "低",
+        "medium": "中",
+        "high": "高"
+      },
+      "status": {
+        "open": "待处理",
+        "ack": "已确认",
+        "resolved": "已处置"
+      },
+      "all": "全部",
+      "ack": "确认",
+      "resolve": "处置",
+      "export": "导出 CSV",
+      "empty": "没有匹配的事件",
+      "detail": "事件详情",
+      "snapshot": "事件截图",
+      "total": "共 {count} 条",
+      "types": {
+        "fight": "肢体冲突",
+        "push": "推搡",
+        "crowding": "异常聚集",
+        "fall": "跌倒",
+        "running": "追逐奔跑",
+        "loitering": "长时间滞留",
+        "knife": "管制刀具",
+        "lighter": "打火机",
+        "concealed_object": "隐藏物品",
+        "zone_intrusion": "区域闯入",
+        "climbing": "攀爬翻越",
+        "smoke": "烟火",
+        "queue_long": "排队过长",
+        "zone_hot": "区域拥挤",
+        "out_of_stock": "货架缺货",
+        "misplaced": "商品错放",
+        "price_tag": "价签缺失",
+        "session": "数字人会话",
+        "handoff": "转人工",
+        "skip_scan": "漏扫",
+        "concealment": "遮挡扫码",
+        "stream_live": "直播开始",
+        "stream_drop": "信号中断",
+        "job_done": "处理完成",
+        "highlight_ready": "集锦生成",
+        "published": "已分发",
+        "ng_part": "NG 件",
+        "line_stop": "产线停机",
+        "pothole": "坑槽",
+        "crack": "裂缝",
+        "rutting": "车辙",
+        "no_helmet": "未戴安全帽",
+        "no_vest": "未穿反光衣",
+        "missing_part": "漏装",
+        "wrong_part": "错装"
+      }
+    },
+    "apiKeys": {
+      "title": "API 密钥",
+      "desc": "使用 API 密钥从业务系统调用 SightAI 能力，或接收 Webhook 事件推送。",
+      "create": "创建密钥",
+      "name": "密钥名称",
+      "namePlaceholder": "例如：生产环境 MES 对接",
+      "cols": {
+        "name": "名称",
+        "key": "密钥",
+        "created": "创建时间",
+        "lastUsed": "最近使用",
+        "calls": "30 天调用"
+      },
+      "revoke": "吊销",
+      "revoked": "已吊销「{name}」",
+      "created": "密钥已创建，请立即复制保存，之后将不再完整显示。",
+      "copy": "复制",
+      "copied": "已复制",
+      "never": "从未",
+      "example": "调用示例",
+      "webhook": "Webhook 地址",
+      "webhookDesc": "事件产生时 POST JSON 到该地址，签名放在 X-SightAI-Signature 头。",
+      "webhookSave": "保存",
+      "webhookSaved": "Webhook 已保存",
+      "docs": "查看 API 文档"
+    },
+    "billing": {
+      "title": "套餐与账单",
+      "desc": "管理平台套餐、能力加购与发票。",
+      "current": "当前套餐",
+      "change": "切换套餐",
+      "currentBadge": "当前",
+      "switchTo": "切换",
+      "contact": "联系销售",
+      "usage": "本月用量",
+      "usageItems": {
+        "streams": "视频源",
+        "apiCalls": "API 调用",
+        "seats": "成员席位",
+        "storage": "事件存储"
+      },
+      "addons": "已订阅能力",
+      "addonsEmpty": "尚未订阅能力",
+      "estimate": "本月预估费用",
+      "base": "平台套餐",
+      "addonTotal": "能力加购",
+      "invoices": "历史账单",
+      "cols": {
+        "period": "账期",
+        "amount": "金额",
+        "status": "状态",
+        "invoice": "发票"
+      },
+      "paid": "已支付",
+      "download": "下载",
+      "demoNote": "演示环境不会产生真实扣费。"
+    },
+    "settings": {
+      "title": "设置",
+      "profile": "个人与组织",
+      "name": "姓名",
+      "company": "组织名称",
+      "email": "登录邮箱",
+      "save": "保存",
+      "saved": "已保存",
+      "team": "团队成员",
+      "invite": "邀请成员",
+      "invitePlaceholder": "成员邮箱",
+      "invited": "已发送邀请至 {email}",
+      "roles": {
+        "owner": "所有者",
+        "admin": "管理员",
+        "operator": "值班员",
+        "viewer": "只读"
+      },
+      "security": "安全",
+      "securityItems": [
+        "双因素认证（Enterprise 支持 SSO）",
+        "登录 IP 白名单",
+        "审计日志保留 365 天"
+      ],
+      "region": "数据区域",
+      "regionValue": "中国 · 华东（示例）",
+      "pending": "待接受"
+    },
+    "notifications": {
+      "title": "通知",
+      "markRead": "全部已读",
+      "empty": "没有新通知"
     }
   }
 }

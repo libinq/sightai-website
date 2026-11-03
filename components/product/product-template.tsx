@@ -14,6 +14,9 @@ import type { ProductData } from "@/content/products/types";
 import { PRODUCT_METRICS, SHOW_PLACEHOLDER_NOTICE } from "@/content/metrics";
 import { listCases } from "@/content/cases";
 import { SITE_URL } from "@/lib/site";
+import { PRODUCT_MEDIA } from "@/content/media";
+import { CAPABILITIES, INDUSTRIES, industryHref, pick } from "@/content/industries";
+import { DemoMedia } from "@/components/media/demo-media";
 import { HowItWorks } from "./how-it-works";
 import { SpecsTable } from "./specs-table";
 import { ProductDemo } from "./product-demo";
@@ -35,6 +38,8 @@ export async function ProductPageTemplate({ product, locale }: { product: Produc
     s.replace("{latencyCloud}", metrics.latencyCloud).replace("{latencyEdge}", metrics.latencyEdge);
   const specs = copy.specs.map((r) => ({ ...r, cloud: fill(r.cloud), edge: fill(r.edge) }));
   const cases = listCases(locale, (c) => product.relatedCases.includes(c.slug));
+  const footage = PRODUCT_MEDIA[product.slug] ?? [];
+  const applications = CAPABILITIES.filter((c) => c.products.includes(product.slug));
 
   const jsonLd = [
     {
@@ -184,6 +189,45 @@ export async function ProductPageTemplate({ product, locale }: { product: Produc
           </div>
         </Container>
       </Section>
+
+      {/* 5b. Real footage + industry applications built on this technology */}
+      {(footage.length > 0 || applications.length > 0) && (
+        <Section aria-labelledby="footage-title" className="border-t border-line">
+          <Container>
+            <SectionHeading id="footage-title" eyebrow={t("common.realFootage")} title={t("product.appsTitle")} desc={t("product.appsDesc")} />
+            {footage.length > 0 && (
+              <div className={footage.length > 1 ? "mt-12 grid gap-5 md:grid-cols-2" : "mt-12"}>
+                {footage.map((key, i) => (
+                  <Card key={key} className={footage.length > 2 && i === 0 ? "overflow-hidden md:col-span-2" : "overflow-hidden"}>
+                    <DemoMedia media={key} label={t("common.realFootage")} fit="contain" controls className="aspect-video" />
+                  </Card>
+                ))}
+              </div>
+            )}
+            {applications.length > 0 && (
+              <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {applications.map((cap) => {
+                  const ind = INDUSTRIES.find((i) => i.key === cap.industry)!;
+                  return (
+                    <li key={cap.id}>
+                      <Link href={`${industryHref(cap.industry)}#${cap.id}`} className="group flex h-full flex-col rounded-[10px] border border-line bg-bg-1 p-4 transition-colors hover:border-line-strong">
+                        <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-text-3">
+                          <span className="size-1.5 rounded-full" style={{ background: ind.color }} aria-hidden />
+                          {pick(ind, locale).name}
+                        </span>
+                        <span className="mt-2 flex items-center justify-between gap-2 text-sm font-medium text-text-1">
+                          {pick(cap, locale).name}
+                          <ArrowRight className="size-4 text-text-3 transition-transform group-hover:translate-x-0.5 group-hover:text-accent" aria-hidden />
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </Container>
+        </Section>
+      )}
 
       {/* 6. Specs */}
       <Section aria-labelledby="specs-title" className="border-t border-line">

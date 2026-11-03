@@ -10,9 +10,6 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Providers } from "@/components/layout/providers";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { CookieConsent } from "@/components/layout/cookie-consent";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -73,12 +70,7 @@ export default async function LocaleLayout({
             >
               {t("skipToContent")}
             </a>
-            <SiteHeader />
-            <main id="main" tabIndex={-1} className="outline-none">
-              {children}
-            </main>
-            <SiteFooter />
-            <CookieConsent />
+            {children}
           </Providers>
         </NextIntlClientProvider>
       </body>

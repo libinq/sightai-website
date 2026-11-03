@@ -23,15 +23,21 @@ export function HomeHero() {
           <p className="mt-6 max-w-xl text-base text-text-2 md:text-lg">{t("home.hero.subtitle")}</p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/contact">
-                {t("common.bookDemo")}
+              <Link href="/register">
+                {t("common.startTrial")}
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
-              <a href="#products">{t("common.viewProducts")}</a>
+              <Link href="/contact">{t("common.bookDemo")}</Link>
             </Button>
           </div>
+          <p className="mt-5 text-sm text-text-3">
+            {t("auth.hasAccount")}{" "}
+            <Link href="/login" className="text-accent hover:underline">
+              {t("nav.login")}
+            </Link>
+          </p>
         </div>
 
         <div className="lg:col-span-7">
