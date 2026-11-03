@@ -143,8 +143,7 @@ export function OverviewView() {
           </Panel>
           <Panel title={t("overview.usage")}>
             <div className="space-y-4">
-              <Meter label={t("billing.usageItems.streams")} used={store.sources.length} total={plan.quota.streams} unlimited={t("sources.unlimited")} />
-              <Meter label={t("billing.usageItems.apiCalls")} used={Math.min(data.totalCalls * (range === "30d" ? 1 : range === "7d" ? 4 : 30), (plan.quota.apiCalls ?? 1e9) * 0.82)} total={plan.quota.apiCalls} unlimited={t("sources.unlimited")} />
+              <Meter label={t("billing.usageItems.cameras")} used={store.sources.length} total={plan.quota.cameras} unlimited={t("sources.unlimited")} />
               <Meter label={t("billing.usageItems.seats")} used={store.members.length} total={plan.quota.seats} unlimited={t("sources.unlimited")} />
             </div>
           </Panel>

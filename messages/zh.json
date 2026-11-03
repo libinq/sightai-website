@@ -22,7 +22,6 @@
     "watchDemo": "观看演示",
     "subscribe": "订阅",
     "subscribed": "已订阅",
-    "perMonth": "/ 月",
     "contactSales": "联系销售",
     "realFootage": "真实演示画面",
     "builtOn": "技术能力",
@@ -120,7 +119,6 @@
   "footer": {
     "tagline": "让机器看懂世界，让影像更真实。",
     "productsCol": "产品",
-    "solutionsCol": "行业方案",
     "resourcesCol": "资源",
     "companyCol": "公司",
     "whitepapers": "白皮书",
@@ -133,33 +131,10 @@
     "icp": "ICP 备案号",
     "privacy": "隐私政策",
     "cookies": "Cookie 设置",
-    "rights": "保留所有权利。"
-  },
-  "industries": {
-    "transport": {
-      "name": "交通基建",
-      "desc": "道路巡检、桥隧病害、交通事件"
-    },
-    "manufacturing": {
-      "name": "制造",
-      "desc": "表面缺陷、装配校验、良率分析"
-    },
-    "energy": {
-      "name": "能源化工",
-      "desc": "EHS 合规、烟火识别、周界入侵"
-    },
-    "construction": {
-      "name": "建筑工地",
-      "desc": "安全帽反光衣、临边防护、机械作业"
-    },
-    "media": {
-      "name": "媒体与内容",
-      "desc": "防抖、调色、超分与数字人播报"
-    },
-    "retail": {
-      "name": "零售与金融",
-      "desc": "数字人导览、客服与营销内容"
-    }
+    "rights": "保留所有权利。",
+    "platformCol": "平台",
+    "allIndustries": "全部行业",
+    "consoleLogin": "控制台登录"
   },
   "classes": {
     "crack": "裂缝",
@@ -317,7 +292,7 @@
     "industryShowcase": {
       "eyebrow": "行业应用",
       "title": "四大行业，开箱即用的视觉 AI 能力",
-      "desc": "每一项能力都由 SightAI 的检测、增强与数字人技术组合而成，登录控制台即可按需订阅、接入摄像头、查看看板。",
+      "desc": "每项能力都为学生与老师、顾客与店员、媒体与粉丝、工人与管理者带来具体的好处。选择行业，看看谁会受益。",
       "explore": "查看{name}方案",
       "capabilities": "{count} 项可订阅能力"
     },
@@ -332,7 +307,7 @@
         },
         {
           "title": "订阅能力",
-          "desc": "按路数 / 门店 / 工位计费，随时开通与停用"
+          "desc": "按摄像头路数计费，基础版每路每年 500 美元"
         },
         {
           "title": "接入视频源",
@@ -414,64 +389,6 @@
     "eyebrow": "产品",
     "title": "7 个产品，覆盖检测、增强与数字人",
     "desc": "三条产品线共享同一套数据、训练与部署平台。按场景选择单个产品，或组合成完整方案。"
-  },
-  "solutions": {
-    "eyebrow": "行业方案",
-    "title": "按行业组合视觉 AI 能力",
-    "desc": "每个行业的场景、合规要求与部署条件不同。下面是我们最常交付的组合方式。",
-    "challenges": "典型问题",
-    "products": "推荐产品",
-    "cases": "相关案例",
-    "items": {
-      "transport": {
-        "long": "道路、桥梁与隧道的日常巡检，以及交通事件的实时发现。",
-        "points": [
-          "人工巡查覆盖慢、标准不一",
-          "病害位置与严重度难以量化",
-          "巡检结果难以对接养护流程"
-        ]
-      },
-      "manufacturing": {
-        "long": "产线表面缺陷检测、装配完整性校验与良率分析。",
-        "points": [
-          "人工目检疲劳导致漏检",
-          "换型频繁，规则算法维护成本高",
-          "缺陷原因难以追溯"
-        ]
-      },
-      "energy": {
-        "long": "石化、电力与新能源场站的 EHS 合规与周界安全。",
-        "points": [
-          "装置区严禁烟火，需早期发现",
-          "承包商 PPE 穿戴难以监管",
-          "视频数据须留在内网"
-        ]
-      },
-      "construction": {
-        "long": "工地人员安全、临边防护与机械作业区管理。",
-        "points": [
-          "安全帽、反光衣穿戴不规范",
-          "临边与塔吊作业区闯入风险",
-          "多工地分散，难以统一管理"
-        ]
-      },
-      "media": {
-        "long": "赛事转播、内容制作与档案修复，以及多语种内容生产。",
-        "points": [
-          "第一视角素材抖动、多机位色彩不一",
-          "档案素材分辨率低",
-          "多语种内容产能不足"
-        ]
-      },
-      "retail": {
-        "long": "门店、营业厅与政务大厅的数字人导览、客服与营销内容。",
-        "points": [
-          "重复咨询占用大量人力",
-          "营销内容更新频繁",
-          "多语种服务能力不足"
-        ]
-      }
-    }
   },
   "cases": {
     "eyebrow": "客户案例",
@@ -885,53 +802,68 @@
   },
   "industriesPage": {
     "eyebrow": "行业应用",
-    "title": "面向行业的视觉 AI 能力目录",
-    "desc": "教育、零售、体育、生产质检四大行业，16 项可订阅能力。每项能力都标注了所依赖的技术能力与真实演示画面。",
+    "title": "每个行业，都有看得见的价值",
+    "desc": "教育、零售、体育、生产质检四大行业的 16 项视觉 AI 能力。先看它为谁带来什么好处，再点进去看演示与完整介绍。",
     "pains": "行业痛点",
     "capabilities": "可订阅能力",
-    "features": "核心功能",
     "techStack": "依赖的技术能力",
-    "tryInConsole": "在控制台中订阅",
     "otherIndustries": "其他行业",
-    "unit": "计费单位",
-    "from": "起",
-    "tier": "最低套餐"
+    "benefitsEyebrow": "谁会受益",
+    "benefitsTitle": "{name}：每个角色都能获益",
+    "capabilitiesTitle": "{name}可订阅能力",
+    "capabilitiesDesc": "每项能力都可单独订阅。点击查看演示视频、功能细节、工作流程与技术规格。",
+    "viewIndustry": "查看{name}方案",
+    "viewCapability": "查看完整介绍"
   },
   "pricing": {
     "eyebrow": "价格",
-    "title": "按需订阅，从免费试用开始",
-    "desc": "平台套餐决定视频源、调用量与席位上限；行业能力按单位叠加订阅。",
-    "monthly": "按月",
+    "title": "按摄像头计费，简单透明",
+    "desc": "所有套餐按“每路摄像头每年”计费。基础版每路摄像头每年 500 美元，含全部基础版能力；按需增减路数。",
     "custom": "定制",
     "popular": "最受欢迎",
     "choose": "选择 {name}",
-    "addonsTitle": "行业能力加购价",
-    "addonsDesc": "在任意套餐上叠加订阅，价格为单位月价。",
     "capability": "能力",
     "industry": "行业",
-    "unit": "计费单位",
-    "price": "单价",
-    "minTier": "最低套餐",
     "faqTitle": "常见问题",
     "faqs": [
       {
+        "q": "什么算“一路摄像头”？",
+        "a": "任何接入平台进行分析的视频源都算一路，包括网络摄像头、安检门画面、产线相机、车载相机和直播流。"
+      },
+      {
+        "q": "一路摄像头可以同时用多个能力吗？",
+        "a": "可以。套餐内包含的能力，可以在同一路摄像头上叠加使用，不额外收费。"
+      },
+      {
+        "q": "可以按月付费吗？",
+        "a": "标准价格按年计费。如需按月或按季度结算，请联系销售。"
+      },
+      {
         "q": "试用结束后会自动扣费吗？",
-        "a": "不会。试用期结束后账号进入只读状态，需要手动选择套餐才会开始计费。"
+        "a": "不会。试用结束后账号进入只读状态，选择套餐后才开始计费。"
       },
       {
         "q": "可以私有化部署吗？",
-        "a": "可以。Enterprise 套餐支持私有化与边缘盒子部署，能力与控制台功能保持一致。"
-      },
-      {
-        "q": "视频数据存储在哪里？",
-        "a": "云端版本默认存储在所选区域的数据中心；边缘与私有化部署时，原始视频不出本地网络。"
-      },
-      {
-        "q": "如何开具发票？",
-        "a": "在控制台「套餐与账单」中维护开票信息，月度账单生成后可自助下载发票。"
+        "a": "可以。企业版支持私有化与边缘盒子部署，并提供大规模摄像头的批量价格。"
       }
     ],
-    "note": "价格为示例，上线前替换为正式报价。"
+    "note": "价格以美元计，不含税。专业版价格为示例，以销售报价为准。",
+    "free": "免费",
+    "perCameraYear": "/ 路 / 年",
+    "perCameraYearLong": "每路摄像头 · 每年",
+    "trialNote": "14 天 · 最多 4 路",
+    "volumeNote": "大规模部署批量价格",
+    "calcEyebrow": "费用估算",
+    "calcTitle": "算一算你的年度费用",
+    "calcDesc": "拖动选择摄像头路数，选择套餐，即可看到年度费用。",
+    "calcCameras": "摄像头路数",
+    "calcPlan": "套餐",
+    "calcTotal": "年度费用",
+    "calcVolume": "200 路以上可联系销售获取批量价格。",
+    "matrixTitle": "各套餐包含的能力",
+    "matrixDesc": "每路摄像头可绑定该套餐包含的任意能力。",
+    "included": "包含",
+    "notIncluded": "不包含"
   },
   "auth": {
     "loginTitle": "登录 SightAI 控制台",
@@ -1088,7 +1020,8 @@
         "techStack": "依赖的技术能力",
         "notSubscribed": "尚未订阅该能力",
         "notSubscribedDesc": "订阅后可配置参数、绑定视频源并接收事件。",
-        "unbind": "解除绑定"
+        "unbind": "解除绑定",
+        "fullIntro": "查看完整介绍"
       }
     },
     "analytics": {
@@ -1323,34 +1256,35 @@
     },
     "billing": {
       "title": "套餐与账单",
-      "desc": "管理平台套餐、能力加购与发票。",
+      "desc": "管理套餐、摄像头路数与年度发票。",
       "current": "当前套餐",
       "change": "切换套餐",
       "currentBadge": "当前",
       "switchTo": "切换",
       "contact": "联系销售",
-      "usage": "本月用量",
+      "usage": "当前用量",
       "usageItems": {
-        "streams": "视频源",
-        "apiCalls": "API 调用",
         "seats": "成员席位",
-        "storage": "事件存储"
+        "storage": "事件存储",
+        "cameras": "摄像头"
       },
       "addons": "已订阅能力",
       "addonsEmpty": "尚未订阅能力",
-      "estimate": "本月预估费用",
-      "base": "平台套餐",
-      "addonTotal": "能力加购",
+      "estimate": "年度费用（预估）",
       "invoices": "历史账单",
       "cols": {
-        "period": "账期",
+        "period": "年度",
         "amount": "金额",
         "status": "状态",
         "invoice": "发票"
       },
       "paid": "已支付",
       "download": "下载",
-      "demoNote": "演示环境不会产生真实扣费。"
+      "demoNote": "演示环境不会产生真实扣费。",
+      "cameras": "摄像头路数",
+      "rate": "单价",
+      "addonsDesc": "套餐内能力不额外收费，可在任意摄像头上叠加使用。",
+      "boundCameras": "{count} 路摄像头"
     },
     "settings": {
       "title": "设置",
@@ -1387,5 +1321,26 @@
       "empty": "没有新通知"
     },
     "title": "控制台"
+  },
+  "capabilityPage": {
+    "includedIn": "{plan}可用",
+    "subscribe": "在控制台订阅",
+    "demoNote": "真实项目演示画面。",
+    "relatedNote": "该场景素材整理中，当前展示的是同一技术在其它场景的真实演示。",
+    "benefitsEyebrow": "价值",
+    "benefitsTitle": "为谁创造什么价值",
+    "featuresEyebrow": "能力",
+    "featuresTitle": "{name}核心功能",
+    "workflowEyebrow": "工作流程",
+    "workflowTitle": "从接入到闭环，四步上线",
+    "scenariosEyebrow": "应用场景",
+    "scenariosTitle": "典型应用场景",
+    "specsEyebrow": "技术规格",
+    "specsTitle": "技术规格与部署",
+    "pricingEyebrow": "价格",
+    "pricingDesc": "{plan}起可用，按每路摄像头每年计费，订阅后可随时增减路数。",
+    "seePricing": "查看价格详情",
+    "faqTitle": "常见问题",
+    "related": "{industry}的其他能力"
   }
 }

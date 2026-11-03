@@ -8,8 +8,8 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CapabilityVisual } from "@/components/media/capability-visual";
-import { CAPABILITIES, INDUSTRIES, formatPrice, pick, type Capability, type IndustryKey } from "@/content/industries";
-import { getPlan, planAllows, PLANS } from "@/content/plans";
+import { CAPABILITIES, INDUSTRIES, pick, type Capability, type IndustryKey } from "@/content/industries";
+import { getPlan, planAllows, PLANS, usd } from "@/content/plans";
 import { cn } from "@/lib/utils";
 import { useConsole } from "../console-provider";
 import { PageHeader } from "../ui";
@@ -158,8 +158,8 @@ export function CapabilitiesView() {
                 <p className="mt-1.5 flex-1 text-sm text-text-2">{c.short}</p>
                 <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-4">
                   <p className="text-sm">
-                    <span className="font-display font-semibold text-text-1">{formatPrice(cap.price, locale)}</span>
-                    <span className="ml-1 text-xs text-text-3">/ {c.unit}</span>
+                    <span className="font-display font-semibold text-text-1">{usd(getPlan(cap.tier).perCamera ?? 0)}</span>
+                    <span className="ml-1 text-xs text-text-3">{t("pricing.perCameraYear")}</span>
                   </p>
                   <div className="flex items-center gap-1">
                     {subscribed && (

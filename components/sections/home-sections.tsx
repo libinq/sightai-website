@@ -7,15 +7,9 @@ import {
   Building,
   Cctv,
   LayoutDashboard,
-  Clapperboard,
   Cloud,
-  Construction,
   Cpu,
-  Factory,
-  Flame,
-  Route,
   Server,
-  Store,
   type LucideIcon,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -23,7 +17,6 @@ import { Card } from "@/components/ui/card";
 import { Container, Section, SectionHeading } from "@/components/visual/primitives";
 import { CountUp, Reveal, ScanLine } from "@/components/visual/motion";
 import { HOME_METRICS, SHOW_PLACEHOLDER_NOTICE } from "@/content/metrics";
-import { INDUSTRIES } from "@/lib/site";
 import { FootageWall, type WallItem } from "@/components/media/footage-wall";
 import { EnhanceCompare } from "@/components/demo/enhance-compare";
 import { CasesCarousel } from "./cases-carousel";
@@ -196,51 +189,6 @@ export function DeploySection() {
             </Reveal>
           ))}
         </div>
-      </Container>
-    </Section>
-  );
-}
-
-/* ---------------- 8. Industries ---------------- */
-const INDUSTRY_ICON: Record<(typeof INDUSTRIES)[number], LucideIcon> = {
-  transport: Route,
-  manufacturing: Factory,
-  energy: Flame,
-  construction: Construction,
-  media: Clapperboard,
-  retail: Store,
-};
-
-export function IndustriesSection() {
-  const t = useTranslations();
-  return (
-    <Section aria-labelledby="ind-title" className="border-t border-line">
-      <Container>
-        <SectionHeading id="ind-title" eyebrow={t("home.industries.eyebrow")} title={t("home.industries.title")} />
-        <ul className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-          {INDUSTRIES.map((k, i) => {
-            const Icon = INDUSTRY_ICON[k];
-            return (
-              <li key={k} className="bg-bg-0">
-                <Link href={`/solutions#${k}`} className="group relative flex h-full min-h-44 flex-col justify-between p-6 transition-colors hover:bg-bg-1 md:p-8">
-                  <span className="flex items-start justify-between">
-                    <span className="grid size-10 place-items-center rounded-lg border border-line bg-bg-1 text-accent transition-colors group-hover:border-accent/50">
-                      <Icon className="size-5" aria-hidden />
-                    </span>
-                    <span className="font-mono text-xs text-text-3">{String(i + 1).padStart(2, "0")}</span>
-                  </span>
-                  <span className="mt-8 block">
-                    <span className="flex items-center gap-2 text-lg font-semibold text-text-1">
-                      {t(`industries.${k}.name`)}
-                      <ArrowUpRight className="size-4 text-text-3 opacity-0 transition-all group-hover:text-accent group-hover:opacity-100" aria-hidden />
-                    </span>
-                    <span className="mt-1 block text-sm text-text-2">{t(`industries.${k}.desc`)}</span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
       </Container>
     </Section>
   );

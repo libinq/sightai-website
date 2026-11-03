@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
   // Docker / on-prem deployment
   output: "standalone",
   images: { formats: ["image/avif", "image/webp"] },
+  // the old "solutions" module was folded into /industries
+  async redirects() {
+    return [{ source: "/:locale(zh|en)/solutions", destination: "/:locale/industries", permanent: true }];
+  },
   turbopack: {
     resolveAlias: { "next-intl/config": I18N_REQUEST },
   },

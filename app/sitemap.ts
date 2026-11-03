@@ -3,7 +3,7 @@ import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
 import { PRODUCTS } from "@/content/products";
 import { CASES } from "@/content/cases";
-import { INDUSTRY_KEYS } from "@/content/industries";
+import { CAPABILITIES, INDUSTRY_KEYS, capabilityHref } from "@/content/industries";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
@@ -12,8 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...PRODUCTS.map((p) => `/products/${p.slug}`),
     "/industries",
     ...INDUSTRY_KEYS.map((k) => `/industries/${k}`),
+    ...CAPABILITIES.map((c) => capabilityHref(c)),
     "/pricing",
-    "/solutions",
     "/cases",
     ...CASES.map((c) => `/cases/${c.slug}`),
     "/technology",

@@ -125,7 +125,7 @@ export function SourcesView() {
           </Panel>
         ))}
         <Panel>
-          <Meter label={t("quota", { used: store.sources.length, total: plan.quota.streams ?? "∞" })} used={store.sources.length} total={plan.quota.streams} unlimited={t("unlimited")} />
+          <Meter label={t("quota", { used: store.sources.length, total: plan.quota.cameras ?? "∞" })} used={store.sources.length} total={plan.quota.cameras} unlimited={t("unlimited")} />
         </Panel>
       </div>
 
