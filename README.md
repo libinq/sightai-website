@@ -37,8 +37,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## SaaS console
 
-- Public site: `/[locale]` (home with industry showcase), `/industries`, `/industries/{education|retail|sports|manufacturing}`, `/pricing`.
+- Public site: `/[locale]` (home), `/industries` (benefit-led overview), `/industries/{industry}` (stakeholder benefits + demo videos), `/industries/{industry}/{capability}` (16 detail pages), `/pricing` (per-camera pricing + calculator). `/solutions` redirects to `/industries`.
 - Auth: `/[locale]/login`, `/[locale]/register` → signed httpOnly cookie (`AUTH_SECRET`, required in production). Users are stored in `.data/users.json` (gitignored; memory fallback on read-only filesystems) — swap `lib/auth/users.ts` for a real database before production.
 - Demo org (Pro plan): `demo@sightai.example` / `sightai-demo` (seeded in `lib/auth/users.ts`, shown on the sign-in page).
 - Console: `/[locale]/console` — overview, capability subscriptions (server-side via `/api/account`), industry dashboards, events, video sources, API keys, plan & billing, settings. Sources / events / keys are deterministic demo data persisted per user in `localStorage` (`lib/console/mock.ts`).
-- Catalog & prices: `content/industries.ts` (16 capabilities) and `content/plans.ts` — all prices are placeholders (TODO: verify before launch).
+- Catalog: `content/industries.ts` (16 capabilities), `content/audiences.ts` (who benefits per industry), `content/capability-details/` (long-form copy per capability).
+- Pricing: `content/plans.ts`, billed per camera per year in USD. Basic = $500 / camera / year; the Pro price ($800) is a placeholder to confirm.

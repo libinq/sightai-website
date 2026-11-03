@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PRODUCTS, LINE_COLOR } from "@/content/products";
-import { INDUSTRIES, CONTACT } from "@/lib/site";
+import { CONTACT } from "@/lib/site";
+import { INDUSTRIES, pick } from "@/content/industries";
 import { contactSchema, STEP_FIELDS, type ContactInput } from "@/lib/contact-schema";
 import { cn } from "@/lib/utils";
 
@@ -209,9 +210,9 @@ export function ContactForm() {
                         <SelectValue placeholder={t("industryPlaceholder")} />
                       </SelectTrigger>
                       <SelectContent>
-                        {INDUSTRIES.map((k) => (
-                          <SelectItem key={k} value={k}>
-                            {tAll(`industries.${k}.name`)}
+                        {INDUSTRIES.map((ind) => (
+                          <SelectItem key={ind.key} value={ind.key}>
+                            {pick(ind, locale).name}
                           </SelectItem>
                         ))}
                         <SelectItem value="other">{t("industryOther")}</SelectItem>

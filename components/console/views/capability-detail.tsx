@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { fieldBase } from "@/components/ui/input";
 import { CapabilityVisual } from "@/components/media/capability-visual";
-import { INDUSTRIES, formatPrice, getCapability, pick } from "@/content/industries";
+import { INDUSTRIES, capabilityHref, getCapability, pick } from "@/content/industries";
 import { PRODUCTS, LINE_COLOR, productHref } from "@/content/products";
-import { getPlan } from "@/content/plans";
+import { getPlan, usd } from "@/content/plans";
 import { loc } from "@/lib/console/mock";
 import { cn } from "@/lib/utils";
 import { DEFAULT_CONFIG, useConsole, type CapConfig } from "../console-provider";
@@ -137,11 +137,14 @@ export function CapabilityDetailView({ id }: { id: string }) {
           </p>
           <h1 className="mt-2 text-2xl font-semibold md:text-[28px]">{c.name}</h1>
           <p className="mt-1.5 max-w-3xl text-sm text-text-2">{c.desc}</p>
+          <Link href={capabilityHref(cap)} className="mt-2 inline-flex min-h-8 items-center gap-1 text-xs text-accent hover:underline">
+            {t("console.capabilities.detail.fullIntro")} →
+          </Link>
         </div>
         <div className="flex items-center gap-3">
           <p className="text-sm">
-            <span className="font-display text-lg font-semibold">{formatPrice(cap.price, locale)}</span>
-            <span className="ml-1 text-xs text-text-3">/ {c.unit}</span>
+            <span className="font-display text-lg font-semibold">{usd(getPlan(cap.tier).perCamera ?? 0)}</span>
+            <span className="ml-1 text-xs text-text-3">{t("pricing.perCameraYear")}</span>
           </p>
           <SubscribeButton cap={cap} size="md" />
         </div>

@@ -7,13 +7,14 @@ import { Check, Download } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CAPABILITIES, formatPrice, pick } from "@/content/industries";
-import { PLANS, getPlan, type PlanId } from "@/content/plans";
+import { CAPABILITIES, pick } from "@/content/industries";
+import { PLANS, getPlan, usd, type PlanId } from "@/content/plans";
 import { cn } from "@/lib/utils";
 import { useConsole } from "../console-provider";
 import { Meter } from "../charts";
 import { PageHeader, PageSkeleton, Panel } from "../ui";
 
+/** Billing is per camera per year: cameras (connected sources) × plan rate. */
 export function BillingView() {
   const t = useTranslations();
   const locale = useLocale();
@@ -24,7 +25,7 @@ export function BillingView() {
   // arriving from the pricing page with ?plan=… applies it once
   useEffect(() => {
     if (!ready || applied.current || !requested || requested === user.plan) return;
-    if (!PLANS.some((p) => p.id === requested && p.price)) return;
+    if (!PLANS.some((p) => p.id === requested && p.perCamera !== null)) return;
     applied.current = true;
     setPlan(requested as PlanId).then(() => toast(t("console.capabilities.planToast", { plan: pick(getPlan(requested), locale).name })));
   }, [ready, requested, user.plan, setPlan, toast, t, locale]);
@@ -32,17 +33,11 @@ export function BillingView() {
   if (!ready) return <PageSkeleton />;
 
   const plan = getPlan(user.plan);
-  const addons = CAPABILITIES.filter((c) => user.subscriptions.includes(c.id));
-  const cur = locale === "en" ? "usd" : "cny";
-  const base = plan.price?.[cur] ?? 0;
-  const addonTotal = addons.reduce((a, c) => a + c.price[cur] * Math.max(1, store.sources.filter((s) => s.capability === c.id).length), 0);
-  const money = (n: number) => (locale === "en" ? `$${n.toLocaleString("en-US")}` : `¥${n.toLocaleString("zh-CN")}`);
-  const months = Array.from({ length: 4 }, (_, i) => {
-    const d = new Date();
-    d.setDate(1);
-    d.setMonth(d.getMonth() - (i + 1));
-    return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "zh-CN", { year: "numeric", month: "long" }).format(d);
-  });
+  const cameras = store.sources.length;
+  const rate = plan.perCamera ?? 0;
+  const annual = cameras * rate;
+  const subs = CAPABILITIES.filter((c) => user.subscriptions.includes(c.id));
+  const years = Array.from({ length: 3 }, (_, i) => new Date().getFullYear() - (i + 1));
 
   return (
     <div className="space-y-6">
@@ -63,22 +58,23 @@ export function BillingView() {
         </Panel>
         <Panel title={t("console.billing.usage")}>
           <div className="space-y-4">
-            <Meter label={t("console.billing.usageItems.streams")} used={store.sources.length} total={plan.quota.streams} unlimited={t("console.sources.unlimited")} />
-            <Meter label={t("console.billing.usageItems.apiCalls")} used={Math.round((plan.quota.apiCalls ?? 5e6) * 0.41)} total={plan.quota.apiCalls} unlimited={t("console.sources.unlimited")} />
+            <Meter label={t("console.billing.usageItems.cameras")} used={cameras} total={plan.quota.cameras} unlimited={t("console.sources.unlimited")} />
             <Meter label={t("console.billing.usageItems.seats")} used={store.members.length} total={plan.quota.seats} unlimited={t("console.sources.unlimited")} />
             <Meter label={`${t("console.billing.usageItems.storage")} (GB)`} used={128} total={plan.quota.retentionDays * 10} unlimited={t("console.sources.unlimited")} />
           </div>
         </Panel>
         <Panel title={t("console.billing.estimate")}>
-          <p className="font-display text-[40px] font-semibold leading-none">{money(base + addonTotal)}</p>
+          <p className="font-display text-[40px] font-semibold leading-none">{plan.perCamera === null ? t("pricing.custom") : usd(annual)}</p>
           <dl className="mt-5 space-y-2 border-t border-line pt-4 text-sm">
             <div className="flex justify-between">
-              <dt className="text-text-2">{t("console.billing.base")}</dt>
-              <dd className="font-mono">{money(base)}</dd>
+              <dt className="text-text-2">{t("console.billing.cameras")}</dt>
+              <dd className="font-mono">{cameras}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-text-2">{t("console.billing.addonTotal")}</dt>
-              <dd className="font-mono">{money(addonTotal)}</dd>
+              <dt className="text-text-2">{t("console.billing.rate")}</dt>
+              <dd className="font-mono">
+                {plan.perCamera === null ? "—" : usd(rate)} <span className="text-text-3">{t("pricing.perCameraYear")}</span>
+              </dd>
             </div>
           </dl>
           <p className="mt-4 font-mono text-[11px] text-warn">* {t("console.billing.demoNote")}</p>
@@ -96,11 +92,11 @@ export function BillingView() {
                   {current && <Badge tone="accent">{t("console.billing.currentBadge")}</Badge>}
                 </div>
                 <p className="mt-2 font-display text-2xl font-semibold">
-                  {p.price ? formatPrice(p.price, locale) : t("pricing.custom")}
-                  {p.price && p.price.cny > 0 && <span className="ml-1 text-xs font-normal text-text-3">{t("common.perMonth")}</span>}
+                  {p.perCamera === null ? t("pricing.custom") : p.perCamera === 0 ? t("pricing.free") : usd(p.perCamera)}
+                  {!!p.perCamera && <span className="ml-1 text-xs font-normal text-text-3">{t("pricing.perCameraYear")}</span>}
                 </p>
                 <p className="mt-1 flex-1 text-xs text-text-2">{pick(p, locale).desc}</p>
-                {p.price ? (
+                {p.perCamera !== null ? (
                   <Button
                     size="sm"
                     className="mt-4"
@@ -125,22 +121,17 @@ export function BillingView() {
       </Panel>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <Panel title={t("console.billing.addons")} bodyClassName="p-0">
+        <Panel title={t("console.billing.addons")} desc={t("console.billing.addonsDesc")} bodyClassName="p-0">
           <ul className="divide-y divide-line">
-            {addons.length === 0 && <li className="px-5 py-6 text-center text-sm text-text-3">{t("console.billing.addonsEmpty")}</li>}
-            {addons.map((c) => {
-              const units = Math.max(1, store.sources.filter((s) => s.capability === c.id).length);
+            {subs.length === 0 && <li className="px-5 py-6 text-center text-sm text-text-3">{t("console.billing.addonsEmpty")}</li>}
+            {subs.map((c) => {
+              const bound = store.sources.filter((s) => s.capability === c.id).length;
               return (
                 <li key={c.id} className="flex items-center justify-between gap-3 px-5 py-3 text-sm">
-                  <span className="min-w-0">
-                    <Link href={`/console/capabilities/${c.id}`} className="block truncate text-text-1 hover:text-accent">
-                      {pick(c, locale).name}
-                    </Link>
-                    <span className="text-xs text-text-3">
-                      {formatPrice(c.price, locale)} × {units} {pick(c, locale).unit}
-                    </span>
-                  </span>
-                  <span className="font-mono">{money(c.price[cur] * units)}</span>
+                  <Link href={`/console/capabilities/${c.id}`} className="min-w-0 truncate text-text-1 hover:text-accent">
+                    {pick(c, locale).name}
+                  </Link>
+                  <span className="shrink-0 font-mono text-xs text-text-2">{t("console.billing.boundCameras", { count: bound })}</span>
                 </li>
               );
             })}
@@ -158,10 +149,10 @@ export function BillingView() {
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              {months.map((m, i) => (
-                <tr key={m}>
-                  <td className="px-5 py-3 text-text-1">{m}</td>
-                  <td className="px-5 py-3 font-mono">{money(Math.round((base + addonTotal) * (0.86 + i * 0.03)))}</td>
+              {years.map((y, i) => (
+                <tr key={y}>
+                  <td className="px-5 py-3 text-text-1">{y}</td>
+                  <td className="px-5 py-3 font-mono">{usd(Math.max(1, cameras - (i + 1) * 3) * rate)}</td>
                   <td className="px-5 py-3">
                     <Badge tone="ok">{t("console.billing.paid")}</Badge>
                   </td>

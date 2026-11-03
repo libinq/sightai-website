@@ -22,7 +22,6 @@
     "watchDemo": "Watch demo",
     "subscribe": "Subscribe",
     "subscribed": "Subscribed",
-    "perMonth": "/ mo",
     "contactSales": "Contact sales",
     "realFootage": "Real footage",
     "builtOn": "Built on",
@@ -120,7 +119,6 @@
   "footer": {
     "tagline": "Vision AI that sees, understands, and enhances the physical world.",
     "productsCol": "Products",
-    "solutionsCol": "Solutions",
     "resourcesCol": "Resources",
     "companyCol": "Company",
     "whitepapers": "Whitepapers",
@@ -133,33 +131,10 @@
     "icp": "ICP license",
     "privacy": "Privacy policy",
     "cookies": "Cookie settings",
-    "rights": "All rights reserved."
-  },
-  "industries": {
-    "transport": {
-      "name": "Transport",
-      "desc": "Road surveys, bridges and tunnels, incidents"
-    },
-    "manufacturing": {
-      "name": "Manufacturing",
-      "desc": "Surface defects, assembly checks, yield"
-    },
-    "energy": {
-      "name": "Energy & Chemicals",
-      "desc": "EHS compliance, smoke and fire, perimeter"
-    },
-    "construction": {
-      "name": "Construction",
-      "desc": "PPE, edge protection, heavy machinery"
-    },
-    "media": {
-      "name": "Media",
-      "desc": "Stabilize, grade, upscale, present"
-    },
-    "retail": {
-      "name": "Retail & Finance",
-      "desc": "Digital guides, service desks, marketing"
-    }
+    "rights": "All rights reserved.",
+    "platformCol": "Platform",
+    "allIndustries": "All industries",
+    "consoleLogin": "Console sign-in"
   },
   "classes": {
     "crack": "Crack",
@@ -317,7 +292,7 @@
     "industryShowcase": {
       "eyebrow": "Industries",
       "title": "Four industries. Vision AI that works out of the box.",
-      "desc": "Every capability is assembled from SightAI's detection, enhancement and avatar technology. Sign in to subscribe, connect cameras and open the dashboards.",
+      "desc": "Every capability brings concrete benefits to students and teachers, shoppers and store teams, media and fans, workers and managers. Pick an industry to see who gains.",
       "explore": "Explore {name}",
       "capabilities": "{count} subscribable capabilities"
     },
@@ -332,7 +307,7 @@
         },
         {
           "title": "Subscribe",
-          "desc": "Billed per camera, store or station; switch on and off anytime"
+          "desc": "Billed per camera — Basic is $500 per camera per year"
         },
         {
           "title": "Connect video",
@@ -414,64 +389,6 @@
     "eyebrow": "Products",
     "title": "Seven products for inspection, enhancement and digital humans",
     "desc": "All three product lines share one data, training and deployment platform. Pick one product or combine them into a full solution."
-  },
-  "solutions": {
-    "eyebrow": "Solutions",
-    "title": "Vision AI, assembled for your industry",
-    "desc": "Every industry has its own scenes, compliance rules and deployment constraints. These are the combinations we deliver most often.",
-    "challenges": "Typical problems",
-    "products": "Recommended products",
-    "cases": "Customer stories",
-    "items": {
-      "transport": {
-        "long": "Routine surveys of roads, bridges and tunnels, plus real-time incident detection.",
-        "points": [
-          "Manual surveys are slow and inconsistent",
-          "Defect location and severity are hard to quantify",
-          "Results don't flow into maintenance"
-        ]
-      },
-      "manufacturing": {
-        "long": "Surface-defect inspection, assembly verification and yield analytics.",
-        "points": [
-          "Fatigue causes missed defects",
-          "Frequent changeovers make rule-based vision costly",
-          "Root causes are hard to trace"
-        ]
-      },
-      "energy": {
-        "long": "EHS compliance and perimeter security for petrochemical, power and renewable sites.",
-        "points": [
-          "Smoke and flame must be caught early",
-          "Contractor PPE is hard to police",
-          "Video must stay on the internal network"
-        ]
-      },
-      "construction": {
-        "long": "Worker safety, edge protection and heavy-machinery zones on job sites.",
-        "points": [
-          "Hard hats and vests not worn consistently",
-          "Intrusion into edge and crane zones",
-          "Scattered sites, no central view"
-        ]
-      },
-      "media": {
-        "long": "Sports broadcast, content production, archive restoration and multilingual output.",
-        "points": [
-          "Shaky POV footage, mismatched cameras",
-          "Low-resolution archives",
-          "Not enough capacity for every language"
-        ]
-      },
-      "retail": {
-        "long": "Digital-human guides, service desks and marketing content for stores, branches and public service halls.",
-        "points": [
-          "Repetitive questions tie up staff",
-          "Marketing content changes constantly",
-          "Limited multilingual service"
-        ]
-      }
-    }
   },
   "cases": {
     "eyebrow": "Customers",
@@ -885,53 +802,68 @@
   },
   "industriesPage": {
     "eyebrow": "Industries",
-    "title": "A catalog of vision AI, organized by industry",
-    "desc": "Education, retail, sports and manufacturing QC — 16 subscribable capabilities, each mapped to the technology it runs on and shown with real footage.",
+    "title": "Visible value in every industry",
+    "desc": "16 vision AI capabilities across education, retail, sports and manufacturing QC. See who benefits first, then click through for demos and full details.",
     "pains": "Challenges",
     "capabilities": "Subscribable capabilities",
-    "features": "Key features",
     "techStack": "Runs on",
-    "tryInConsole": "Subscribe in console",
     "otherIndustries": "Other industries",
-    "unit": "Billed per",
-    "from": "from",
-    "tier": "Minimum plan"
+    "benefitsEyebrow": "Who benefits",
+    "benefitsTitle": "{name}: value for every role",
+    "capabilitiesTitle": "{name} capabilities",
+    "capabilitiesDesc": "Each capability can be subscribed on its own. Open one for the demo video, features, workflow and specs.",
+    "viewIndustry": "Explore {name}",
+    "viewCapability": "Full details"
   },
   "pricing": {
     "eyebrow": "Pricing",
-    "title": "Subscribe as you go. Start free.",
-    "desc": "Your platform plan sets source, API and seat limits; industry capabilities are added per unit.",
-    "monthly": "Monthly",
+    "title": "Priced per camera. Simple and transparent.",
+    "desc": "Every plan is billed per camera per year. Basic is $500 per camera per year and includes every Basic capability; scale cameras up or down as you need.",
     "custom": "Custom",
     "popular": "Most popular",
     "choose": "Choose {name}",
-    "addonsTitle": "Capability add-on pricing",
-    "addonsDesc": "Add to any plan. Prices are per unit per month.",
     "capability": "Capability",
     "industry": "Industry",
-    "unit": "Unit",
-    "price": "Price",
-    "minTier": "Min. plan",
     "faqTitle": "FAQ",
     "faqs": [
+      {
+        "q": "What counts as a camera?",
+        "a": "Any video source analyzed on the platform: network cameras, screening gates, line cameras, vehicle cameras and live streams."
+      },
+      {
+        "q": "Can one camera run several capabilities?",
+        "a": "Yes. Capabilities in your plan can be stacked on the same camera at no extra cost."
+      },
+      {
+        "q": "Can I pay monthly?",
+        "a": "Standard pricing is annual. Contact sales for monthly or quarterly billing."
+      },
       {
         "q": "Will I be charged when the trial ends?",
         "a": "No. The account becomes read-only until you choose a plan."
       },
       {
-        "q": "Can I deploy on-premises?",
-        "a": "Yes. Enterprise supports on-prem and edge appliances with the same capabilities and console."
-      },
-      {
-        "q": "Where is video stored?",
-        "a": "Cloud tenants store data in the region they choose. With edge or on-prem deployment, raw video never leaves your network."
-      },
-      {
-        "q": "How do invoices work?",
-        "a": "Maintain billing details under Plan & billing; invoices are downloadable once each monthly bill closes."
+        "q": "Can we deploy on-premises?",
+        "a": "Yes. Enterprise supports on-prem and edge appliances, with volume pricing for large camera fleets."
       }
     ],
-    "note": "Sample prices — replace with official pricing before launch."
+    "note": "Prices in USD, excluding tax. Pro price is indicative; final pricing per sales quote.",
+    "free": "Free",
+    "perCameraYear": "/ camera / yr",
+    "perCameraYearLong": "per camera · per year",
+    "trialNote": "14 days · up to 4 cameras",
+    "volumeNote": "Volume pricing for large fleets",
+    "calcEyebrow": "Estimate",
+    "calcTitle": "Estimate your annual cost",
+    "calcDesc": "Pick a number of cameras and a plan to see the annual total.",
+    "calcCameras": "Cameras",
+    "calcPlan": "Plan",
+    "calcTotal": "Annual total",
+    "calcVolume": "200+ cameras? Contact sales for volume pricing.",
+    "matrixTitle": "Capabilities by plan",
+    "matrixDesc": "Each camera can run any capability included in its plan.",
+    "included": "Included",
+    "notIncluded": "Not included"
   },
   "auth": {
     "loginTitle": "Sign in to SightAI Console",
@@ -1088,7 +1020,8 @@
         "techStack": "Runs on",
         "notSubscribed": "Not subscribed",
         "notSubscribedDesc": "Subscribe to configure, bind sources and receive events.",
-        "unbind": "Unbind"
+        "unbind": "Unbind",
+        "fullIntro": "Full product details"
       }
     },
     "analytics": {
@@ -1323,34 +1256,35 @@
     },
     "billing": {
       "title": "Plan & billing",
-      "desc": "Manage your platform plan, capability add-ons and invoices.",
+      "desc": "Manage your plan, camera count and annual invoices.",
       "current": "Current plan",
       "change": "Change plan",
       "currentBadge": "Current",
       "switchTo": "Switch",
       "contact": "Contact sales",
-      "usage": "Usage this month",
+      "usage": "Current usage",
       "usageItems": {
-        "streams": "Video sources",
-        "apiCalls": "API calls",
         "seats": "Seats",
-        "storage": "Event storage"
+        "storage": "Event storage",
+        "cameras": "Cameras"
       },
       "addons": "Subscribed capabilities",
       "addonsEmpty": "No capabilities yet",
-      "estimate": "Estimated this month",
-      "base": "Platform plan",
-      "addonTotal": "Capability add-ons",
+      "estimate": "Annual cost (estimate)",
       "invoices": "Invoices",
       "cols": {
-        "period": "Period",
+        "period": "Year",
         "amount": "Amount",
         "status": "Status",
         "invoice": "Invoice"
       },
       "paid": "Paid",
       "download": "Download",
-      "demoNote": "Demo environment — no real charges."
+      "demoNote": "Demo environment — no real charges.",
+      "cameras": "Cameras",
+      "rate": "Rate",
+      "addonsDesc": "Capabilities in your plan cost nothing extra and can be stacked on any camera.",
+      "boundCameras": "{count} cameras"
     },
     "settings": {
       "title": "Settings",
@@ -1387,5 +1321,26 @@
       "empty": "No new notifications"
     },
     "title": "Console"
+  },
+  "capabilityPage": {
+    "includedIn": "Available on {plan}",
+    "subscribe": "Subscribe in console",
+    "demoNote": "Footage from a real deployment.",
+    "relatedNote": "Footage for this exact scenario is being prepared; shown is the same technology in another real deployment.",
+    "benefitsEyebrow": "Benefits",
+    "benefitsTitle": "What it does for each role",
+    "featuresEyebrow": "Capabilities",
+    "featuresTitle": "{name}: key features",
+    "workflowEyebrow": "Workflow",
+    "workflowTitle": "Four steps from connection to closed loop",
+    "scenariosEyebrow": "Use cases",
+    "scenariosTitle": "Typical use cases",
+    "specsEyebrow": "Specifications",
+    "specsTitle": "Specs & deployment",
+    "pricingEyebrow": "Pricing",
+    "pricingDesc": "Available from {plan}, billed per camera per year — add or remove cameras any time.",
+    "seePricing": "See pricing",
+    "faqTitle": "FAQ",
+    "related": "More {industry} capabilities"
   }
 }

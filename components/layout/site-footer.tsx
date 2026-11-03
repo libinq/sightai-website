@@ -1,30 +1,43 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PRODUCTS, productHref } from "@/content/products";
-import { CONTACT, INDUSTRIES } from "@/lib/site";
+import { CONTACT } from "@/lib/site";
+import { INDUSTRIES, industryHref, pick } from "@/content/industries";
 import { Logo } from "./logo";
 
 export function SiteFooter() {
   const t = useTranslations();
+  const locale = useLocale();
   const year = new Date().getFullYear();
 
   const cols = [
+    {
+      title: t("nav.industries"),
+      links: [
+        ...INDUSTRIES.map((ind) => ({ href: industryHref(ind.key), label: pick(ind, locale).name })),
+        { href: "/industries", label: t("footer.allIndustries") },
+      ],
+    },
     {
       title: t("footer.productsCol"),
       links: PRODUCTS.map((p) => ({ href: productHref(p.slug), label: t(`products.${p.slug}.name`) })),
     },
     {
-      title: t("footer.solutionsCol"),
-      links: INDUSTRIES.map((k) => ({ href: `/solutions#${k}`, label: t(`industries.${k}.name`) })),
+      title: t("footer.platformCol"),
+      links: [
+        { href: "/pricing", label: t("nav.pricing") },
+        { href: "/register", label: t("common.startTrial") },
+        { href: "/login", label: t("footer.consoleLogin") },
+        { href: "/resources#docs", label: t("footer.docs") },
+      ],
     },
     {
       title: t("footer.resourcesCol"),
       links: [
-        { href: "/resources#whitepapers", label: t("footer.whitepapers") },
-        { href: "/resources#docs", label: t("footer.docs") },
-        { href: "/resources#news", label: t("footer.news") },
         { href: "/cases", label: t("nav.cases") },
         { href: "/technology", label: t("nav.technology") },
+        { href: "/resources#whitepapers", label: t("footer.whitepapers") },
+        { href: "/resources#news", label: t("footer.news") },
       ],
     },
     {
@@ -32,6 +45,7 @@ export function SiteFooter() {
       links: [
         { href: "/about", label: t("nav.about") },
         { href: "/contact", label: t("nav.contact") },
+        { href: "/contact?intent=demo", label: t("common.bookDemo") },
       ],
     },
   ];
@@ -40,7 +54,7 @@ export function SiteFooter() {
     <footer className="no-print border-t border-line bg-bg-0">
       <div className="mx-auto max-w-[1280px] px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <Logo />
             <p className="mt-4 max-w-xs text-sm text-text-2">{t("footer.tagline")}</p>
             <dl className="mt-8 space-y-2 text-sm">
@@ -62,7 +76,7 @@ export function SiteFooter() {
               </div>
             </dl>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-9 lg:grid-cols-5">
             {cols.map((col) => (
               <div key={col.title}>
                 <h2 className="font-mono text-[11px] font-medium uppercase tracking-wider text-text-3">
