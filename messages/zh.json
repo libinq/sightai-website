@@ -26,7 +26,8 @@
     "contactSales": "联系销售",
     "realFootage": "真实演示画面",
     "builtOn": "技术能力",
-    "includedIn": "包含于"
+    "includedIn": "包含于",
+    "relatedFootage": "同技术演示"
   },
   "nav": {
     "home": "首页",
@@ -222,9 +223,9 @@
       }
     },
     "demo": {
-      "eyebrow": "交互演示",
+      "eyebrow": "真实画面",
       "title": "看见 SightAI 所见",
-      "desc": "选择一个场景，开启 AI 识别。检测框按推理顺序出现，右侧列表与画面联动。",
+      "desc": "以下为 SightAI 在道路、产线、校园、门店与赛场中的实际运行画面。点击卡片查看对应的行业方案。",
       "scenes": {
         "road": "道路",
         "line": "产线",
@@ -247,15 +248,16 @@
     },
     "compare": {
       "eyebrow": "视频增强",
-      "title": "拖动分割线，看处理前后的差异",
-      "desc": "支持鼠标拖动、触摸滑动与键盘方向键。",
+      "title": "处理前后，差异一目了然",
+      "desc": "左侧为原始画面，右侧为 SightAI 处理后的结果。",
       "stabilization": "第一视角防抖",
       "color": "色彩增强",
       "before": "原始",
       "after": "SightAI",
       "sliderLabel": "前后对比分割位置",
-      "stabNote": "左侧为未处理的头戴相机画面，右侧为轨迹平滑后的结果（示意动画）。",
-      "colorNote": "低光、偏色素材经自动白平衡、曝光映射与去噪后的结果（示意画面）。"
+      "stabNote": "FIFA 赛事裁判胸挂 RefCam：左为原始画面（下方陀螺仪曲线剧烈抖动），右为防抖处理后的输出。",
+      "colorNote": "低光、偏色素材经自动白平衡、曝光映射与去噪后的结果（示意画面，真实素材待补充）。",
+      "realLabel": "真实演示画面"
     },
     "metrics": {
       "eyebrow": "关键数据",
@@ -403,8 +405,9 @@
     "faqTitle": "关于{name}",
     "whitepaper": "下载产品白皮书",
     "loading": "正在加载演示…",
-    "appsTitle": "真实画面与行业应用",
-    "appsDesc": "来自实际项目的演示画面，以及基于这项技术构建、可在控制台直接订阅的行业能力。"
+    "appsTitle": "基于这项技术的行业应用",
+    "appsDesc": "以下行业能力基于这项技术构建，可在控制台中直接订阅。",
+    "footageNote": "以下为真实项目中的运行画面，可暂停、拖动进度查看细节。"
   },
   "productsIndex": {
     "eyebrow": "产品",

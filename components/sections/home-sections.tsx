@@ -24,22 +24,29 @@ import { Container, Section, SectionHeading } from "@/components/visual/primitiv
 import { CountUp, Reveal, ScanLine } from "@/components/visual/motion";
 import { HOME_METRICS, SHOW_PLACEHOLDER_NOTICE } from "@/content/metrics";
 import { INDUSTRIES } from "@/lib/site";
-import { SeeDemo } from "@/components/demo/see-demo";
+import { FootageWall, type WallItem } from "@/components/media/footage-wall";
 import { EnhanceCompare } from "@/components/demo/enhance-compare";
 import { CasesCarousel } from "./cases-carousel";
 import { Button } from "@/components/ui/button";
 import { IndustryShowcase } from "@/components/industries/industry-showcase";
 
-/* ---------------- 4. See what SightAI sees ---------------- */
+/* ---------------- 4. See what SightAI sees (real footage wall) ---------------- */
+const DEMO_WALL: WallItem[] = [
+  { media: "roadDefect", capability: "mfg-road" },
+  { media: "packaging", capability: "mfg-defect" },
+  { media: "bullying", capability: "edu-bullying" },
+  { media: "contraband", capability: "edu-contraband" },
+  { media: "shelf", capability: "retail-shelf" },
+  { media: "refcam", capability: "sports-refcam" },
+];
+
 export function DemoSection() {
   const t = useTranslations("home.demo");
   return (
     <Section aria-labelledby="demo-title" className="border-t border-line bg-bg-0">
       <Container>
         <SectionHeading id="demo-title" eyebrow={t("eyebrow")} title={t("title")} desc={t("desc")} />
-        <div className="mt-12">
-          <SeeDemo />
-        </div>
+        <FootageWall className="mt-12" items={DEMO_WALL} />
       </Container>
     </Section>
   );

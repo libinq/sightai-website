@@ -74,6 +74,8 @@ export interface Capability extends Localized<CapabilityCopy> {
   /** technology products this capability runs on */
   products: string[];
   media?: MediaKey;
+  /** true = `media` is footage of the same underlying technology, not of this exact scenario yet */
+  related?: boolean;
   visual?: VisualKey;
   /** minimum plan that includes it */
   tier: Tier;
@@ -277,6 +279,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "education",
     icon: MapIcon,
     products: ["safety-behavior"],
+    media: "behavior",
+    related: true,
     visual: "perimeter",
     tier: "starter",
     price: { cny: 99, usd: 15 },
@@ -303,6 +307,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "retail",
     icon: Flame,
     products: ["safety-behavior", "platform"],
+    media: "shelf",
+    related: true,
     visual: "heatmap",
     tier: "starter",
     price: { cny: 299, usd: 45 },
@@ -375,6 +381,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "retail",
     icon: ShoppingBag,
     products: ["safety-behavior"],
+    media: "shelf",
+    related: true,
     visual: "loss",
     tier: "pro",
     price: { cny: 349, usd: 49 },
@@ -425,6 +433,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "sports",
     icon: WandSparkles,
     products: ["color-enhancement"],
+    media: "refcam",
+    related: true,
     visual: "enhance",
     tier: "starter",
     price: { cny: 999, usd: 149 },
@@ -449,6 +459,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "sports",
     icon: Clapperboard,
     products: ["safety-behavior", "color-enhancement", "platform"],
+    media: "refcam",
+    related: true,
     visual: "highlights",
     tier: "pro",
     price: { cny: 1999, usd: 289 },
@@ -547,6 +559,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "manufacturing",
     icon: HardHat,
     products: ["safety-behavior"],
+    media: "behavior",
+    related: true,
     visual: "ppe",
     tier: "starter",
     price: { cny: 129, usd: 19 },
@@ -571,6 +585,8 @@ export const CAPABILITIES: Capability[] = [
     industry: "manufacturing",
     icon: LayoutGrid,
     products: ["quality-inspection"],
+    media: "packaging",
+    related: true,
     visual: "assembly",
     tier: "pro",
     price: { cny: 1499, usd: 219 },

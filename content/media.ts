@@ -62,6 +62,12 @@ export const MEDIA = {
 
 export type MediaKey = keyof typeof MEDIA;
 
+/** Still frame for thumbnails (poster for videos, the image itself otherwise). */
+export function posterOf(key: MediaKey): string {
+  const m: DemoMedia = MEDIA[key];
+  return m.poster ?? m.src;
+}
+
 /** Real footage shown on each technology (product) page. */
 export const PRODUCT_MEDIA: Record<string, MediaKey[]> = {
   "road-inspection": ["roadDefect"],

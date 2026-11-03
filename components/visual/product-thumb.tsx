@@ -1,6 +1,7 @@
 import { LINE_COLOR, type ProductLine } from "@/content/products";
+import { PRODUCT_MEDIA, posterOf } from "@/content/media";
 
-// Mini schematic preview per product (used in mega menu & command palette).
+// Mini preview per product (mega menu, products index): real poster frame, else a schematic.
 const SHAPES: Record<string, React.ReactNode> = {
   "road-inspection": (
     <>
@@ -58,6 +59,13 @@ const SHAPES: Record<string, React.ReactNode> = {
 };
 
 export function ProductThumb({ slug, line }: { slug: string; line: ProductLine }) {
+  const footage = PRODUCT_MEDIA[slug]?.[0];
+  if (footage) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element -- 64×40 poster thumb
+      <img src={posterOf(footage)} alt="" aria-hidden loading="lazy" className="h-10 w-16 shrink-0 rounded-md border border-line bg-bg-0 object-cover" />
+    );
+  }
   return (
     <svg
       viewBox="0 0 64 40"

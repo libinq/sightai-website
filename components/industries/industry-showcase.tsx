@@ -92,7 +92,7 @@ export function IndustryShowcase() {
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-2 text-sm font-medium text-text-1">
                         {cc.name}
-                        {c.media && (
+                        {c.media && !c.related && (
                           <Badge tone="accent" mono className="px-1.5 py-0 text-[10px]">
                             {t("common.realFootage")}
                           </Badge>
@@ -124,7 +124,7 @@ export function IndustryShowcase() {
             <BboxCorners />
             <AnimatePresence mode="wait">
               <motion.div key={cap.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-                <CapabilityVisual capability={cap} label={cap.media ? t("common.realFootage") : undefined} className="aspect-video" />
+                <CapabilityVisual id={cap.id} labeled className="aspect-video" />
               </motion.div>
             </AnimatePresence>
             <div className="border-t border-line p-5">

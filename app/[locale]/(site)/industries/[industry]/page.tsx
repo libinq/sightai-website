@@ -124,7 +124,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ local
                 <article key={cap.id} id={cap.id} className="grid scroll-mt-24 items-center gap-8 lg:grid-cols-12" aria-labelledby={`${cap.id}-t`}>
                   <Reveal className={i % 2 ? "lg:order-2 lg:col-span-7" : "lg:col-span-7"}>
                     <Card className="overflow-hidden">
-                      <CapabilityVisual capability={cap} label={cap.media ? t("common.realFootage") : undefined} className="aspect-video" />
+                      <CapabilityVisual id={cap.id} labeled className="aspect-video" />
                     </Card>
                   </Reveal>
                   <div className="lg:col-span-5">
