@@ -73,7 +73,7 @@ export function SettingsView() {
             }}
           >
             <Input type="email" aria-label={t("invitePlaceholder")} placeholder={t("invitePlaceholder")} value={email} onChange={(e) => setEmail(e.target.value)} className="h-10 min-w-48 flex-1" />
-            <select aria-label="role" value={role} onChange={(e) => setRole(e.target.value as Member["role"])} className={cn(fieldBase, "h-10 w-32")}>
+            <select aria-label={t("role")} value={role} onChange={(e) => setRole(e.target.value as Member["role"])} className={cn(fieldBase, "h-10 w-32")}>
               {ROLES.map((r) => (
                 <option key={r} value={r}>
                   {t(`roles.${r}`)}

@@ -276,6 +276,7 @@ function Toasts() {
 
 export function ConsoleShell({ children }: { children: React.ReactNode }) {
   const t = useTranslations("console");
+  const tc = useTranslations("common");
   const [drawer, setDrawer] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
@@ -290,14 +291,14 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
       >
         <div className={cn("flex h-14 items-center border-b border-line", collapsed ? "justify-center" : "justify-between px-4")}>
           {!collapsed && (
-            <Link href="/console" className="flex items-center gap-2 rounded-md" aria-label="SightAI Console">
+            <Link href="/console" className="flex items-center gap-2 rounded-md" aria-label={t("brand")}>
               <Logo />
             </Link>
           )}
           <button
             type="button"
             onClick={() => setCollapsed((c) => !c)}
-            aria-label="Toggle sidebar"
+            aria-label={t("topbar.toggleSidebar")}
             className="grid size-9 place-items-center rounded-[8px] text-text-3 hover:bg-bg-2 hover:text-text-1"
           >
             <PanelLeft className="size-4" aria-hidden />
@@ -331,7 +332,7 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
                       <Logo />
                     </span>
                   </DialogPrimitive.Title>
-                  <DialogPrimitive.Close aria-label="Close" className="grid size-10 place-items-center rounded-[8px] hover:bg-bg-2">
+                  <DialogPrimitive.Close aria-label={tc("close")} className="grid size-10 place-items-center rounded-[8px] hover:bg-bg-2">
                     <X className="size-5" aria-hidden />
                   </DialogPrimitive.Close>
                 </div>

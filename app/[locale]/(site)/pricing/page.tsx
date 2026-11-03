@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Container, Section, SectionHeading } from "@/components/visual/primitives";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaBand } from "@/components/sections/cta-band";
-import { PLANS } from "@/content/plans";
+import { PLANS, getPlan } from "@/content/plans";
 import { CAPABILITIES, INDUSTRIES, formatPrice, industryHref, pick } from "@/content/industries";
 import { pageMetadata } from "@/lib/page-meta";
 import { cn } from "@/lib/utils";
@@ -107,7 +107,7 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
                       </td>
                       <td className="px-4 py-3 text-text-2">{cc.unit}</td>
                       <td className="px-4 py-3">
-                        <Badge mono className="capitalize">{cap.tier}</Badge>
+                        <Badge mono>{pick(getPlan(cap.tier), locale).name}</Badge>
                       </td>
                       <td className="px-4 py-3 text-right font-mono text-text-1">{formatPrice(cap.price, locale)}</td>
                     </tr>

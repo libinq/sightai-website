@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Check } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/layout/logo";
@@ -13,8 +13,10 @@ export const dynamic = "force-dynamic";
 
 const MOSAIC: MediaKey[] = ["refcam", "packaging", "shelf", "bullying"];
 
-export default async function AuthLayout({ children }: { children: React.ReactNode }) {
-  const t = await getTranslations("auth");
+export default async function AuthLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "auth" });
   const points = t.raw("sidePoints") as string[];
   return (
     <div className="grid min-h-dvh lg:grid-cols-2">

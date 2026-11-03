@@ -20,6 +20,7 @@ import {
   pick,
 } from "@/content/industries";
 import { PRODUCTS, LINE_COLOR, productHref } from "@/content/products";
+import { getPlan } from "@/content/plans";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -57,7 +58,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ local
         <GridBackdrop />
         <Container className="relative grid items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-text-3">
+            <nav aria-label={t("common.breadcrumb")} className="flex items-center gap-1.5 text-xs text-text-3">
               <Link href="/industries" className="hover:text-text-1">
                 {t("nav.industries")}
               </Link>
@@ -161,7 +162,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ local
                           <span className="ml-1 text-sm font-normal text-text-3">/ {cc.unit}</span>
                         </p>
                         <p className="mt-0.5 text-xs text-text-3">
-                          {t("industriesPage.tier")} · <Badge tone="accent" mono className="ml-1 py-0 capitalize">{cap.tier}</Badge>
+                          {t("industriesPage.tier")} · <Badge tone="accent" mono className="ml-1 py-0">{pick(getPlan(cap.tier), locale).name}</Badge>
                         </p>
                       </div>
                       <Button asChild size="sm">

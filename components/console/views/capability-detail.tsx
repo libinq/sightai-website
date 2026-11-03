@@ -10,6 +10,7 @@ import { fieldBase } from "@/components/ui/input";
 import { CapabilityVisual } from "@/components/media/capability-visual";
 import { INDUSTRIES, formatPrice, getCapability, pick } from "@/content/industries";
 import { PRODUCTS, LINE_COLOR, productHref } from "@/content/products";
+import { getPlan } from "@/content/plans";
 import { loc } from "@/lib/console/mock";
 import { cn } from "@/lib/utils";
 import { DEFAULT_CONFIG, useConsole, type CapConfig } from "../console-provider";
@@ -131,7 +132,7 @@ export function CapabilityDetailView({ id }: { id: string }) {
           <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-text-3">
             <span className="size-1.5 rounded-full" style={{ background: ind.color }} aria-hidden />
             {pick(ind, locale).name}
-            <Badge mono className="py-0 capitalize">{cap.tier}</Badge>
+            <Badge mono className="py-0">{pick(getPlan(cap.tier), locale).name}</Badge>
             {subscribed && <Badge tone="ok">{t("common.subscribed")}</Badge>}
           </p>
           <h1 className="mt-2 text-2xl font-semibold md:text-[28px]">{c.name}</h1>
@@ -179,7 +180,7 @@ export function CapabilityDetailView({ id }: { id: string }) {
                   <span className="block truncate text-xs text-text-3">{loc(s.location, locale)}</span>
                 </span>
                 <SourceStatusBadge status={s.status} />
-                <button type="button" aria-label="Unbind" onClick={() => bindSource(s.id, undefined)} className="grid size-8 place-items-center rounded-md text-text-3 hover:bg-bg-2 hover:text-danger">
+                <button type="button" aria-label={t("console.capabilities.detail.unbind")} onClick={() => bindSource(s.id, undefined)} className="grid size-8 place-items-center rounded-md text-text-3 hover:bg-bg-2 hover:text-danger">
                   <Unlink className="size-3.5" aria-hidden />
                 </button>
               </li>

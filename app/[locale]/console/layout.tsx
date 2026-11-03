@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getCurrentUser } from "@/lib/auth/session";
 import { ConsoleProvider } from "@/components/console/console-provider";
 import { ConsoleShell } from "@/components/console/console-shell";
@@ -7,7 +7,10 @@ import { ConsoleShell } from "@/components/console/console-shell";
 // session-dependent: never prerender (a build-time redirect would be baked in)
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Console", robots: { index: false } };
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const t = await getTranslations({ locale: (await params).locale, namespace: "console" });
+  return { title: t("title"), robots: { index: false } };
+}
 
 /** Authenticated area — every /console route requires a session. */
 export default async function ConsoleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {

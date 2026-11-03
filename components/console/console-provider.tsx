@@ -31,7 +31,7 @@ export interface Member {
 }
 
 interface Store {
-  v: 1;
+  v: 2;
   sources: Source[];
   events: EventItem[];
   apiKeys: ApiKey[];
@@ -81,12 +81,12 @@ export function useConsole() {
   return c;
 }
 
-const EMPTY: Store = { v: 1, sources: [], events: [], apiKeys: [], webhook: "", configs: {}, members: [], readAt: 0 };
+const EMPTY: Store = { v: 2, sources: [], events: [], apiKeys: [], webhook: "", configs: {}, members: [], readAt: 0 };
 
 function seedStore(user: PublicUser): Store {
   const sources = user.subscriptions.flatMap((id) => makeSources(user.id, id));
   return {
-    v: 1,
+    v: 2,
     sources,
     events: makeEvents(user.id, user.subscriptions, sources),
     apiKeys: makeApiKeys(user.id),
@@ -127,7 +127,7 @@ export function ConsoleProvider({ initialUser, children }: { initialUser: Public
     } catch {
       // storage unavailable — fall back to a fresh seed
     }
-    setStore(loaded?.v === 1 ? loaded : seedStore(initialUser));
+    setStore(loaded?.v === 2 ? loaded : seedStore(initialUser));
     setReady(true);
   }, [key, initialUser]);
 

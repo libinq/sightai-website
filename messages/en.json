@@ -27,7 +27,8 @@
     "realFootage": "Real footage",
     "builtOn": "Built on",
     "includedIn": "Included in",
-    "relatedFootage": "Same-technology demo"
+    "relatedFootage": "Same-technology demo",
+    "breadcrumb": "Breadcrumb"
   },
   "nav": {
     "home": "Home",
@@ -1004,7 +1005,8 @@
       "site": "Back to site",
       "plan": "Plan",
       "trialLeft": "{days} trial days left",
-      "upgrade": "Upgrade"
+      "upgrade": "Upgrade",
+      "toggleSidebar": "Toggle sidebar"
     },
     "range": {
       "label": "Range",
@@ -1085,7 +1087,8 @@
         "events": "Recent events",
         "techStack": "Runs on",
         "notSubscribed": "Not subscribed",
-        "notSubscribedDesc": "Subscribe to configure, bind sources and receive events."
+        "notSubscribedDesc": "Subscribe to configure, bind sources and receive events.",
+        "unbind": "Unbind"
       }
     },
     "analytics": {
@@ -1375,12 +1378,14 @@
       ],
       "region": "Data region",
       "regionValue": "Asia Pacific · Singapore (sample)",
-      "pending": "Pending"
+      "pending": "Pending",
+      "role": "Role"
     },
     "notifications": {
       "title": "Notifications",
       "markRead": "Mark all read",
       "empty": "No new notifications"
-    }
+    },
+    "title": "Console"
   }
 }

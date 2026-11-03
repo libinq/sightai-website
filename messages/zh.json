@@ -27,7 +27,8 @@
     "realFootage": "真实演示画面",
     "builtOn": "技术能力",
     "includedIn": "包含于",
-    "relatedFootage": "同技术演示"
+    "relatedFootage": "同技术演示",
+    "breadcrumb": "面包屑导航"
   },
   "nav": {
     "home": "首页",
@@ -209,17 +210,17 @@
       "inspection": {
         "title": "视觉检测",
         "desc": "把巡检、质检和安全监管中的“人眼判断”变成可追溯的结构化数据。",
-        "tag": "road · line · site"
+        "tag": "道路 · 产线 · 工地"
       },
       "enhancement": {
         "title": "视频增强",
         "desc": "稳定剧烈抖动的第一视角画面，统一多机位色彩，让低光与低分辨率素材可用。",
-        "tag": "stabilize · grade · upscale"
+        "tag": "防抖 · 调色 · 超分"
       },
       "human": {
         "title": "AI 数字人",
         "desc": "3 分钟素材定制形象与声音，接入大模型后可用于直播、客服与培训讲解。",
-        "tag": "avatar · voice · llm"
+        "tag": "形象 · 声音 · 大模型"
       }
     },
     "demo": {
@@ -1004,7 +1005,8 @@
       "site": "返回官网",
       "plan": "当前套餐",
       "trialLeft": "试用剩余 {days} 天",
-      "upgrade": "升级"
+      "upgrade": "升级",
+      "toggleSidebar": "折叠 / 展开侧边栏"
     },
     "range": {
       "label": "时间范围",
@@ -1085,7 +1087,8 @@
         "events": "最近事件",
         "techStack": "依赖的技术能力",
         "notSubscribed": "尚未订阅该能力",
-        "notSubscribedDesc": "订阅后可配置参数、绑定视频源并接收事件。"
+        "notSubscribedDesc": "订阅后可配置参数、绑定视频源并接收事件。",
+        "unbind": "解除绑定"
       }
     },
     "analytics": {
@@ -1375,12 +1378,14 @@
       ],
       "region": "数据区域",
       "regionValue": "中国 · 华东（示例）",
-      "pending": "待接受"
+      "pending": "待接受",
+      "role": "角色"
     },
     "notifications": {
       "title": "通知",
       "markRead": "全部已读",
       "empty": "没有新通知"
-    }
+    },
+    "title": "控制台"
   }
 }

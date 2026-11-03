@@ -70,7 +70,7 @@ export async function ProductPageTemplate({ product, locale }: { product: Produc
         <GridBackdrop />
         <Container className="relative grid items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-6">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-text-3">
+            <nav aria-label={t("common.breadcrumb")} className="flex items-center gap-1.5 text-xs text-text-3">
               <Link href="/products" className="hover:text-text-1">
                 {t("product.breadcrumb")}
               </Link>

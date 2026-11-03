@@ -18,6 +18,7 @@ const PROTOCOLS: Source["protocol"][] = ["RTSP", "ONVIF", "GB28181", "SRT", "Upl
 
 function AddSourceDialog() {
   const t = useTranslations("console.sources");
+  const tc = useTranslations("common");
   const locale = useLocale();
   const { user, addSource, toast } = useConsole();
   const [open, setOpen] = useState(false);
@@ -32,7 +33,7 @@ function AddSourceDialog() {
           {t("add")}
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent closeLabel={tc("close")}>
         <DialogTitle>{t("form.title")}</DialogTitle>
         <DialogDescription>{t("desc")}</DialogDescription>
         <form
