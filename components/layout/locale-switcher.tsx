@@ -15,7 +15,8 @@ export function useSwitchLocale() {
   const next = locale === "zh" ? "en" : "zh";
   const switchLocale = () =>
     start(() => {
-      router.replace(`${pathname}${window.location.hash}`, { locale: next, scroll: false });
+      // keep query (?next=, filters) and hash when switching
+      router.replace(`${pathname}${window.location.search}${window.location.hash}`, { locale: next, scroll: false });
     });
   return { locale, next, switchLocale, pending };
 }

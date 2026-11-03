@@ -17,6 +17,7 @@ const PAGE = 25;
 
 function EventDetail({ e, onClose }: { e: EventItem; onClose: () => void }) {
   const t = useTranslations("console.events");
+  const tc = useTranslations("common");
   const locale = useLocale();
   const { store, setEventStatus } = useConsole();
   const cap = getCapability(e.capability);
@@ -26,7 +27,7 @@ function EventDetail({ e, onClose }: { e: EventItem; onClose: () => void }) {
     <Panel
       title={t("detail")}
       actions={
-        <button type="button" aria-label="Close" onClick={onClose} className="grid size-8 place-items-center rounded-md text-text-3 hover:bg-bg-2">
+        <button type="button" aria-label={tc("close")} onClick={onClose} className="grid size-8 place-items-center rounded-md text-text-3 hover:bg-bg-2">
           <X className="size-4" aria-hidden />
         </button>
       }

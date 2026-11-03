@@ -31,7 +31,7 @@ export function useSubscribeAction() {
       } else {
         const res = await subscribe(cap.id);
         if (res.ok) toast(t("subscribedToast", { name }));
-        else toast(t("needPlan", { tier: cap.tier }), "danger");
+        else toast(t("needPlan", { tier: pick(getPlan(cap.tier), locale).name }), "danger");
       }
     } finally {
       setBusy(null);
@@ -147,7 +147,7 @@ export function CapabilitiesView() {
                 <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-text-3">
                   <span className="size-1.5 rounded-full" style={{ background: ind.color }} aria-hidden />
                   {pick(ind, locale).name}
-                  <Badge mono className="ml-auto py-0 capitalize">{cap.tier}</Badge>
+                  <Badge mono className="ml-auto py-0">{pick(getPlan(cap.tier), locale).name}</Badge>
                 </p>
                 <h2 className="mt-2 flex items-center gap-2 text-base font-semibold">
                   <Icon className="size-4 text-text-3" aria-hidden />

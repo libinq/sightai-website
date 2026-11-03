@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Check, Copy, KeyRound, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { loc } from "@/lib/console/mock";
 import { useConsole } from "../console-provider";
 import { fmtNum } from "../charts";
 import { PageHeader, PageSkeleton, Panel, relTime } from "../ui";
@@ -99,7 +100,7 @@ export function ApiKeysView() {
                   <td className="px-4 py-3 text-text-1">
                     <span className="flex items-center gap-2">
                       <KeyRound className="size-3.5 text-text-3" aria-hidden />
-                      {k.name}
+                      {loc(k.name, locale)}
                     </span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs text-text-2">
@@ -115,7 +116,7 @@ export function ApiKeysView() {
                       className="text-danger hover:text-danger"
                       onClick={() => {
                         revokeKey(k.id);
-                        toast(t("revoked", { name: k.name }));
+                        toast(t("revoked", { name: loc(k.name, locale) }));
                       }}
                     >
                       {t("revoke")}

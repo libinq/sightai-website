@@ -7,7 +7,7 @@ import "../globals.css";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Providers } from "@/components/layout/providers";
 import { SITE_URL } from "@/lib/site";
@@ -58,11 +58,13 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "common" });
+  // explicit locale + messages: route-group layouts can render before setRequestLocale takes effect
+  const messages = await getMessages({ locale });
 
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
       <body className="min-h-dvh overflow-x-clip">
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <a
               href="#main"

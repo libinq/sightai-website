@@ -35,7 +35,7 @@ export interface EventItem {
 
 export interface ApiKey {
   id: string;
-  name: string;
+  name: Bilingual;
   prefix: string;
   tail: string;
   created: number;
@@ -193,8 +193,8 @@ export function randomKey() {
 export function makeApiKeys(uid: string, now = Date.now()): ApiKey[] {
   const r = rng(hashStr(`${uid}:keys`));
   return [
-    { id: "key_prod", name: "Production", prefix: "sk_live_", tail: Math.floor(r() * 0xffff).toString(16).padStart(4, "0"), created: now - 40 * 86400e3, lastUsed: now - 120e3, calls: 1_284_311 },
-    { id: "key_stage", name: "Staging", prefix: "sk_test_", tail: Math.floor(r() * 0xffff).toString(16).padStart(4, "0"), created: now - 12 * 86400e3, lastUsed: now - 5 * 3600e3, calls: 48_902 },
+    { id: "key_prod", name: { zh: "生产环境", en: "Production" }, prefix: "sk_live_", tail: Math.floor(r() * 0xffff).toString(16).padStart(4, "0"), created: now - 40 * 86400e3, lastUsed: now - 120e3, calls: 1_284_311 },
+    { id: "key_stage", name: { zh: "测试环境", en: "Staging" }, prefix: "sk_test_", tail: Math.floor(r() * 0xffff).toString(16).padStart(4, "0"), created: now - 12 * 86400e3, lastUsed: now - 5 * 3600e3, calls: 48_902 },
   ];
 }
 
