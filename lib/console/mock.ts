@@ -1,4 +1,7 @@
 import { CAPABILITIES, getCapability, type IndustryKey } from "@/content/industries";
+import type { MediaKey } from "@/content/media";
+import type { Box, EngineEvent, PreviewParams } from "./engine";
+import type { CapValues } from "@/content/capability-params";
 
 /**
  * Deterministic demo data for the console. Everything is seeded from the user id so a
@@ -11,15 +14,52 @@ export type EventStatus = "open" | "ack" | "resolved";
 export type SourceStatus = "online" | "offline" | "degraded";
 export type Bilingual = string | { zh: string; en: string };
 
+export type Protocol = "RTSP" | "ONVIF" | "GB28181" | "SRT" | "RTMP" | "WebRTC" | "Upload";
+
 export interface Source {
   id: string;
   name: string;
   location: Bilingual;
-  protocol: "RTSP" | "ONVIF" | "GB28181" | "SRT" | "Upload";
+  protocol: Protocol;
   resolution: string;
   fps: number;
   capability?: string;
   status: SourceStatus;
+  /** camera = pulled stream (via gateway or direct), push = SRT/RTMP ingest, webcam = this browser */
+  kind?: "camera" | "push" | "webcam";
+  url?: string;
+  gatewayId?: string;
+  codec?: string;
+  roi?: Box | null;
+  /** footage used to simulate this stream in the browser (real RTSP needs the edge gateway relay) */
+  media?: MediaKey;
+}
+
+export interface Gateway {
+  id: string;
+  name: string;
+  site: string;
+  status: "pending" | "online" | "offline";
+  version: string;
+  ip: string;
+  token: string;
+  created: number;
+}
+
+export type JobStatus = "queued" | "processing" | "succeeded" | "failed";
+
+export interface Job {
+  id: string;
+  capability: string;
+  input: { kind: "sample" | "file" | "url"; name: string };
+  status: JobStatus;
+  progress: number;
+  created: number;
+  finished?: number;
+  params: PreviewParams;
+  options?: CapValues;
+  error?: string;
+  result?: { duration: number; frames: number; detections: number; byClass: Record<string, number>; events: EngineEvent[] };
 }
 
 export interface EventItem {
@@ -122,6 +162,16 @@ const LOCATIONS: Record<IndustryKey, { zh: string; en: string }[]> = {
   ],
 };
 
+/** Footage used to simulate a camera stream when the capability has none of its own. */
+const INDUSTRY_MEDIA: Record<IndustryKey, MediaKey> = { education: "behavior", retail: "shelf", sports: "refcam", manufacturing: "packaging" };
+
+export function streamMedia(source: Pick<Source, "media" | "capability">): MediaKey {
+  if (source.media) return source.media;
+  const cap = source.capability ? getCapability(source.capability) : undefined;
+  if (cap?.media && cap.media !== "avatar") return cap.media;
+  return INDUSTRY_MEDIA[cap?.industry ?? "education"];
+}
+
 const CODE: Record<IndustryKey, string> = { education: "EDU", retail: "RTL", sports: "SPT", manufacturing: "MFG" };
 
 export function makeSources(uid: string, capId: string, count?: number): Source[] {
@@ -140,6 +190,10 @@ export function makeSources(uid: string, capId: string, count?: number): Source[
       fps: pickOne(r, [15, 25, 30]),
       capability: capId,
       status: roll > 0.93 ? "offline" : roll > 0.85 ? "degraded" : "online",
+      kind: cap.industry === "sports" ? "push" : "camera",
+      gatewayId: cap.industry === "sports" ? undefined : "gw_default",
+      url: cap.industry === "sports" ? `srt://ingest.sightai.example:9000?streamid=${capId}-${i}` : `rtsp://10.0.${i + 1}.${20 + Math.floor(r() * 200)}:554/Streaming/Channels/101`,
+      codec: pickOne(r, ["H.264", "H.265"]),
     };
   });
 }
@@ -195,6 +249,15 @@ export function makeApiKeys(uid: string, now = Date.now()): ApiKey[] {
   return [
     { id: "key_prod", name: { zh: "生产环境", en: "Production" }, prefix: "sk_live_", tail: Math.floor(r() * 0xffff).toString(16).padStart(4, "0"), created: now - 40 * 86400e3, lastUsed: now - 120e3, calls: 1_284_311 },
     { id: "key_stage", name: { zh: "测试环境", en: "Staging" }, prefix: "sk_test_", tail: Math.floor(r() * 0xffff).toString(16).padStart(4, "0"), created: now - 12 * 86400e3, lastUsed: now - 5 * 3600e3, calls: 48_902 },
+  ];
+}
+
+/* ---------------- Gateways ---------------- */
+
+export function makeGateways(uid: string, now = Date.now()): Gateway[] {
+  const r = rng(hashStr(`${uid}:gw`));
+  return [
+    { id: "gw_default", name: "edge-01", site: "HQ", status: "online", version: "2.8.1", ip: `10.0.0.${2 + Math.floor(r() * 200)}`, token: `gwt_${randomKey().slice(0, 24)}`, created: now - 30 * 86400e3 },
   ];
 }
 

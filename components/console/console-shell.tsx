@@ -10,7 +10,9 @@ import {
   CircleCheck,
   CreditCard,
   ExternalLink,
+  FlaskConical,
   KeyRound,
+  ListChecks,
   LayoutDashboard,
   LayoutGrid,
   LogOut,
@@ -49,7 +51,14 @@ const GROUPS: { key: string; items: NavItem[] }[] = [
       { key: "sources", href: "/console/sources", icon: Cctv },
     ],
   },
-  { key: "groupBuild", items: [{ key: "apiKeys", href: "/console/api-keys", icon: KeyRound }] },
+  {
+    key: "groupBuild",
+    items: [
+      { key: "playground", href: "/console/playground", icon: FlaskConical },
+      { key: "jobs", href: "/console/jobs", icon: ListChecks },
+      { key: "apiKeys", href: "/console/api-keys", icon: KeyRound },
+    ],
+  },
   {
     key: "groupAccount",
     items: [
@@ -64,6 +73,7 @@ function SideNav({ onNavigate, collapsed = false }: { onNavigate?: () => void; c
   const pathname = usePathname();
   const { store } = useConsole();
   const open = store.events.filter((e) => e.status === "open").length;
+  const running = store.jobs.filter((j) => j.status === "processing").length;
   return (
     <nav aria-label={t("overview")} className="space-y-6">
       {GROUPS.map((g) => (
@@ -88,6 +98,9 @@ function SideNav({ onNavigate, collapsed = false }: { onNavigate?: () => void; c
                     {active && <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-accent" aria-hidden />}
                     <Icon className={cn("size-4 shrink-0", active && "text-accent")} aria-hidden />
                     {!collapsed && <span className="flex-1 truncate">{t(key)}</span>}
+                    {!collapsed && key === "jobs" && running > 0 && (
+                      <span className="rounded-full bg-accent/15 px-1.5 font-mono text-[10px] text-accent">{running}</span>
+                    )}
                     {!collapsed && key === "events" && open > 0 && (
                       <span className="rounded-full bg-warn/15 px-1.5 font-mono text-[10px] text-warn">{open > 99 ? "99+" : open}</span>
                     )}

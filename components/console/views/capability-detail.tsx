@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, Check, Link2, Unlink } from "lucide-react";
+import { ArrowLeft, Check, FlaskConical, Link2, Unlink } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -151,7 +151,21 @@ export function CapabilityDetailView({ id }: { id: string }) {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-3">
-        <Panel className="xl:col-span-2" title={t("console.capabilities.detail.livePreview")} bodyClassName="p-0">
+        <Panel
+          className="xl:col-span-2"
+          title={t("console.capabilities.detail.livePreview")}
+          bodyClassName="p-0"
+          actions={
+            subscribed ? (
+              <Button asChild size="sm">
+                <Link href={`/console/playground?cap=${cap.id}`}>
+                  <FlaskConical aria-hidden />
+                  {t("console.capabilities.detail.tryIt")}
+                </Link>
+              </Button>
+            ) : undefined
+          }
+        >
           <CapabilityVisual id={cap.id} labeled fit="contain" className="aspect-video rounded-b-[var(--radius-card)]" />
         </Panel>
         <Panel title={t("console.capabilities.detail.config")}>
@@ -179,7 +193,9 @@ export function CapabilityDetailView({ id }: { id: string }) {
             {bound.map((s) => (
               <li key={s.id} className="flex items-center gap-3 px-5 py-3">
                 <span className="min-w-0 flex-1">
-                  <span className="block font-mono text-xs text-text-1">{s.name}</span>
+                  <Link href={`/console/sources/${s.id}`} className="block font-mono text-xs text-text-1 hover:text-accent">
+                    {s.name}
+                  </Link>
                   <span className="block truncate text-xs text-text-3">{loc(s.location, locale)}</span>
                 </span>
                 <SourceStatusBadge status={s.status} />

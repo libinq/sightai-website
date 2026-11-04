@@ -927,7 +927,9 @@
       "settings": "设置",
       "groupOperate": "运营",
       "groupBuild": "开发",
-      "groupAccount": "账户"
+      "groupAccount": "账户",
+      "playground": "在线体验",
+      "jobs": "批处理任务"
     },
     "topbar": {
       "search": "搜索能力、视频源、事件…",
@@ -972,7 +974,8 @@
         "subscribe": "订阅一项能力",
         "source": "接入视频源",
         "key": "创建 API 密钥",
-        "analytics": "查看行业看板"
+        "analytics": "查看行业看板",
+        "playground": "用自己的视频试用能力"
       },
       "empty": "还没有订阅能力，先去能力市场开通一项吧。"
     },
@@ -1021,7 +1024,8 @@
         "notSubscribed": "尚未订阅该能力",
         "notSubscribedDesc": "订阅后可配置参数、绑定视频源并接收事件。",
         "unbind": "解除绑定",
-        "fullIntro": "查看完整介绍"
+        "fullIntro": "查看完整介绍",
+        "tryIt": "在线体验"
       }
     },
     "analytics": {
@@ -1125,7 +1129,7 @@
     },
     "sources": {
       "title": "视频源",
-      "desc": "管理摄像头、安检门、产线相机与边缘盒子。支持 RTSP / ONVIF / GB28181 / SRT / 文件上传。",
+      "desc": "管理摄像头、安检门、产线相机与边缘网关。RTSP / ONVIF / GB28181 经网关拉流，SRT / RTMP 推流接入，也可直接使用本机摄像头。",
       "add": "接入视频源",
       "search": "按名称或位置搜索",
       "cols": {
@@ -1158,7 +1162,8 @@
       "removed": "已移除「{name}」",
       "empty": "没有匹配的视频源",
       "quota": "视频源配额 {used} / {total}",
-      "unlimited": "不限"
+      "unlimited": "不限",
+      "live": "实时画面"
     },
     "events": {
       "title": "事件中心",
@@ -1225,7 +1230,11 @@
         "no_helmet": "未戴安全帽",
         "no_vest": "未穿反光衣",
         "missing_part": "漏装",
-        "wrong_part": "错装"
+        "wrong_part": "错装",
+        "goal": "进球",
+        "shot": "射门",
+        "save": "扑救",
+        "foul": "犯规"
       }
     },
     "apiKeys": {
@@ -1320,7 +1329,923 @@
       "markRead": "全部已读",
       "empty": "没有新通知"
     },
-    "title": "控制台"
+    "title": "控制台",
+    "stage": {
+      "live": "直播",
+      "roiHint": "在画面上拖动，框选检测区域",
+      "play": "播放",
+      "pause": "暂停",
+      "seek": "进度",
+      "overlay": "显示 / 隐藏检测框",
+      "snapshot": "下载截图",
+      "fullscreen": "全屏",
+      "errors": {
+        "load": "无法加载该媒体，请检查文件或链接后重试。",
+        "cors": "视频可以播放，但其服务器不允许跨域分析（CORS）。请为视频配置 Access-Control-Allow-Origin，或改为上传文件。",
+        "camDenied": "摄像头权限被拒绝。请在浏览器地址栏中允许访问后重试。",
+        "camMissing": "此设备未检测到摄像头。",
+        "insecure": "浏览器摄像头需要 HTTPS（或 localhost）环境。"
+      },
+      "compare": "对比"
+    },
+    "playground": {
+      "title": "在线体验",
+      "desc": "为已订阅的能力选择示例视频、上传自有视频、接入摄像头或使用本机摄像头，调整参数后实时查看识别效果；满意后可保存为默认配置、下发到摄像头，或对整段视频发起批处理。",
+      "capability": "能力",
+      "engineNote": {
+        "detect": "预览引擎说明：运动分析、目标跟踪、ROI 与脱敏都会在浏览器本地对您的画面实时计算，视频不会上传；类别标签与置信度为模拟值。标有「部署生效」的参数由正式模型执行，预览中不模拟。",
+        "enhance": "预览说明：调色在浏览器本地实时计算，为近似效果；拖动画面上的分割线可对比原始与增强画面。超分、降噪与 HDR 输出由正式模型完成。",
+        "stabilize": "预览说明：浏览器会在本地对画面做全局运动估计与轨迹平滑，真实反映防抖效果；拖动分割线可对比原始与防抖画面。地平线锁定与果冻效应校正由正式模型完成。",
+        "avatar": "预览说明：使用浏览器语音合成朗读台词并同步显示字幕；正式环境使用声音克隆、口型同步与实时渲染。"
+      },
+      "inputLabel": "输入源",
+      "inputs": {
+        "sample": "示例视频",
+        "upload": "上传文件",
+        "camera": "已接入摄像头",
+        "webcam": "本机摄像头",
+        "url": "视频链接"
+      },
+      "samples": {
+        "roadDefect": "道路巡检",
+        "packaging": "包装产线",
+        "bullying": "校园走廊",
+        "behavior": "教室",
+        "contraband": "安检通道",
+        "shelf": "门店货架",
+        "refcam": "裁判视角"
+      },
+      "dropTitle": "拖入视频或图片",
+      "dropHint": "支持 MP4 / WebM / MOV / JPG / PNG，单个不超过 500 MB；文件只在本地浏览器中处理。",
+      "choose": "选择文件",
+      "errType": "仅支持视频或图片文件。",
+      "errSize": "文件超过 500 MB。",
+      "pickCamera": "选择摄像头…",
+      "connectCamera": "接入摄像头",
+      "relayNote": "{protocol} 视频流由边缘网关通过 WebRTC 中继到浏览器；演示环境以示例画面代替真实视频流。",
+      "webcamHint": "将本机摄像头作为实时视频源。画面在浏览器本地分析，不会上传。",
+      "webcamStart": "打开摄像头",
+      "webcamStop": "关闭摄像头",
+      "webcamLabel": "本机摄像头",
+      "errUrl": "请输入有效的 http(s) 链接。",
+      "load": "加载",
+      "urlHint": "填写 MP4 / WebM 直链；如需在此分析，视频服务器须允许跨域（CORS）。",
+      "empty": {
+        "sample": "请选择一个示例视频。",
+        "upload": "上传视频或图片，用您自己的画面预览识别效果。",
+        "camera": "选择一路摄像头，查看实时画面。",
+        "webcam": "打开摄像头即可实时预览。",
+        "url": "粘贴视频链接后点击「加载」。"
+      },
+      "stats": {
+        "objects": "当前目标数",
+        "events": "已触发事件",
+        "fps": "分析帧率",
+        "latency": "单帧耗时",
+        "jitterRaw": "原始抖动",
+        "jitterSmooth": "防抖后抖动",
+        "reduction": "抖动降低"
+      },
+      "results": "结果",
+      "resultTabs": {
+        "detections": "检测结果",
+        "events": "事件",
+        "json": "返回 JSON",
+        "code": "API 调用代码",
+        "motion": "相机轨迹"
+      },
+      "cols": {
+        "track": "跟踪 ID",
+        "class": "类别",
+        "confidence": "置信度",
+        "box": "坐标（x, y, w×h）",
+        "roi": "在 ROI 内"
+      },
+      "noDetections": "当前帧暂无检测结果。",
+      "inRoi": "位于 ROI 内",
+      "forward": "同步推送到事件中心",
+      "noEvents": "暂无事件。目标在检测区域内停留超过触发时长后会产生事件。",
+      "paramsTitle": "参数",
+      "paramsDesc": "修改后立即作用于预览",
+      "deployTitle": "应用配置",
+      "deployDesc": "将当前参数设为默认、下发到摄像头，或对整段视频批量分析。",
+      "saveDefault": "保存为该能力的默认配置",
+      "savedDefault": "已保存为该能力的默认配置",
+      "applyCameras": "下发到摄像头…",
+      "runBatch": "对此视频发起批处理",
+      "batchDisabled": "批处理适用于示例视频、上传视频和视频链接，不适用于实时流或图片。",
+      "jobStarted": "批处理任务已创建",
+      "viewJobs": "查看批处理任务",
+      "noSubs": "还没有订阅任何能力",
+      "noSubsDesc": "订阅能力后，即可在这里用自己的视频在线体验。",
+      "browse": "浏览能力",
+      "codeTitle": "语言",
+      "copy": "复制",
+      "copied": "已复制",
+      "applyTitle": "下发到摄像头",
+      "applyDesc": "选中的摄像头会绑定到该能力，并使用当前参数与检测区域。",
+      "noCameras": "还没有摄像头，请先接入。",
+      "rebind": "将从「{name}」改绑",
+      "cancel": "取消",
+      "applyConfirm": "下发到 {count} 路摄像头",
+      "applied": "已下发到 {count} 路摄像头",
+      "original": "原始",
+      "enhanced": "增强后",
+      "stabilized": "防抖后",
+      "pathRaw": "原始相机轨迹",
+      "pathSmooth": "平滑后轨迹",
+      "axisX": "水平方向",
+      "axisY": "垂直方向"
+    },
+    "jobs": {
+      "title": "批处理任务",
+      "desc": "在线体验或 API 发起的整段视频分析任务。结果可下载为 JSON，格式与 API 返回一致。",
+      "new": "新建任务",
+      "cols": {
+        "input": "输入",
+        "capability": "能力",
+        "status": "状态",
+        "created": "创建时间",
+        "duration": "时长",
+        "objects": "目标数",
+        "events": "事件数"
+      },
+      "empty": "暂无批处理任务。",
+      "emptyCta": "前往在线体验，对示例视频发起一次任务",
+      "kinds": {
+        "sample": "示例",
+        "file": "上传",
+        "url": "链接"
+      },
+      "status": {
+        "succeeded": "已完成",
+        "failed": "失败"
+      },
+      "errors": {
+        "cors": "视频服务器禁止跨域分析",
+        "interrupted": "任务运行时页面被刷新，已中断",
+        "duration": "无法读取视频时长",
+        "load": "视频加载失败"
+      },
+      "download": "下载 JSON",
+      "remove": "删除",
+      "frames": "共分析 {count} 帧",
+      "byClass": "按类别统计",
+      "timeline": "事件时间线",
+      "doneToast": "批处理完成：{name}",
+      "failedToast": "批处理失败：{name}"
+    },
+    "sourceDetail": {
+      "back": "返回视频源",
+      "notFound": "该视频源不存在或已被移除。",
+      "openPlayground": "在线调参",
+      "confirmRemove": "确定移除该视频源？历史事件会保留。",
+      "roiSaved": "检测区域已保存",
+      "offline": "该视频源当前离线。",
+      "reconnecting": "正在重连…",
+      "reconnect": "重新连接",
+      "reconnected": "视频源已恢复在线",
+      "editRoi": "框选检测区域",
+      "clearRoi": "清除检测区域",
+      "liveStats": "{objects} 个目标 · {fps} fps · {ms} ms",
+      "noCapability": "尚未绑定能力：画面正常播放，但不会做分析。请在右侧绑定能力。",
+      "simNote": "演示环境以示例画面代替视频流；正式环境由边缘网关通过 WebRTC 中继真实画面。",
+      "capability": "绑定能力",
+      "bound": "绑定已更新",
+      "tuneParams": "配置该能力",
+      "stream": "流信息",
+      "info": {
+        "protocol": "协议",
+        "url": "地址",
+        "codec": "编码",
+        "resolution": "分辨率",
+        "fps": "帧率",
+        "via": "接入方式"
+      },
+      "via": {
+        "browser": "本机浏览器",
+        "push": "推流接入",
+        "direct": "直连（公网地址）"
+      },
+      "health": "流健康度（近 4 小时）",
+      "bitrate": "码率",
+      "fpsLabel": "帧率",
+      "events": "该视频源的近期事件",
+      "original": "原始",
+      "processed": "处理后"
+    },
+    "wizard": {
+      "title": "接入视频源",
+      "desc": "选择接入方式并测试连接，然后绑定能力即可开始分析。",
+      "progress": "进度",
+      "steps": {
+        "method": "接入方式",
+        "connect": "连接与测试",
+        "finish": "命名与绑定"
+      },
+      "quotaFull": "当前套餐的视频源配额已满（{total} 路），请升级套餐或先移除部分视频源。",
+      "methods": {
+        "rtsp": {
+          "name": "RTSP 摄像头",
+          "desc": "IP 摄像头或 NVR 通道，由内网边缘网关拉流。"
+        },
+        "onvif": {
+          "name": "ONVIF 自动发现",
+          "desc": "由网关扫描局域网，列出可接入的 ONVIF 设备。"
+        },
+        "gb28181": {
+          "name": "GB28181 平台",
+          "desc": "国标设备注册，或下级平台级联接入。"
+        },
+        "push": {
+          "name": "SRT / RTMP 推流",
+          "desc": "编码器、无人机、RefCam、OBS 等推流到接入点。"
+        },
+        "webcam": {
+          "name": "本机摄像头",
+          "desc": "使用当前电脑的摄像头，在浏览器本地分析，适合试用。"
+        }
+      },
+      "gateway": "边缘网关",
+      "direct": "不使用网关（摄像头有公网地址）",
+      "gatewayHint": "内网摄像头需经网关接入；可在「视频源」页的「边缘网关」区域添加网关。",
+      "discovery": "已发现设备",
+      "scan": "扫描网络",
+      "scanning": "扫描中…",
+      "scanHint": "选择网关后点击扫描，网关将在所在网段发送 ONVIF WS-Discovery 探测。",
+      "url": "流地址",
+      "username": "用户名",
+      "password": "密码",
+      "transport": "传输方式",
+      "credHint": "凭据加密下发到网关保存，控制台中不会再次显示。",
+      "gbIntro": "请在设备或下级平台上填写以下 SIP 参数，然后输入设备的 20 位国标编码。",
+      "gb": {
+        "serverId": "SIP 服务器编号",
+        "domain": "SIP 域",
+        "host": "SIP 服务器地址",
+        "password": "注册密码",
+        "deviceId": "设备国标编码（20 位）"
+      },
+      "pushProto": "推流协议",
+      "pushIntro": "在编码器中填写以下推流地址，收到视频流后会自动识别。",
+      "ingestUrl": "推流地址",
+      "streamKey": "推流密钥",
+      "webcamIntro": "浏览器会请求摄像头权限。画面只在本机分析，不会上传。",
+      "waitStream": "等待视频流",
+      "test": "连接测试",
+      "listen": "开始监听",
+      "runTest": "测试连接",
+      "checks": {
+        "reach": "网络可达",
+        "auth": "鉴权通过",
+        "probe": "流探测",
+        "decode": "解码成功",
+        "receive": "收到视频流"
+      },
+      "fail": {
+        "webcam": "无法打开摄像头，请检查浏览器权限。",
+        "url": "流地址格式不正确，应为 rtsp://主机[:端口]/路径。",
+        "deviceId": "国标编码须为 20 位数字。",
+        "private": "这是内网地址，请选择一个边缘网关进行接入。",
+        "auth": "摄像头拒绝了用户名或密码。"
+      },
+      "probed": "探测结果",
+      "name": "名称",
+      "location": "位置",
+      "capability": "绑定能力",
+      "none": "暂不绑定",
+      "summary": {
+        "protocol": "协议",
+        "codec": "编码",
+        "resolution": "分辨率",
+        "fps": "帧率"
+      },
+      "cancel": "取消",
+      "back": "上一步",
+      "next": "下一步",
+      "submit": "完成接入",
+      "added": "已接入「{name}」",
+      "copy": "复制",
+      "webcamName": "WEBCAM-01"
+    },
+    "gateways": {
+      "title": "边缘网关",
+      "desc": "部署在您内网的轻量服务：负责 RTSP / ONVIF / GB28181 拉流、就地推理，并通过仅出站连接回传云端。",
+      "add": "添加网关",
+      "empty": "还没有网关。",
+      "cameras": "{count} 路摄像头",
+      "remove": "移除",
+      "confirmRemove": "有 {count} 路摄像头经此网关接入，移除后将离线。确定移除？",
+      "status": {
+        "online": "在线",
+        "pending": "等待连接",
+        "offline": "离线"
+      },
+      "addTitle": "添加边缘网关",
+      "addDesc": "以 Docker 容器运行在摄像头所在网络中的任意 x86 / ARM Linux 主机上，也可部署在 SightAI 边缘盒子上。",
+      "name": "网关名称",
+      "site": "站点",
+      "generate": "生成安装命令",
+      "stepHw": "准备一台已安装 Docker、能访问摄像头的 Linux 主机（4 核 8 GB 约可接入 16 路 1080p）。",
+      "stepRun": "在该主机上执行以下命令（令牌仅可使用一次）。",
+      "stepWait": "保持此窗口打开，网关连接成功后会自动显示。",
+      "copy": "复制命令",
+      "connected": "网关已连接，来源 IP {ip}",
+      "waiting": "等待网关连接…",
+      "done": "完成"
+    },
+    "capParams": {
+      "_groups": {
+        "detect": "识别",
+        "rule": "告警规则",
+        "look": "画面调整",
+        "stab": "防抖",
+        "persona": "形象与声音",
+        "output": "输出与集成"
+      },
+      "_units": {
+        "s": "秒",
+        "pct": "%",
+        "ms": "ms",
+        "mm": "mm",
+        "m": "米",
+        "kmh": "km/h",
+        "mbps": "Mbps",
+        "fps": "fps",
+        "x": "×",
+        "people": "人",
+        "parts": "件",
+        "lanes": "条",
+        "min": "分钟"
+      },
+      "_deployOnly": "部署生效",
+      "_deployOnlyHint": "该参数由云端或边缘的正式模型执行，浏览器预览不做模拟。",
+      "_common": {
+        "classes": {
+          "label": "检测类别"
+        },
+        "threshold": {
+          "label": "置信度阈值",
+          "hint": "低于阈值的结果将被过滤。"
+        },
+        "sensitivity": {
+          "label": "灵敏度",
+          "hint": "越高越能捕捉细小变化，误报也会相应增加。"
+        },
+        "minSize": {
+          "label": "最小目标尺寸",
+          "hint": "按占画面面积的百分比计算。"
+        },
+        "sampleFps": {
+          "label": "分析帧率"
+        },
+        "roi": {
+          "label": "检测区域（ROI）",
+          "options": {
+            "full": "全画面",
+            "left": "左半区",
+            "right": "右半区",
+            "center": "中心区域",
+            "bottom": "下半区",
+            "custom": "自定义"
+          }
+        },
+        "drawRoi": {
+          "label": "框选"
+        },
+        "dwell": {
+          "label": "触发时长",
+          "hint": "目标在检测区域内持续多久后产生事件。"
+        },
+        "cooldown": {
+          "label": "告警冷却",
+          "hint": "同类事件在冷却期内不重复告警。"
+        },
+        "minCount": {
+          "label": "最少人数"
+        },
+        "privacy": {
+          "label": "隐私脱敏",
+          "hint": "对预览画面和留存截图中的检测区域做模糊处理。"
+        },
+        "notify": {
+          "label": "通知对象"
+        },
+        "scene": {
+          "label": "应用场景"
+        },
+        "lang": {
+          "label": "播报语言",
+          "options": {
+            "zh": "中文",
+            "en": "English",
+            "ms": "Bahasa Melayu",
+            "ja": "日本語"
+          }
+        },
+        "voice": {
+          "label": "声音风格",
+          "options": {
+            "warm": "亲和",
+            "pro": "专业",
+            "lively": "活泼"
+          }
+        },
+        "rate": {
+          "label": "语速"
+        },
+        "subtitles": {
+          "label": "显示字幕"
+        }
+      },
+      "edu-bullying": {
+        "roi": {
+          "label": "监控区域",
+          "hint": "建议框选走廊尽头、楼梯间等监控盲区附近。"
+        },
+        "minCount": {
+          "label": "最少涉及人数",
+          "hint": "区域内达到该人数并持续「冲突持续时长」，才判定为聚集或冲突。"
+        },
+        "dwell": {
+          "label": "冲突持续时长",
+          "hint": "推搡、打斗持续多久才告警，用来过滤正常打闹。"
+        },
+        "schedule": {
+          "label": "布防时段",
+          "options": {
+            "always": "全天",
+            "breaks": "课间与午休",
+            "afterSchool": "放学后"
+          }
+        },
+        "privacy": {
+          "label": "学生人脸脱敏",
+          "hint": "默认开启；事件留证需授权后查看原图。"
+        },
+        "notify": {
+          "label": "通知对象",
+          "options": {
+            "moral": "德育处",
+            "teacher": "班主任",
+            "security": "安保值班室"
+          }
+        }
+      },
+      "edu-behavior": {
+        "dwell": {
+          "label": "异常持续时长",
+          "hint": "跌倒、打斗等行为持续多久后告警。"
+        },
+        "loiterSeconds": {
+          "label": "徘徊判定时长",
+          "hint": "在同一区域停留超过该时长视为徘徊。"
+        },
+        "runSpeed": {
+          "label": "奔跑速度阈值（m/s）",
+          "hint": "用于识别走廊、楼梯的追逐奔跑。"
+        }
+      },
+      "edu-contraband": {
+        "threshold": {
+          "label": "置信度阈值",
+          "hint": "安检场景宁可多报，默认阈值偏低，由安保人工复核。"
+        },
+        "minSize": {
+          "label": "最小物品尺寸",
+          "hint": "刀具、打火机等小物品可适当调低。"
+        },
+        "screening": {
+          "label": "安检方式",
+          "options": {
+            "gate": "通道式安检门",
+            "xray": "X 光行李机",
+            "camera": "普通摄像头"
+          }
+        },
+        "dwell": {
+          "label": "确认时长",
+          "hint": "0 表示检出即报警。"
+        },
+        "lanes": {
+          "label": "安检通道数"
+        },
+        "alarm": {
+          "label": "告警动作",
+          "options": {
+            "soundLight": "声光报警",
+            "silent": "静默推送至安保",
+            "lockGate": "联动闸机锁定"
+          }
+        }
+      },
+      "edu-perimeter": {
+        "roi": {
+          "label": "警戒区域",
+          "hint": "框选围墙、天台、水域等危险区域。"
+        },
+        "minSize": {
+          "label": "最小目标尺寸",
+          "hint": "用于过滤猫狗、落叶等小目标。"
+        },
+        "dwell": {
+          "label": "进入后报警延迟"
+        },
+        "direction": {
+          "label": "越界方向",
+          "options": {
+            "enter": "进入区域",
+            "exit": "离开区域",
+            "both": "双向"
+          }
+        },
+        "arm": {
+          "label": "布防时段",
+          "options": {
+            "always": "全天",
+            "night": "夜间 18:00–07:00",
+            "weekend": "节假日"
+          }
+        }
+      },
+      "retail-heatmap": {
+        "roi": {
+          "label": "统计区域",
+          "hint": "如收银排队区、促销堆头。"
+        },
+        "minCount": {
+          "label": "排队告警人数",
+          "hint": "区域内人数达到该值，并持续「停留判定时长」后告警。"
+        },
+        "dwell": {
+          "label": "停留判定时长"
+        },
+        "excludeStaff": {
+          "label": "排除店员",
+          "hint": "根据工服识别店员，不计入客流。"
+        },
+        "grid": {
+          "label": "热力图网格",
+          "options": {
+            "coarse": "粗（1 m）",
+            "fine": "细（0.5 m）"
+          }
+        },
+        "interval": {
+          "label": "报表粒度",
+          "options": {
+            "15m": "15 分钟",
+            "1h": "1 小时",
+            "1d": "1 天"
+          }
+        }
+      },
+      "retail-shelf": {
+        "roi": {
+          "label": "货架区域"
+        },
+        "minSize": {
+          "label": "最小陈列面"
+        },
+        "dwell": {
+          "label": "缺货确认时长",
+          "hint": "持续多久才报缺货，避免顾客遮挡造成误报。"
+        },
+        "emptyRatio": {
+          "label": "缺货判定（空位占比）",
+          "hint": "货架空位超过该比例即判定为缺货。"
+        },
+        "scanEvery": {
+          "label": "巡检间隔",
+          "options": {
+            "5": "每 5 分钟",
+            "15": "每 15 分钟",
+            "30": "每 30 分钟",
+            "60": "每小时"
+          }
+        },
+        "notify": {
+          "label": "通知对象",
+          "options": {
+            "store": "门店店长",
+            "area": "区域经理",
+            "hq": "总部运营"
+          }
+        }
+      },
+      "retail-loss": {
+        "roi": {
+          "label": "收银台区域"
+        },
+        "dwell": {
+          "label": "遮挡判定时长",
+          "hint": "商品遮挡扫码区超过该时长，判定为遮挡扫码。"
+        },
+        "posSync": {
+          "label": "关联 POS 交易",
+          "hint": "与收银流水比对，识别漏扫。"
+        },
+        "action": {
+          "label": "处置方式",
+          "options": {
+            "alert": "实时提醒收银员",
+            "record": "仅记录留证"
+          }
+        }
+      },
+      "retail-avatar": {
+        "scene": {
+          "label": "应用场景",
+          "options": {
+            "guide": "门店导购",
+            "live": "直播带货",
+            "service": "客服问答"
+          }
+        },
+        "knowledge": {
+          "label": "接入商品知识库",
+          "hint": "基于商品库与促销信息回答顾客提问。"
+        },
+        "handoff": {
+          "label": "复杂问题转人工"
+        },
+        "idle": {
+          "label": "空闲时",
+          "options": {
+            "promo": "循环播放促销",
+            "greet": "主动招呼",
+            "none": "静默"
+          }
+        }
+      },
+      "sports-refcam": {
+        "strength": {
+          "label": "平滑强度",
+          "hint": "越高画面越稳，但跟随快速转头时会有滞后。"
+        },
+        "crop": {
+          "label": "裁切余量",
+          "hint": "为防抖预留的画面边缘。"
+        },
+        "horizon": {
+          "label": "地平线锁定",
+          "hint": "保持画面水平（滚转校正）。"
+        },
+        "rollingShutter": {
+          "label": "果冻效应校正"
+        },
+        "latency": {
+          "label": "延迟模式",
+          "options": {
+            "ultra": "超低延迟（1 帧）",
+            "balanced": "均衡",
+            "quality": "画质优先"
+          }
+        },
+        "output": {
+          "label": "输出规格"
+        },
+        "bitrate": {
+          "label": "推流码率"
+        }
+      },
+      "sports-enhance": {
+        "preset": {
+          "label": "增强模式",
+          "options": {
+            "auto": "自动白平衡与曝光",
+            "lowlight": "低光增强",
+            "hdr": "HDR 还原",
+            "sr": "超分辨率",
+            "match": "多机位色彩匹配"
+          }
+        },
+        "strength": {
+          "label": "增强强度"
+        },
+        "exposure": {
+          "label": "曝光"
+        },
+        "contrast": {
+          "label": "对比度"
+        },
+        "saturation": {
+          "label": "饱和度"
+        },
+        "warmth": {
+          "label": "色温",
+          "hint": "正值偏暖，负值偏冷。"
+        },
+        "sharpen": {
+          "label": "锐化"
+        },
+        "denoise": {
+          "label": "降噪"
+        },
+        "resolution": {
+          "label": "输出分辨率",
+          "options": {
+            "same": "与输入一致",
+            "1080p": "1080p",
+            "4k": "4K"
+          }
+        },
+        "hdrOut": {
+          "label": "动态范围输出",
+          "options": {
+            "sdr": "SDR",
+            "hlg": "HDR（HLG）",
+            "pq": "HDR（PQ）"
+          }
+        }
+      },
+      "sports-highlights": {
+        "classes": {
+          "label": "高光类型"
+        },
+        "dwell": {
+          "label": "判定时长"
+        },
+        "cooldown": {
+          "label": "同类高光间隔"
+        },
+        "preRoll": {
+          "label": "前置时长",
+          "hint": "保留高光时刻之前的秒数。"
+        },
+        "postRoll": {
+          "label": "后置时长"
+        },
+        "maxClip": {
+          "label": "单条最长"
+        },
+        "aspects": {
+          "label": "输出画幅",
+          "options": {
+            "16:9": "横屏 16:9",
+            "9:16": "竖屏 9:16",
+            "1:1": "方形 1:1"
+          }
+        },
+        "platforms": {
+          "label": "分发平台",
+          "options": {
+            "tiktok": "抖音 / TikTok",
+            "youtube": "YouTube",
+            "web": "官网",
+            "app": "App"
+          }
+        },
+        "autoPublish": {
+          "label": "自动发布",
+          "hint": "关闭时，生成的集锦进入待审核队列。"
+        }
+      },
+      "sports-avatar": {
+        "scene": {
+          "label": "应用场景",
+          "options": {
+            "commentary": "赛事解说",
+            "venue": "场馆引导",
+            "score": "比分播报"
+          }
+        },
+        "dataFeed": {
+          "label": "接入实时比分数据"
+        },
+        "channels": {
+          "label": "播出渠道",
+          "options": {
+            "screen": "场馆大屏",
+            "stream": "直播流",
+            "miniapp": "小程序"
+          }
+        }
+      },
+      "mfg-defect": {
+        "threshold": {
+          "label": "NG 判定阈值",
+          "hint": "高于阈值判为不良品。"
+        },
+        "minSize": {
+          "label": "最小缺陷面积",
+          "hint": "小于该面积的划痕、污点忽略不计。"
+        },
+        "roi": {
+          "label": "检测工位区域"
+        },
+        "takt": {
+          "label": "产线节拍",
+          "hint": "单件判定须在节拍内完成。"
+        },
+        "consecutiveNg": {
+          "label": "连续 NG 停线",
+          "hint": "连续出现 N 件不良即停线报警。"
+        },
+        "reject": {
+          "label": "剔除方式",
+          "options": {
+            "plc": "PLC 信号剔除",
+            "alarm": "仅声光报警",
+            "stopLine": "停线"
+          }
+        },
+        "saveImages": {
+          "label": "图片留存",
+          "options": {
+            "ng": "仅 NG 件",
+            "all": "全部",
+            "none": "不留存"
+          }
+        }
+      },
+      "mfg-road": {
+        "minSize": {
+          "label": "最小病害尺寸"
+        },
+        "speed": {
+          "label": "采集车速",
+          "hint": "车速越高，需要的分析帧率越高。"
+        },
+        "depth": {
+          "label": "深度告警阈值",
+          "hint": "坑槽、车辙深度超过该值标记为重度。"
+        },
+        "gpsInterval": {
+          "label": "定位打点间隔"
+        },
+        "report": {
+          "label": "报告生成",
+          "options": {
+            "perTrip": "每趟巡检",
+            "daily": "每日汇总"
+          }
+        }
+      },
+      "mfg-ppe": {
+        "roi": {
+          "label": "危险作业区域"
+        },
+        "gear": {
+          "label": "必须佩戴",
+          "options": {
+            "helmet": "安全帽",
+            "vest": "反光衣",
+            "gloves": "防护手套",
+            "goggles": "护目镜"
+          }
+        },
+        "dwell": {
+          "label": "违规持续时长",
+          "hint": "短暂摘帽（如擦汗）不告警。"
+        },
+        "cooldown": {
+          "label": "告警冷却",
+          "hint": "同一违规在冷却期内不重复推送。"
+        }
+      },
+      "mfg-assembly": {
+        "threshold": {
+          "label": "判定阈值"
+        },
+        "minSize": {
+          "label": "最小零件尺寸"
+        },
+        "roi": {
+          "label": "工件区域"
+        },
+        "variant": {
+          "label": "BOM 型号",
+          "options": {
+            "A": "型号 A",
+            "B": "型号 B",
+            "C": "型号 C"
+          }
+        },
+        "parts": {
+          "label": "应装零件数"
+        },
+        "trigger": {
+          "label": "检测触发",
+          "options": {
+            "plc": "工位 PLC 到位信号",
+            "continuous": "连续检测"
+          }
+        }
+      }
+    },
+    "avatar": {
+      "alt": "AI 数字人形象",
+      "speaking": "播报中",
+      "idle": "待机",
+      "script": "播报台词",
+      "speak": "播报",
+      "stop": "停止",
+      "useSample": "使用示例台词",
+      "note": "预览使用浏览器语音（{voice}）；正式环境使用声音克隆与口型同步。",
+      "systemVoice": "系统默认声音",
+      "noTts": "当前浏览器不支持语音合成，仅预览字幕。"
+    }
   },
   "capabilityPage": {
     "includedIn": "{plan}可用",
