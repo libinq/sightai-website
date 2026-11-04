@@ -15,7 +15,8 @@ import { useConsole } from "../console-provider";
 import { Sparkline } from "../charts";
 import { EventStatusBadge, PageSkeleton, Panel, SeverityBadge, SourceStatusBadge, relTime } from "../ui";
 import { PreviewStage, type FrameStats, type StageEvent, type StageInput } from "../preview/preview-stage";
-import { initialParams, useClassLabel } from "./playground";
+import { useClassLabel } from "./playground";
+import { enhanceFilter, resolveConfig, toPreviewParams } from "@/lib/console/cap-config";
 
 /** rtsp://user:pass@host → rtsp://user:•••@host */
 const maskUrl = (u?: string) => (u ? u.replace(/(\/\/[^:/@]+:)[^@]+@/, "$1•••@") : "—");
@@ -33,11 +34,17 @@ export function SourceDetailView({ id }: { id: string }) {
 
   const source = store.sources.find((s) => s.id === id);
   const cap = source?.capability ? getCapability(source.capability) : undefined;
-  const classes = useMemo(() => cap?.events ?? [], [cap]);
+  const cfg = useMemo(() => (cap ? resolveConfig(cap.id, store.configs[cap.id]?.values) : null), [cap, store.configs]);
+  const classes = useMemo(() => cfg?.classes ?? [], [cfg]);
+  const mode = cfg?.schema.mode ?? "detect";
   const params = useMemo(() => {
-    const base = initialParams(classes, cap ? store.configs[cap.id] : undefined);
-    return { ...base, roi: source?.roi ?? null, sampleFps: Math.min(base.sampleFps, 8) };
-  }, [classes, cap, store.configs, source?.roi]);
+    const base = cfg ? toPreviewParams(cfg.schema, cfg.values, cfg.classes) : toPreviewParams(resolveConfig("").schema, {}, []);
+    return { ...base, roi: source?.roi ?? base.roi, sampleFps: Math.min(base.sampleFps, 8) };
+  }, [cfg, source?.roi]);
+  const render = useMemo(
+    () => ({ filter: cfg && mode === "enhance" ? enhanceFilter(cfg.values) : undefined, strength: Number(cfg?.values.strength ?? 70), crop: Number(cfg?.values.crop ?? 8), labels: [t("original"), t("processed")] as [string, string] }),
+    [cfg, mode, t],
+  );
 
   const input: StageInput | null = useMemo(() => {
     if (!source || source.status === "offline") return null;
@@ -144,6 +151,8 @@ export function SourceDetailView({ id }: { id: string }) {
             labelFor={labelFor}
             onFrame={setStats}
             onEvent={cap ? onEvent : undefined}
+            mode={!cap ? "none" : mode === "avatar" ? "none" : mode}
+            render={render}
             roiEditing={roiEditing}
             onRoiChange={(roi) => {
               updateSource(source.id, { roi });
@@ -174,7 +183,7 @@ export function SourceDetailView({ id }: { id: string }) {
             }
           />
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" variant={roiEditing ? "primary" : "secondary"} aria-pressed={roiEditing} onClick={() => setRoiEditing((o) => !o)} disabled={!input}>
+            <Button size="sm" variant={roiEditing ? "primary" : "secondary"} aria-pressed={roiEditing} onClick={() => setRoiEditing((o) => !o)} disabled={!input || mode !== "detect"}>
               <Crop aria-hidden />
               {t("editRoi")}
             </Button>

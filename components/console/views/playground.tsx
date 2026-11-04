@@ -12,16 +12,19 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { getCapability, pick } from "@/content/industries";
 import { MEDIA, type MediaKey } from "@/content/media";
 import { releaseObjectUrl } from "@/lib/console/batch";
-import { DEFAULT_PARAMS, type Detection, type PreviewParams } from "@/lib/console/engine";
+import type { Detection } from "@/lib/console/engine";
+import { enhanceFilter, resolveConfig, toPreviewParams } from "@/lib/console/cap-config";
+import { toApiParams, type CapValues } from "@/content/capability-params";
 import { loc, streamMedia, type EventItem, type Source } from "@/lib/console/mock";
 import { cn } from "@/lib/utils";
 import { DEFAULT_CONFIG, useConsole } from "../console-provider";
 import { PageHeader, PageSkeleton, Panel } from "../ui";
-import { PreviewStage, type FrameStats, type StageEvent, type StageInput } from "../preview/preview-stage";
-import { CodeSamples, ParamsPanel, toApiParams } from "../preview/params-panel";
+import { PreviewStage, type FrameStats, type MotionSample, type StageEvent, type StageInput } from "../preview/preview-stage";
+import { CapParamsForm, CodeSamples } from "../preview/params-panel";
+import { AvatarPreview, sampleScript } from "../preview/avatar-preview";
 
 type InputTab = "sample" | "upload" | "camera" | "webcam" | "url";
-type ResultTab = "detections" | "events" | "json" | "code";
+type ResultTab = "detections" | "events" | "motion" | "json" | "code";
 
 const SAMPLE_KEYS = (Object.keys(MEDIA) as MediaKey[]).filter((k) => MEDIA[k].kind === "video");
 const MAX_UPLOAD = 500 * 1024 * 1024;
@@ -33,14 +36,55 @@ export function useClassLabel() {
   return useCallback((cls: string) => (t.has(cls) ? t(cls) : cls), [t]);
 }
 
-export function initialParams(classes: string[], cfg?: { threshold: number; privacy: boolean; preview?: PreviewParams }): PreviewParams {
-  if (cfg?.preview) return { ...cfg.preview, classes: cfg.preview.classes.filter((c) => classes.includes(c)) };
-  return { ...DEFAULT_PARAMS, threshold: cfg?.threshold ?? DEFAULT_PARAMS.threshold, privacy: cfg?.privacy ?? false, classes };
+/** Camera-trajectory chart: raw (shaky) vs. smoothed camera path, horizontal and vertical. */
+function TrajectoryChart({ samples, labels }: { samples: MotionSample[]; labels: { raw: string; smooth: string; x: string; y: string } }) {
+  const W = 600;
+  const H = 120;
+  const axis = (key: "x" | "y") => {
+    const vals = samples.flatMap((s) => [s.raw[key], s.smooth[key]]);
+    const min = Math.min(...vals, -0.01);
+    const max = Math.max(...vals, 0.01);
+    const line = (pick: (s: MotionSample) => number) =>
+      samples.map((s, i) => `${((i / Math.max(1, samples.length - 1)) * W).toFixed(1)},${(H - ((pick(s) - min) / (max - min)) * (H - 8) - 4).toFixed(1)}`).join(" ");
+    return (
+      <figure key={key}>
+        <figcaption className="mb-1 font-mono text-[10px] uppercase tracking-wider text-text-3">{labels[key]}</figcaption>
+        <svg viewBox={`0 0 ${W} ${H}`} className="h-28 w-full rounded-[8px] border border-line bg-bg-0" preserveAspectRatio="none" role="img" aria-label={labels[key]}>
+          <polyline points={line((s) => s.raw[key])} fill="none" stroke="var(--warn)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+          <polyline points={line((s) => s.smooth[key])} fill="none" stroke="var(--accent)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+        </svg>
+      </figure>
+    );
+  };
+  return (
+    <div className="space-y-3 p-4">
+      <p className="flex gap-4 text-xs text-text-2">
+        <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 bg-warn" aria-hidden />{labels.raw}</span>
+        <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 bg-accent" aria-hidden />{labels.smooth}</span>
+      </p>
+      {axis("x")}
+      {axis("y")}
+    </div>
+  );
 }
+
+/** RMS of frame-to-frame steps along a path — "how shaky" in normalized units. */
+function jitter(samples: MotionSample[], which: "raw" | "smooth") {
+  if (samples.length < 3) return 0;
+  let s = 0;
+  for (let i = 1; i < samples.length; i++) {
+    const a = samples[i - 1][which];
+    const b = samples[i][which];
+    s += (b.x - a.x) ** 2 + (b.y - a.y) ** 2;
+  }
+  return Math.sqrt(s / (samples.length - 1));
+}
+
+const getSchemaMode = (capId: string) => resolveConfig(capId).schema.mode;
 
 const severityOf = (conf: number): EventItem["severity"] => (conf >= 0.9 ? "high" : conf >= 0.78 ? "medium" : "low");
 
-function ApplyDialog({ open, onOpenChange, capId, params }: { open: boolean; onOpenChange: (o: boolean) => void; capId: string; params: PreviewParams }) {
+function ApplyDialog({ open, onOpenChange, capId, values }: { open: boolean; onOpenChange: (o: boolean) => void; capId: string; values: CapValues }) {
   const t = useTranslations("console.playground");
   const tc = useTranslations("common");
   const locale = useLocale();
@@ -81,11 +125,13 @@ function ApplyDialog({ open, onOpenChange, capId, params }: { open: boolean; onO
           <Button
             disabled={picked.length === 0}
             onClick={() => {
+              const { schema, classes } = resolveConfig(capId);
+              const p = toPreviewParams(schema, values, classes);
               picked.forEach((id) => {
                 bindSource(id, capId);
-                updateSource(id, { roi: params.roi });
+                if ("roi" in values) updateSource(id, { roi: p.roi });
               });
-              saveConfig(capId, { ...(store.configs[capId] ?? DEFAULT_CONFIG), threshold: params.threshold, privacy: params.privacy, preview: params });
+              saveConfig(capId, { ...(store.configs[capId] ?? DEFAULT_CONFIG), threshold: p.threshold, privacy: p.privacy, values });
               toast(t("applied", { count: picked.length }));
               onOpenChange(false);
             }}
@@ -112,9 +158,19 @@ export function PlaygroundView() {
   const qCap = sp.get("cap");
   const [capId, setCapId] = useState(qCap && subs.includes(qCap) ? qCap : subs[0] ?? "");
   const cap = getCapability(capId);
-  const classes = useMemo(() => cap?.events ?? [], [cap]);
+  const base = useMemo(() => resolveConfig(capId), [capId]);
+  const { schema, classes } = base;
+  const mode = schema.mode;
 
-  const [params, setParams] = useState<PreviewParams>(() => initialParams(classes, store.configs[capId]));
+  const [values, setValues] = useState<CapValues>(base.values);
+  const params = useMemo(() => toPreviewParams(schema, values, classes), [schema, values, classes]);
+  const render = useMemo(
+    () => ({ filter: mode === "enhance" ? enhanceFilter(values) : undefined, strength: Number(values.strength ?? 70), crop: Number(values.crop ?? 8), labels: [t("original"), mode === "stabilize" ? t("stabilized") : t("enhanced")] as [string, string] }),
+    [mode, values, t],
+  );
+  const [script, setScript] = useState("");
+  const [motion, setMotion] = useState<MotionSample[]>([]);
+  const onMotion = useCallback((m: MotionSample) => setMotion((list) => [...list, m].slice(-150)), []);
   const [roiEditing, setRoiEditing] = useState(false);
   const [tab, setTab] = useState<InputTab>(sp.get("source") ? "camera" : "sample");
   const [resultTab, setResultTab] = useState<ResultTab>("detections");
@@ -138,8 +194,12 @@ export function PlaygroundView() {
   // re-seed parameters when the capability changes (or once the store has loaded)
   useEffect(() => {
     if (!ready || !cap) return;
-    setParams(initialParams(cap.events, store.configs[cap.id]));
+    const v = resolveConfig(cap.id, store.configs[cap.id]?.values).values;
+    setValues(v);
+    setScript(sampleScript(v));
     setEvents([]);
+    setMotion([]);
+    setResultTab(getSchemaMode(cap.id) === "detect" ? "detections" : getSchemaMode(cap.id) === "stabilize" ? "motion" : "json");
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only on capability switch / first load
   }, [capId, ready]);
 
@@ -149,7 +209,8 @@ export function PlaygroundView() {
   }, [file]);
 
   const camera = store.sources.find((s) => s.id === cameraId);
-  const defaultSample = cap ? streamMedia({ capability: cap.id }) : SAMPLE_KEYS[0];
+  const schemaSample = schema.sample as MediaKey | undefined;
+  const defaultSample = schemaSample && schemaSample in MEDIA ? schemaSample : cap ? streamMedia({ capability: cap.id }) : SAMPLE_KEYS[0];
   const sampleKey = sample ?? defaultSample;
   const sampleLabel = t(`samples.${sampleKey}`);
   const webcamLabel = t("webcamLabel");
@@ -178,7 +239,15 @@ export function PlaygroundView() {
   useEffect(() => {
     setEvents([]);
     setStats(null);
+    setMotion([]);
   }, [input]);
+
+  // avatar: switching scene or language swaps in that scene's sample line
+  const sceneKey = `${values.scene}|${values.lang}`;
+  useEffect(() => {
+    if (mode === "avatar") setScript(sampleScript(values));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only when scene / language change
+  }, [sceneKey, mode]);
 
   const onFrame = useCallback((s: FrameStats) => {
     const now = performance.now();
@@ -236,15 +305,34 @@ export function PlaygroundView() {
     );
   }
 
-  const batchable = input?.kind === "video" && !("live" in input && input.live);
-  const apiInput = tab === "camera" && camera ? { source_id: camera.id } : { url: tab === "url" && url ? url : "https://example.com/your-video.mp4" };
-  const response = {
-    capability: cap.id,
-    frame: stats ? { t: +stats.t.toFixed(2), width: stats.width, height: stats.height } : null,
-    detections: (stats?.detections ?? []).map((d: Detection) => ({ track_id: d.id, class: d.cls, confidence: d.conf, box: { x: +d.box.x.toFixed(3), y: +d.box.y.toFixed(3), w: +d.box.w.toFixed(3), h: +d.box.h.toFixed(3) }, in_roi: d.inRoi })),
-    events: events.slice(0, 5).map((e) => ({ type: e.cls, track_id: e.trackId, t: +e.t.toFixed(2), confidence: e.conf })),
-    params: toApiParams(params),
-  };
+  const batchable = mode === "detect" && input?.kind === "video" && !("live" in input && input.live);
+  const apiParams = toApiParams(schema, values);
+  const apiInput = mode === "avatar" ? { text: script } : tab === "camera" && camera ? { source_id: camera.id } : { url: tab === "url" && url ? url : "https://example.com/your-video.mp4" };
+  const rawJitter = jitter(motion, "raw");
+  const smoothJitter = jitter(motion, "smooth");
+  const reduction = rawJitter > 0 ? Math.max(0, 1 - smoothJitter / rawJitter) : 0;
+  const frame = stats ? { t: +stats.t.toFixed(2), width: stats.width, height: stats.height } : null;
+  const response =
+    mode === "detect"
+      ? {
+          capability: cap.id,
+          frame,
+          detections: (stats?.detections ?? []).map((d: Detection) => ({ track_id: d.id, class: d.cls, confidence: d.conf, box: { x: +d.box.x.toFixed(3), y: +d.box.y.toFixed(3), w: +d.box.w.toFixed(3), h: +d.box.h.toFixed(3) }, in_roi: d.inRoi })),
+          events: events.slice(0, 5).map((e) => ({ type: e.cls, track_id: e.trackId, t: +e.t.toFixed(2), confidence: e.conf })),
+          params: apiParams,
+        }
+      : mode === "stabilize"
+        ? {
+            capability: cap.id,
+            frame,
+            camera_path: motion.length ? { raw: motion.at(-1)!.raw, smoothed: motion.at(-1)!.smooth } : null,
+            jitter: { raw: +rawJitter.toFixed(5), stabilized: +smoothJitter.toFixed(5), reduction: +reduction.toFixed(3) },
+            params: apiParams,
+          }
+        : mode === "enhance"
+          ? { capability: cap.id, preview_filter: render.filter, params: apiParams }
+          : { capability: cap.id, input: { text: script }, output: { format: "mp4", est_duration_s: +(script.length / (values.lang === "zh" || values.lang === "ja" ? 5 : 14) / Number(values.rate ?? 1)).toFixed(1) }, params: apiParams };
+  const resultTabs: ResultTab[] = mode === "detect" ? ["detections", "events", "json", "code"] : mode === "stabilize" ? ["motion", "json", "code"] : ["json", "code"];
 
   const TABS: { key: InputTab; icon: typeof Upload }[] = [
     { key: "sample", icon: Clapperboard },
@@ -285,11 +373,14 @@ export function PlaygroundView() {
 
       <p className="flex items-start gap-2 rounded-[10px] border border-line bg-bg-1 px-4 py-3 text-xs text-text-2">
         <Info className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-        {t("engineNote")}
+        {t(`engineNote.${mode}`)}
       </p>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-w-0 space-y-4">
+          {mode === "avatar" && <AvatarPreview values={values} script={script} onScript={setScript} />}
+          {mode !== "avatar" && (
+          <>
           {/* input selector */}
           <div role="tablist" aria-label={t("inputLabel")} className="flex flex-wrap gap-1 rounded-[var(--radius-btn)] border border-line bg-bg-1 p-1">
             {TABS.map(({ key, icon: Icon }) => (
@@ -421,31 +512,46 @@ export function PlaygroundView() {
             onEvent={onEvent}
             roiEditing={roiEditing}
             onRoiChange={(roi) => {
-              setParams((p) => ({ ...p, roi }));
+              setValues((v) => ({ ...v, roi }));
               setRoiEditing(false);
             }}
+            mode={mode === "detect" ? "detect" : mode}
+            render={render}
+            onMotion={onMotion}
             empty={<p className="max-w-sm text-sm text-text-3">{t(`empty.${tab}`)}</p>}
           />
 
           {/* live stats */}
+          {mode !== "enhance" && (
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              { k: "objects", v: String(stats?.detections.length ?? 0) },
-              { k: "events", v: String(events.length) },
-              { k: "fps", v: stats ? stats.fps.toFixed(1) : "—" },
-              { k: "latency", v: stats ? `${stats.latency.toFixed(1)} ms` : "—" },
-            ].map(({ k, v }) => (
+            {(mode === "stabilize"
+              ? [
+                  { k: "jitterRaw", v: rawJitter ? `${(rawJitter * 1000).toFixed(1)}‰` : "—" },
+                  { k: "jitterSmooth", v: smoothJitter ? `${(smoothJitter * 1000).toFixed(1)}‰` : "—" },
+                  { k: "reduction", v: rawJitter ? `${Math.round(reduction * 100)}%` : "—" },
+                  { k: "latency", v: stats ? `${stats.latency.toFixed(1)} ms` : "—" },
+                ]
+              : [
+                  { k: "objects", v: String(stats?.detections.length ?? 0) },
+                  { k: "events", v: String(events.length) },
+                  { k: "fps", v: stats ? stats.fps.toFixed(1) : "—" },
+                  { k: "latency", v: stats ? `${stats.latency.toFixed(1)} ms` : "—" },
+                ]
+            ).map(({ k, v }) => (
               <div key={k} className="rounded-[10px] border border-line bg-bg-1 px-4 py-3">
                 <dt className="text-[11px] text-text-3">{t(`stats.${k}`)}</dt>
                 <dd className="mt-1 font-display text-xl font-semibold tabular text-text-1">{v}</dd>
               </div>
             ))}
           </dl>
+          )}
+          </>
+          )}
 
           {/* results */}
           <section className="rounded-[var(--radius-card)] border border-line bg-bg-1">
             <div role="tablist" aria-label={t("results")} className="flex overflow-x-auto border-b border-line px-2">
-              {(["detections", "events", "json", "code"] as const).map((k) => (
+              {resultTabs.map((k) => (
                 <button
                   key={k}
                   type="button"
@@ -531,20 +637,24 @@ export function PlaygroundView() {
               </div>
             )}
 
+            {resultTab === "motion" && (
+              <TrajectoryChart samples={motion} labels={{ raw: t("pathRaw"), smooth: t("pathSmooth"), x: t("axisX"), y: t("axisY") }} />
+            )}
+
             {resultTab === "json" && (
               <pre className="max-h-[420px] overflow-auto p-4 font-mono text-[12px] leading-relaxed text-text-2">
                 <code>{JSON.stringify(response, null, 2)}</code>
               </pre>
             )}
 
-            {resultTab === "code" && <CodeSamples capability={cap.id} params={params} input={apiInput} origin={origin} />}
+            {resultTab === "code" && <CodeSamples capability={cap.id} params={apiParams} input={apiInput} origin={origin} />}
           </section>
         </div>
 
         {/* right column */}
         <div className="space-y-6">
           <Panel title={t("paramsTitle")} desc={t("paramsDesc")}>
-            <ParamsPanel params={params} onChange={setParams} allClasses={classes} labelFor={labelFor} roiEditing={roiEditing} onRoiEditing={setRoiEditing} />
+            <CapParamsForm capId={cap.id} schema={schema} values={values} onChange={setValues} allClasses={classes} labelFor={labelFor} roiEditing={roiEditing} onRoiEditing={setRoiEditing} />
           </Panel>
           <Panel title={t("deployTitle")} desc={t("deployDesc")}>
             <div className="space-y-2">
@@ -552,14 +662,14 @@ export function PlaygroundView() {
                 variant="secondary"
                 className="w-full justify-start"
                 onClick={() => {
-                  saveConfig(cap.id, { ...(store.configs[cap.id] ?? DEFAULT_CONFIG), threshold: params.threshold, privacy: params.privacy, preview: params });
+                  saveConfig(cap.id, { ...(store.configs[cap.id] ?? DEFAULT_CONFIG), threshold: params.threshold, privacy: params.privacy, values });
                   toast(t("savedDefault"));
                 }}
               >
                 <Save aria-hidden />
                 {t("saveDefault")}
               </Button>
-              <Button variant="secondary" className="w-full justify-start" onClick={() => setApplyOpen(true)}>
+              <Button variant="secondary" className="w-full justify-start" onClick={() => setApplyOpen(true)} hidden={mode === "avatar"}>
                 <Layers aria-hidden />
                 {t("applyCameras")}
               </Button>
@@ -576,6 +686,7 @@ export function PlaygroundView() {
                     crossOrigin: input.crossOrigin,
                     params,
                     classes,
+                    options: values,
                   });
                   toast(t("jobStarted"));
                 }}
@@ -592,7 +703,7 @@ export function PlaygroundView() {
         </div>
       </div>
 
-      <ApplyDialog open={applyOpen} onOpenChange={setApplyOpen} capId={cap.id} params={params} />
+      <ApplyDialog open={applyOpen} onOpenChange={setApplyOpen} capId={cap.id} values={values} />
     </div>
   );
 }

@@ -33,6 +33,12 @@ export interface PreviewParams {
   dwell: number;
   /** analysis frames per second */
   sampleFps: number;
+  /** only fire events while at least this many objects are inside the ROI */
+  minCount?: number;
+  /** with minCount: fire one group event of this class instead of per-object events */
+  countClass?: string;
+  /** seconds before the same class may fire again */
+  cooldown?: number;
 }
 
 export const DEFAULT_PARAMS: Omit<PreviewParams, "classes"> = {
@@ -181,6 +187,8 @@ export class PreviewEngine {
   private tracks: Track[] = [];
   private nextId = 1;
   private lastT = -1;
+  private groupSince: number | null = null;
+  private lastFire = new Map<string, number>();
 
   constructor(
     private seed: string,
@@ -194,6 +202,8 @@ export class PreviewEngine {
     this.tracks = [];
     this.nextId = 1;
     this.lastT = -1;
+    this.groupSince = null;
+    this.lastFire.clear();
   }
 
   private gray(img: ImageData) {
@@ -321,23 +331,58 @@ export class PreviewEngine {
     const linger = 0.8;
     this.tracks = this.tracks.filter((tr) => t - tr.lastSeen <= linger);
 
-    const detections: Detection[] = [];
-    const events: EngineEvent[] = [];
+    const visible: { tr: Track; conf: number; inRoi: boolean }[] = [];
     for (const tr of this.tracks) {
       if (tr.hits < 2 && mode === "motion") continue;
       const conf = Math.min(0.99, tr.base * (0.86 + 0.14 * Math.min(1, tr.hits / 8)) + Math.sin(t * 3 + tr.id) * 0.012);
       if (conf < p.threshold || !p.classes.includes(tr.cls)) continue;
-      const inRoi = p.roi ? centerIn(tr.box, p.roi) : true;
-      if (inRoi) {
-        tr.roiSince ??= t;
-        if (!tr.alerted && t - tr.roiSince >= p.dwell) {
-          tr.alerted = true;
-          events.push({ id: `${tr.id}-${Math.round(t * 1000)}`, trackId: tr.id, cls: tr.cls, conf: Math.round(conf * 100) / 100, box: { ...tr.box }, t });
-        }
-      } else tr.roiSince = null;
-      detections.push({ id: tr.id, cls: tr.cls, conf: Math.round(conf * 100) / 100, box: { ...tr.box }, inRoi, alerted: tr.alerted });
+      visible.push({ tr, conf: Math.round(conf * 100) / 100, inRoi: p.roi ? centerIn(tr.box, p.roi) : true });
     }
-    return { detections, events };
+
+    const events: EngineEvent[] = [];
+    const cooled = (cls: string) => t - (this.lastFire.get(cls) ?? -1e9) >= (p.cooldown ?? 0);
+    const fire = (e: EngineEvent) => {
+      this.lastFire.set(e.cls, t);
+      events.push(e);
+    };
+    const inRoi = visible.filter((v) => v.inRoi);
+    const need = Math.max(1, p.minCount ?? 1);
+    const group = need > 1 && !!p.countClass;
+
+    if (group) {
+      // one event for the whole group (crowding, queue) once enough objects stay in the ROI
+      if (inRoi.length >= need) {
+        this.groupSince ??= t;
+        const cls = p.countClass!;
+        if (t - this.groupSince >= p.dwell && cooled(cls)) {
+          const x0 = Math.min(...inRoi.map((v) => v.tr.box.x));
+          const y0 = Math.min(...inRoi.map((v) => v.tr.box.y));
+          const x1 = Math.max(...inRoi.map((v) => v.tr.box.x + v.tr.box.w));
+          const y1 = Math.max(...inRoi.map((v) => v.tr.box.y + v.tr.box.h));
+          const conf = Math.round((inRoi.reduce((s, v) => s + v.conf, 0) / inRoi.length) * 100) / 100;
+          fire({ id: `g-${Math.round(t * 1000)}`, trackId: 0, cls, conf, box: { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }, t });
+          inRoi.forEach((v) => (v.tr.alerted = true));
+          this.groupSince = null;
+        }
+      } else this.groupSince = null;
+    }
+
+    for (const v of visible) {
+      const tr = v.tr;
+      if (!v.inRoi) {
+        tr.roiSince = null;
+        continue;
+      }
+      tr.roiSince ??= t;
+      if (group || tr.alerted || inRoi.length < need) continue;
+      if (t - tr.roiSince >= p.dwell && cooled(tr.cls)) {
+        tr.alerted = true;
+        fire({ id: `${tr.id}-${Math.round(t * 1000)}`, trackId: tr.id, cls: tr.cls, conf: v.conf, box: { ...tr.box }, t });
+      }
+    }
+
+    const detections: Detection[] = visible.map((v) => ({ id: v.tr.id, cls: v.tr.cls, conf: v.conf, box: { ...v.tr.box }, inRoi: v.inRoi, alerted: v.tr.alerted }));
+    return { detections, events, roiCount: inRoi.length };
   }
 }
 
@@ -357,3 +402,58 @@ export const ROI_PRESETS: Record<string, Box | null> = {
   center: { x: 0.2, y: 0.2, w: 0.6, h: 0.6 },
   bottom: { x: 0, y: 0.5, w: 1, h: 0.5 },
 };
+
+/**
+ * Global-motion stabilizer: estimates frame-to-frame translation by block matching on a
+ * downsampled grayscale frame, accumulates the camera path and smooths it. The correction
+ * (raw − smoothed) is what the renderer applies.
+ */
+export class Stabilizer {
+  private prev: Float32Array | null = null;
+  raw = { x: 0, y: 0 };
+  smooth = { x: 0, y: 0 };
+
+  reset() {
+    this.prev = null;
+    this.raw = { x: 0, y: 0 };
+    this.smooth = { x: 0, y: 0 };
+  }
+
+  /** @param strength 0–100; returns correction in normalized frame units */
+  step(img: ImageData, strength: number) {
+    const w = img.width;
+    const h = img.height;
+    const d = img.data;
+    const g = new Float32Array(w * h);
+    for (let i = 0, j = 0; j < g.length; i += 4, j++) g[j] = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+    if (this.prev) {
+      const R = 8;
+      const mx = Math.floor(w * 0.2);
+      const my = Math.floor(h * 0.2);
+      let best = Infinity;
+      let bx = 0;
+      let by = 0;
+      for (let dy = -R; dy <= R; dy++)
+        for (let dx = -R; dx <= R; dx++) {
+          let sad = 0;
+          for (let y = my; y < h - my; y += 2) {
+            const row = y * w;
+            const prow = (y + dy) * w;
+            for (let x = mx; x < w - mx; x += 2) sad += Math.abs(g[row + x] - this.prev[prow + x + dx]);
+          }
+          if (sad < best) {
+            best = sad;
+            bx = dx;
+            by = dy;
+          }
+        }
+      // content moved by (bx, by) → camera moved the opposite way
+      this.raw = { x: this.raw.x - bx / w, y: this.raw.y - by / h };
+    }
+    this.prev = g;
+    const a = 1 - (Math.max(0, Math.min(100, strength)) / 100) * 0.96;
+    this.smooth = { x: this.smooth.x + (this.raw.x - this.smooth.x) * a, y: this.smooth.y + (this.raw.y - this.smooth.y) * a };
+    // shift the image so content follows the smoothed path instead of the raw one
+    return { x: this.raw.x - this.smooth.x, y: this.raw.y - this.smooth.y };
+  }
+}

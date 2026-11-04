@@ -1230,7 +1230,11 @@
         "no_helmet": "No helmet",
         "no_vest": "No vest",
         "missing_part": "Missing part",
-        "wrong_part": "Wrong part"
+        "wrong_part": "Wrong part",
+        "goal": "Goal",
+        "shot": "Shot",
+        "save": "Save",
+        "foul": "Foul"
       }
     },
     "apiKeys": {
@@ -1341,36 +1345,19 @@
         "camDenied": "Camera access was blocked. Allow it in the browser's address bar and try again.",
         "camMissing": "No camera was found on this device.",
         "insecure": "Browser cameras need HTTPS (or localhost)."
-      }
-    },
-    "params": {
-      "classes": "Classes",
-      "threshold": "Confidence threshold",
-      "thresholdHint": "Detections below this are dropped.",
-      "sensitivity": "Sensitivity",
-      "sensitivityHint": "Higher picks up smaller or subtler changes — and more noise.",
-      "minSize": "Minimum object size",
-      "dwell": "Trigger after",
-      "dwellHint": "How long an object must stay in the ROI before an event fires.",
-      "sampleFps": "Analysis rate",
-      "roi": "Region of interest",
-      "roiPresets": {
-        "full": "Whole frame",
-        "left": "Left half",
-        "right": "Right half",
-        "center": "Center",
-        "bottom": "Bottom half",
-        "custom": "Custom"
       },
-      "drawRoi": "Draw",
-      "privacy": "Privacy blur",
-      "privacyHint": "Blurs detected regions in the preview and in stored snapshots."
+      "compare": "Compare"
     },
     "playground": {
       "title": "Playground",
       "desc": "Feed a subscribed capability a sample clip, your own video, a connected camera or this browser's webcam. Tune the parameters and watch the result live — then save them, push them to cameras or run a batch job.",
       "capability": "Capability",
-      "engineNote": "Preview engine: motion analysis, tracking, ROI and blur run on your own footage, here in the browser, and nothing is uploaded. Class labels and confidence are simulated. Production models run in the SightAI cloud or on your edge gateway, and accuracy will differ.",
+      "engineNote": {
+        "detect": "Preview engine: motion analysis, tracking, ROI and blur run on your own footage, here in the browser, and nothing is uploaded. Class labels and confidence are simulated. Parameters marked “On deploy” are applied by the production model and aren't simulated here.",
+        "enhance": "Preview: the color grade is computed live in the browser and approximates the result. Drag the divider on the frame to compare original and enhanced. Super-resolution, noise reduction and HDR output come from the production model.",
+        "stabilize": "Preview: the browser estimates global motion and smooths the camera path on your footage, so the stabilization you see is real. Drag the divider to compare original and stabilized. Horizon lock and rolling-shutter correction come from the production model.",
+        "avatar": "Preview: the browser's speech synthesis reads the script with synced subtitles. In production you get a cloned voice, lip-sync and real-time rendering."
+      },
       "inputLabel": "Input",
       "inputs": {
         "sample": "Sample clips",
@@ -1414,14 +1401,18 @@
         "objects": "Objects in frame",
         "events": "Events fired",
         "fps": "Analysis fps",
-        "latency": "Frame latency"
+        "latency": "Frame latency",
+        "jitterRaw": "Raw jitter",
+        "jitterSmooth": "Stabilized jitter",
+        "reduction": "Jitter reduced"
       },
       "results": "Results",
       "resultTabs": {
         "detections": "Detections",
         "events": "Events",
         "json": "Response JSON",
-        "code": "API code"
+        "code": "API code",
+        "motion": "Camera path"
       },
       "cols": {
         "track": "Track",
@@ -1457,7 +1448,14 @@
       "rebind": "moves from “{name}”",
       "cancel": "Cancel",
       "applyConfirm": "{count, plural, =0 {Apply} one {Apply to # camera} other {Apply to # cameras}}",
-      "applied": "{count, plural, one {Applied to # camera} other {Applied to # cameras}}"
+      "applied": "{count, plural, one {Applied to # camera} other {Applied to # cameras}}",
+      "original": "Original",
+      "enhanced": "Enhanced",
+      "stabilized": "Stabilized",
+      "pathRaw": "Raw camera path",
+      "pathSmooth": "Smoothed path",
+      "axisX": "Horizontal",
+      "axisY": "Vertical"
     },
     "jobs": {
       "title": "Batch jobs",
@@ -1532,7 +1530,9 @@
       "health": "Stream health, last 4 h",
       "bitrate": "Bitrate",
       "fpsLabel": "Frame rate",
-      "events": "Recent events from this source"
+      "events": "Recent events from this source",
+      "original": "Original",
+      "processed": "Processed"
     },
     "wizard": {
       "title": "Connect a video source",
@@ -1653,6 +1653,598 @@
       "connected": "Gateway connected from {ip}",
       "waiting": "Waiting for the gateway to connect…",
       "done": "Done"
+    },
+    "capParams": {
+      "_groups": {
+        "detect": "Detection",
+        "rule": "Alert rules",
+        "look": "Look",
+        "stab": "Stabilization",
+        "persona": "Avatar & voice",
+        "output": "Output & integration"
+      },
+      "_units": {
+        "s": "s",
+        "pct": "%",
+        "ms": "ms",
+        "mm": "mm",
+        "m": "m",
+        "kmh": "km/h",
+        "mbps": "Mbps",
+        "fps": "fps",
+        "x": "×",
+        "people": " people",
+        "parts": " parts",
+        "lanes": " lanes",
+        "min": " min"
+      },
+      "_deployOnly": "On deploy",
+      "_deployOnlyHint": "Applied by the production model in the cloud or on the edge. The browser preview doesn't simulate it.",
+      "_common": {
+        "classes": {
+          "label": "Classes"
+        },
+        "threshold": {
+          "label": "Confidence threshold",
+          "hint": "Detections below this are dropped."
+        },
+        "sensitivity": {
+          "label": "Sensitivity",
+          "hint": "Higher picks up smaller or subtler changes, and more noise."
+        },
+        "minSize": {
+          "label": "Minimum object size",
+          "hint": "As a percentage of the frame area."
+        },
+        "sampleFps": {
+          "label": "Analysis rate"
+        },
+        "roi": {
+          "label": "Region of interest",
+          "options": {
+            "full": "Whole frame",
+            "left": "Left half",
+            "right": "Right half",
+            "center": "Center",
+            "bottom": "Bottom half",
+            "custom": "Custom"
+          }
+        },
+        "drawRoi": {
+          "label": "Draw"
+        },
+        "dwell": {
+          "label": "Trigger after",
+          "hint": "How long an object must stay in the ROI before an event fires."
+        },
+        "cooldown": {
+          "label": "Alert cooldown",
+          "hint": "The same event type won't alert again within this time."
+        },
+        "minCount": {
+          "label": "Minimum people"
+        },
+        "privacy": {
+          "label": "Privacy blur",
+          "hint": "Blurs detected regions in the preview and in stored snapshots."
+        },
+        "notify": {
+          "label": "Notify"
+        },
+        "scene": {
+          "label": "Scenario"
+        },
+        "lang": {
+          "label": "Language",
+          "options": {
+            "zh": "中文",
+            "en": "English",
+            "ms": "Bahasa Melayu",
+            "ja": "日本語"
+          }
+        },
+        "voice": {
+          "label": "Voice style",
+          "options": {
+            "warm": "Warm",
+            "pro": "Professional",
+            "lively": "Lively"
+          }
+        },
+        "rate": {
+          "label": "Speaking rate"
+        },
+        "subtitles": {
+          "label": "Show subtitles"
+        }
+      },
+      "edu-bullying": {
+        "roi": {
+          "label": "Watch area",
+          "hint": "Cover corridor ends, stairwells and other spots near camera blind spots."
+        },
+        "minCount": {
+          "label": "People involved",
+          "hint": "An incident needs at least this many people in the area for the full duration."
+        },
+        "dwell": {
+          "label": "Incident duration",
+          "hint": "How long pushing or fighting must last before alerting. Filters out horseplay."
+        },
+        "schedule": {
+          "label": "Armed",
+          "options": {
+            "always": "Always",
+            "breaks": "Breaks & lunch",
+            "afterSchool": "After school"
+          }
+        },
+        "privacy": {
+          "label": "Blur student faces",
+          "hint": "On by default; viewing the original evidence requires authorization."
+        },
+        "notify": {
+          "label": "Notify",
+          "options": {
+            "moral": "Student affairs",
+            "teacher": "Homeroom teacher",
+            "security": "Security desk"
+          }
+        }
+      },
+      "edu-behavior": {
+        "dwell": {
+          "label": "Behavior duration",
+          "hint": "How long a fall or fight must last before alerting."
+        },
+        "loiterSeconds": {
+          "label": "Loitering after",
+          "hint": "Staying in one area longer than this counts as loitering."
+        },
+        "runSpeed": {
+          "label": "Running speed (m/s)",
+          "hint": "Flags chasing in corridors and stairwells."
+        }
+      },
+      "edu-contraband": {
+        "threshold": {
+          "label": "Confidence threshold",
+          "hint": "Screening errs toward more alerts; staff review each one."
+        },
+        "minSize": {
+          "label": "Minimum item size",
+          "hint": "Lower it for knives, lighters and other small items."
+        },
+        "screening": {
+          "label": "Screening setup",
+          "options": {
+            "gate": "Walk-through gate",
+            "xray": "X-ray bag scanner",
+            "camera": "Regular camera"
+          }
+        },
+        "dwell": {
+          "label": "Confirm after",
+          "hint": "0 alerts as soon as an item is detected."
+        },
+        "lanes": {
+          "label": "Screening lanes"
+        },
+        "alarm": {
+          "label": "On detection",
+          "options": {
+            "soundLight": "Sound & light alarm",
+            "silent": "Silent alert to security",
+            "lockGate": "Lock the turnstile"
+          }
+        }
+      },
+      "edu-perimeter": {
+        "roi": {
+          "label": "Restricted zone",
+          "hint": "Cover walls, rooftops, water and other danger areas."
+        },
+        "minSize": {
+          "label": "Minimum object size",
+          "hint": "Filters out pets, leaves and other small objects."
+        },
+        "dwell": {
+          "label": "Alert delay after entry"
+        },
+        "direction": {
+          "label": "Crossing direction",
+          "options": {
+            "enter": "Entering",
+            "exit": "Leaving",
+            "both": "Both"
+          }
+        },
+        "arm": {
+          "label": "Armed",
+          "options": {
+            "always": "Always",
+            "night": "Night 18:00–07:00",
+            "weekend": "Weekends & holidays"
+          }
+        }
+      },
+      "retail-heatmap": {
+        "roi": {
+          "label": "Counting area",
+          "hint": "For example the checkout queue or a promo display."
+        },
+        "minCount": {
+          "label": "Queue alert at",
+          "hint": "Alerts once this many people stay in the area for the dwell time."
+        },
+        "dwell": {
+          "label": "Dwell time"
+        },
+        "excludeStaff": {
+          "label": "Exclude staff",
+          "hint": "Staff are recognized by uniform and not counted."
+        },
+        "grid": {
+          "label": "Heatmap grid",
+          "options": {
+            "coarse": "Coarse (1 m)",
+            "fine": "Fine (0.5 m)"
+          }
+        },
+        "interval": {
+          "label": "Report interval",
+          "options": {
+            "15m": "15 min",
+            "1h": "1 hour",
+            "1d": "1 day"
+          }
+        }
+      },
+      "retail-shelf": {
+        "roi": {
+          "label": "Shelf area"
+        },
+        "minSize": {
+          "label": "Minimum facing size"
+        },
+        "dwell": {
+          "label": "Confirm out-of-stock after",
+          "hint": "Wait this long before alerting, so shoppers blocking the view don't trigger it."
+        },
+        "emptyRatio": {
+          "label": "Out-of-stock at (empty share)",
+          "hint": "A shelf counts as out of stock once this much of it is empty."
+        },
+        "scanEvery": {
+          "label": "Scan every",
+          "options": {
+            "5": "5 min",
+            "15": "15 min",
+            "30": "30 min",
+            "60": "Hour"
+          }
+        },
+        "notify": {
+          "label": "Notify",
+          "options": {
+            "store": "Store manager",
+            "area": "Area manager",
+            "hq": "HQ operations"
+          }
+        }
+      },
+      "retail-loss": {
+        "roi": {
+          "label": "Checkout area"
+        },
+        "dwell": {
+          "label": "Blocked-scan after",
+          "hint": "An item covering the scanner longer than this counts as a blocked scan."
+        },
+        "posSync": {
+          "label": "Match POS transactions",
+          "hint": "Compares with till data to catch skipped scans."
+        },
+        "action": {
+          "label": "On detection",
+          "options": {
+            "alert": "Alert the cashier",
+            "record": "Record only"
+          }
+        }
+      },
+      "retail-avatar": {
+        "scene": {
+          "label": "Scenario",
+          "options": {
+            "guide": "In-store guide",
+            "live": "Live selling",
+            "service": "Customer service"
+          }
+        },
+        "knowledge": {
+          "label": "Use product knowledge base",
+          "hint": "Answers from your catalog and current promotions."
+        },
+        "handoff": {
+          "label": "Hand off hard questions to staff"
+        },
+        "idle": {
+          "label": "When idle",
+          "options": {
+            "promo": "Loop promotions",
+            "greet": "Greet shoppers",
+            "none": "Stay silent"
+          }
+        }
+      },
+      "sports-refcam": {
+        "strength": {
+          "label": "Smoothing",
+          "hint": "Higher is steadier, but lags behind fast head turns."
+        },
+        "crop": {
+          "label": "Crop margin",
+          "hint": "Edge of the frame reserved for stabilization."
+        },
+        "horizon": {
+          "label": "Horizon lock",
+          "hint": "Keeps the picture level (roll correction)."
+        },
+        "rollingShutter": {
+          "label": "Rolling-shutter correction"
+        },
+        "latency": {
+          "label": "Latency mode",
+          "options": {
+            "ultra": "Ultra-low (1 frame)",
+            "balanced": "Balanced",
+            "quality": "Quality first"
+          }
+        },
+        "output": {
+          "label": "Output format"
+        },
+        "bitrate": {
+          "label": "Stream bitrate"
+        }
+      },
+      "sports-enhance": {
+        "preset": {
+          "label": "Enhancement",
+          "options": {
+            "auto": "Auto white balance & exposure",
+            "lowlight": "Low light",
+            "hdr": "HDR recovery",
+            "sr": "Super-resolution",
+            "match": "Multi-camera color match"
+          }
+        },
+        "strength": {
+          "label": "Strength"
+        },
+        "exposure": {
+          "label": "Exposure"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "saturation": {
+          "label": "Saturation"
+        },
+        "warmth": {
+          "label": "Temperature",
+          "hint": "Positive is warmer, negative cooler."
+        },
+        "sharpen": {
+          "label": "Sharpening"
+        },
+        "denoise": {
+          "label": "Noise reduction"
+        },
+        "resolution": {
+          "label": "Output resolution",
+          "options": {
+            "same": "Same as input",
+            "1080p": "1080p",
+            "4k": "4K"
+          }
+        },
+        "hdrOut": {
+          "label": "Dynamic range",
+          "options": {
+            "sdr": "SDR",
+            "hlg": "HDR (HLG)",
+            "pq": "HDR (PQ)"
+          }
+        }
+      },
+      "sports-highlights": {
+        "classes": {
+          "label": "Moment types"
+        },
+        "dwell": {
+          "label": "Confirm after"
+        },
+        "cooldown": {
+          "label": "Gap between same-type clips"
+        },
+        "preRoll": {
+          "label": "Pre-roll",
+          "hint": "Seconds kept before the moment."
+        },
+        "postRoll": {
+          "label": "Post-roll"
+        },
+        "maxClip": {
+          "label": "Maximum clip length"
+        },
+        "aspects": {
+          "label": "Aspect ratios",
+          "options": {
+            "16:9": "Landscape 16:9",
+            "9:16": "Vertical 9:16",
+            "1:1": "Square 1:1"
+          }
+        },
+        "platforms": {
+          "label": "Publish to",
+          "options": {
+            "tiktok": "TikTok / Douyin",
+            "youtube": "YouTube",
+            "web": "Website",
+            "app": "App"
+          }
+        },
+        "autoPublish": {
+          "label": "Auto-publish",
+          "hint": "When off, clips wait in a review queue."
+        }
+      },
+      "sports-avatar": {
+        "scene": {
+          "label": "Scenario",
+          "options": {
+            "commentary": "Match commentary",
+            "venue": "Venue guidance",
+            "score": "Score updates"
+          }
+        },
+        "dataFeed": {
+          "label": "Use live match data"
+        },
+        "channels": {
+          "label": "Channels",
+          "options": {
+            "screen": "Venue screens",
+            "stream": "Live stream",
+            "miniapp": "Mini-app"
+          }
+        }
+      },
+      "mfg-defect": {
+        "threshold": {
+          "label": "NG threshold",
+          "hint": "Parts scoring above this are rejected."
+        },
+        "minSize": {
+          "label": "Minimum defect area",
+          "hint": "Scratches and spots smaller than this are ignored."
+        },
+        "roi": {
+          "label": "Inspection area"
+        },
+        "takt": {
+          "label": "Takt time",
+          "hint": "Each part must be judged within the takt time."
+        },
+        "consecutiveNg": {
+          "label": "Stop line after consecutive NG",
+          "hint": "Stops the line and alarms after N rejects in a row."
+        },
+        "reject": {
+          "label": "Reject by",
+          "options": {
+            "plc": "PLC reject signal",
+            "alarm": "Alarm only",
+            "stopLine": "Stop the line"
+          }
+        },
+        "saveImages": {
+          "label": "Keep images",
+          "options": {
+            "ng": "NG parts only",
+            "all": "All parts",
+            "none": "None"
+          }
+        }
+      },
+      "mfg-road": {
+        "minSize": {
+          "label": "Minimum defect size"
+        },
+        "speed": {
+          "label": "Survey speed",
+          "hint": "Faster driving needs a higher analysis rate."
+        },
+        "depth": {
+          "label": "Depth alert threshold",
+          "hint": "Potholes and ruts deeper than this are marked severe."
+        },
+        "gpsInterval": {
+          "label": "GPS point spacing"
+        },
+        "report": {
+          "label": "Reports",
+          "options": {
+            "perTrip": "Per survey run",
+            "daily": "Daily summary"
+          }
+        }
+      },
+      "mfg-ppe": {
+        "roi": {
+          "label": "Hazard zone"
+        },
+        "gear": {
+          "label": "Required PPE",
+          "options": {
+            "helmet": "Hard hat",
+            "vest": "Hi-vis vest",
+            "gloves": "Gloves",
+            "goggles": "Goggles"
+          }
+        },
+        "dwell": {
+          "label": "Violation lasts",
+          "hint": "Briefly removing a helmet (wiping sweat) won't alert."
+        },
+        "cooldown": {
+          "label": "Alert cooldown",
+          "hint": "The same violation won't be pushed again within this time."
+        }
+      },
+      "mfg-assembly": {
+        "threshold": {
+          "label": "Decision threshold"
+        },
+        "minSize": {
+          "label": "Minimum part size"
+        },
+        "roi": {
+          "label": "Workpiece area"
+        },
+        "variant": {
+          "label": "BOM variant",
+          "options": {
+            "A": "Variant A",
+            "B": "Variant B",
+            "C": "Variant C"
+          }
+        },
+        "parts": {
+          "label": "Expected parts"
+        },
+        "trigger": {
+          "label": "Inspect on",
+          "options": {
+            "plc": "Station PLC in-position signal",
+            "continuous": "Continuous"
+          }
+        }
+      }
+    },
+    "avatar": {
+      "alt": "AI avatar",
+      "speaking": "Speaking",
+      "idle": "Idle",
+      "script": "Script",
+      "speak": "Speak",
+      "stop": "Stop",
+      "useSample": "Use sample line",
+      "note": "The preview uses your browser's voice ({voice}). In production you get a cloned voice and lip-sync.",
+      "systemVoice": "system default",
+      "noTts": "This browser can't synthesize speech, so only subtitles are previewed."
     }
   },
   "capabilityPage": {

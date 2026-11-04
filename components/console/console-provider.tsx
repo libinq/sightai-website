@@ -6,6 +6,7 @@ import type { PublicUser } from "@/lib/auth/users";
 import type { PlanId } from "@/content/plans";
 import { analyzeVideo } from "@/lib/console/batch";
 import type { PreviewParams } from "@/lib/console/engine";
+import type { CapValues } from "@/content/capability-params";
 import {
   makeApiKeys,
   makeGateways,
@@ -28,8 +29,8 @@ export interface CapConfig {
   channels: string[];
   schedule: "always" | "school" | "night";
   privacy: boolean;
-  /** detection parameters tuned in the playground; used by camera live views */
-  preview?: PreviewParams;
+  /** capability-specific parameters tuned in the playground (content/capability-params) */
+  values?: CapValues;
 }
 
 export interface Member {
@@ -59,6 +60,8 @@ export interface NewJob {
   crossOrigin?: boolean;
   params: PreviewParams;
   classes: string[];
+  /** the capability-specific values the job was started with */
+  options?: CapValues;
 }
 
 export const DEFAULT_CONFIG: CapConfig = { sensitivity: 60, threshold: 0.8, channels: ["app", "webhook"], schedule: "always", privacy: true };
@@ -239,7 +242,7 @@ export function ConsoleProvider({ initialUser, children }: { initialUser: Public
   const createJob = useCallback(
     (nj: NewJob) => {
       const id = `job_${Date.now().toString(36)}${Math.floor(Math.random() * 1e4).toString(36)}`;
-      const job: Job = { id, capability: nj.capability, input: nj.input, status: "processing", progress: 0, created: Date.now(), params: nj.params };
+      const job: Job = { id, capability: nj.capability, input: nj.input, status: "processing", progress: 0, created: Date.now(), params: nj.params, options: nj.options };
       setStore((s) => ({ ...s, jobs: [job, ...s.jobs].slice(0, 50) }));
       let last = 0;
       analyzeVideo(nj.src, { params: nj.params, classes: nj.classes, seed: id, crossOrigin: nj.crossOrigin }, (p) => {

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getCapability } from "@/content/industries";
 import { API_KEY_RE, analyzeSchema } from "@/lib/console/api-schema";
+import { getSchema, validateApiParams } from "@/content/capability-params";
+import { capClasses } from "@/lib/console/cap-config";
 
 /**
  * Mock of the hosted analysis API. Validates auth + body exactly like production will, then
@@ -16,6 +18,11 @@ export async function POST(req: Request) {
   }
   const cap = getCapability(parsed.data.capability);
   if (!cap) return NextResponse.json({ error: { code: "unknown_capability" } }, { status: 404 });
+  const schema = getSchema(cap.id);
+  const issues = validateApiParams(schema, capClasses(cap.id), parsed.data.params ?? {});
+  if (schema.mode === "avatar" && !("text" in parsed.data.input)) issues.push("input: this capability takes { text }");
+  if (schema.mode !== "avatar" && "text" in parsed.data.input) issues.push("input: this capability takes { url } or { source_id }");
+  if (issues.length) return NextResponse.json({ error: { code: "invalid_params", issues } }, { status: 422 });
 
   const created = Date.now();
   const id = `job_${Buffer.from(JSON.stringify({ c: cap.id, t: created })).toString("base64url")}`;

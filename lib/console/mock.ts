@@ -1,6 +1,7 @@
 import { CAPABILITIES, getCapability, type IndustryKey } from "@/content/industries";
 import type { MediaKey } from "@/content/media";
 import type { Box, EngineEvent, PreviewParams } from "./engine";
+import type { CapValues } from "@/content/capability-params";
 
 /**
  * Deterministic demo data for the console. Everything is seeded from the user id so a
@@ -56,6 +57,7 @@ export interface Job {
   created: number;
   finished?: number;
   params: PreviewParams;
+  options?: CapValues;
   error?: string;
   result?: { duration: number; frames: number; detections: number; byClass: Record<string, number>; events: EngineEvent[] };
 }

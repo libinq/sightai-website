@@ -5,7 +5,25 @@ import { useTranslations } from "next-intl";
 import { useReducedMotion } from "framer-motion";
 import { Camera, Eye, EyeOff, Maximize, Pause, Play, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ANALYSIS_H, ANALYSIS_W, PreviewEngine, containRect, type Box, type Detection, type EngineEvent, type PreviewParams } from "@/lib/console/engine";
+import { ANALYSIS_H, ANALYSIS_W, PreviewEngine, Stabilizer, containRect, type Box, type Detection, type EngineEvent, type PreviewParams } from "@/lib/console/engine";
+
+export type StageMode = "detect" | "enhance" | "stabilize" | "none";
+
+export interface StageRender {
+  /** enhance: CSS filter applied to the processed side */
+  filter?: string;
+  /** stabilize: 0–100 */
+  strength?: number;
+  /** stabilize: crop margin, % */
+  crop?: number;
+  /** split labels: [left, right] */
+  labels?: [string, string];
+}
+
+export interface MotionSample {
+  raw: { x: number; y: number };
+  smooth: { x: number; y: number };
+}
 
 export type StageInput =
   | { kind: "video"; src: string; label: string; crossOrigin?: boolean; live?: boolean }
@@ -52,7 +70,13 @@ export function PreviewStage({
   onRoiChange,
   className,
   empty,
+  mode = "detect",
+  render,
+  onMotion,
 }: {
+  mode?: StageMode;
+  render?: StageRender;
+  onMotion?: (m: MotionSample) => void;
   input: StageInput | null;
   params: PreviewParams;
   /** every class the capability emits */
@@ -76,7 +100,13 @@ export function PreviewStage({
   const detsRef = useRef<Detection[]>([]);
   const draftRef = useRef<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
   const paramsRef = useRef(params);
-  const cbRef = useRef({ onFrame, onEvent, labelFor });
+  const cbRef = useRef({ onFrame, onEvent, labelFor, onMotion });
+  const renderRef = useRef(render);
+  const stabRef = useRef(new Stabilizer());
+  const corrRef = useRef({ x: 0, y: 0 });
+  const splitRef = useRef(0.5);
+  const [split, setSplit] = useState(0.5);
+  const compare = mode === "enhance" || mode === "stabilize";
   const [error, setError] = useState<StageError>(null);
   const [playing, setPlaying] = useState(false);
   const [overlay, setOverlay] = useState(true);
@@ -86,13 +116,21 @@ export function PreviewStage({
     paramsRef.current = params;
   }, [params]);
   useEffect(() => {
-    cbRef.current = { onFrame, onEvent, labelFor };
-  }, [onFrame, onEvent, labelFor]);
+    cbRef.current = { onFrame, onEvent, labelFor, onMotion };
+  }, [onFrame, onEvent, labelFor, onMotion]);
+  useEffect(() => {
+    renderRef.current = render;
+  }, [render]);
+  useEffect(() => {
+    splitRef.current = split;
+  }, [split]);
 
   const classKey = classes.join("|");
   useEffect(() => {
     engineRef.current = new PreviewEngine(seed, classKey ? classKey.split("|") : []);
     detsRef.current = [];
+    stabRef.current.reset();
+    corrRef.current = { x: 0, y: 0 };
     setError(null);
   }, [seed, classKey, input]);
 
@@ -182,6 +220,49 @@ export function PreviewStage({
       const p = paramsRef.current;
       const toPx = (b: Box) => ({ x: r.x + b.x * r.w, y: r.y + b.y * r.h, w: b.w * r.w, h: b.h * r.h });
 
+      if (mode === "enhance" || mode === "stabilize") {
+        const sx = r.x + r.w * splitRef.current;
+        const rd = renderRef.current ?? {};
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(sx, r.y, r.x + r.w - sx, r.h);
+        ctx.clip();
+        ctx.fillStyle = "#000";
+        ctx.fillRect(sx, r.y, r.x + r.w - sx, r.h);
+        if (mode === "enhance") {
+          ctx.filter = rd.filter ?? "none";
+          ctx.drawImage(el, r.x, r.y, r.w, r.h);
+        } else {
+          const zoom = 1 + (rd.crop ?? 8) / 100;
+          const c = corrRef.current;
+          const max = (zoom - 1) / 2;
+          const dx = Math.max(-max, Math.min(max, c.x));
+          const dy = Math.max(-max, Math.min(max, c.y));
+          ctx.translate(r.x + r.w / 2 + dx * r.w, r.y + r.h / 2 + dy * r.h);
+          ctx.scale(zoom, zoom);
+          ctx.drawImage(el, -r.w / 2, -r.h / 2, r.w, r.h);
+        }
+        ctx.restore();
+        ctx.fillStyle = "#22d3ee";
+        ctx.fillRect(sx - 1, r.y, 2, r.h);
+        ctx.beginPath();
+        ctx.arc(sx, r.y + r.h / 2, 9, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = `10px ${MONO}`;
+        const lbl = (txt: string, x: number, align: CanvasTextAlign) => {
+          const w = ctx.measureText(txt).width + 10;
+          const x0 = align === "left" ? x : x - w;
+          ctx.fillStyle = "rgba(7,9,12,0.75)";
+          ctx.fillRect(x0, r.y + r.h - 24, w, 16);
+          ctx.fillStyle = "#e8edf2";
+          ctx.fillText(txt, x0 + 5, r.y + r.h - 12);
+        };
+        if (splitRef.current > 0.12) lbl(rd.labels?.[0] ?? "", r.x + 8, "left");
+        if (splitRef.current < 0.88) lbl(rd.labels?.[1] ?? "", r.x + r.w - 8, "right");
+        return;
+      }
+      if (mode === "none") return;
+
       // privacy blur is applied even with the overlay hidden — it's a data-protection setting
       if (p.privacy) {
         for (const d of detsRef.current) {
@@ -264,7 +345,33 @@ export function PreviewStage({
 
       const due = now - lastRun >= 1000 / Math.max(1, p.sampleFps);
       const active = isVideo ? !el.paused && !el.ended : true;
-      if (ready && due && active && !tainted) {
+      if (mode === "stabilize" && ready && active && !tainted) {
+        try {
+          actx.drawImage(el, 0, 0, ANALYSIS_W, ANALYSIS_H);
+          const t0 = performance.now();
+          corrRef.current = stabRef.current.step(actx.getImageData(0, 0, ANALYSIS_W, ANALYSIS_H), renderRef.current?.strength ?? 70);
+          latency = performance.now() - t0;
+          frames++;
+          if (now - fpsWindow >= 1000) {
+            fps = (frames * 1000) / (now - fpsWindow);
+            frames = 0;
+            fpsWindow = now;
+          }
+          if (now - lastRun > 100) {
+            lastRun = now;
+            const st = stabRef.current;
+            cbRef.current.onMotion?.({ raw: { ...st.raw }, smooth: { ...st.smooth } });
+            const { w, h } = mediaSize();
+            cbRef.current.onFrame?.({ detections: [], fps, latency, t: isVideo ? el.currentTime : now / 1000, width: w, height: h });
+          }
+        } catch (e) {
+          if ((e as DOMException).name === "SecurityError") {
+            tainted = true;
+            setError("cors");
+          }
+        }
+      }
+      if (mode === "detect" && ready && due && active && !tainted) {
         lastRun = now;
         const t0 = performance.now();
         try {
@@ -300,7 +407,7 @@ export function PreviewStage({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [input, mediaEl, mediaSize, overlay, roiEditing]);
+  }, [input, mediaEl, mediaSize, overlay, roiEditing, mode]);
 
   /* ---------- ROI drawing ---------- */
   const toNorm = (e: React.PointerEvent) => {
@@ -311,18 +418,27 @@ export function PreviewStage({
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     return { x: clamp((e.clientX - rect.left - r.x) / r.w), y: clamp((e.clientY - rect.top - r.y) / r.h) };
   };
+  const dragSplit = useRef(false);
   const onPointerDown = (e: React.PointerEvent) => {
+    if (compare) {
+      dragSplit.current = true;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setSplit(toNorm(e).x);
+      return;
+    }
     if (!roiEditing) return;
     e.currentTarget.setPointerCapture(e.pointerId);
     const p = toNorm(e);
     draftRef.current = { x0: p.x, y0: p.y, x1: p.x, y1: p.y };
   };
   const onPointerMove = (e: React.PointerEvent) => {
+    if (dragSplit.current) return setSplit(toNorm(e).x);
     if (!draftRef.current) return;
     const p = toNorm(e);
     draftRef.current = { ...draftRef.current, x1: p.x, y1: p.y };
   };
   const onPointerUp = () => {
+    dragSplit.current = false;
     const d = draftRef.current;
     draftRef.current = null;
     if (!d) return;
@@ -404,7 +520,7 @@ export function PreviewStage({
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
             aria-hidden
-            className={cn("absolute inset-0 size-full touch-none", roiEditing && "cursor-crosshair")}
+            className={cn("absolute inset-0 size-full touch-none", roiEditing && "cursor-crosshair", compare && "cursor-ew-resize")}
           />
         )}
         {input && (
@@ -451,8 +567,15 @@ export function PreviewStage({
             </>
           )}
           {!(isVideo && !isLive) && <span className="flex-1" />}
+          {compare && (
+            <label className="flex items-center gap-1.5 px-1 text-[11px] text-text-3">
+              {t("compare")}
+              <input type="range" min={0} max={1} step={0.01} value={split} onChange={(e) => setSplit(+e.target.value)} className="w-20 accent-[var(--accent)]" />
+            </label>
+          )}
           <button
             type="button"
+            hidden={mode !== "detect"}
             onClick={() => setOverlay((o) => !o)}
             aria-pressed={overlay}
             aria-label={t("overlay")}

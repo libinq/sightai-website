@@ -13,7 +13,7 @@ import { useConsole } from "../console-provider";
 import { BarList } from "../charts";
 import { PageHeader, PageSkeleton, Panel, relTime } from "../ui";
 import { fmtT, useClassLabel } from "./playground";
-import { toApiParams } from "../preview/params-panel";
+import { getSchema, toApiParams } from "@/content/capability-params";
 
 function JobStatus({ job }: { job: Job }) {
   const t = useTranslations("console.jobs.status");
@@ -45,7 +45,7 @@ function download(job: Job) {
     created_at: new Date(job.created).toISOString(),
     completed_at: job.finished ? new Date(job.finished).toISOString() : null,
     input: job.input,
-    params: toApiParams(job.params),
+    params: job.options ? toApiParams(getSchema(job.capability), job.options) : { threshold: job.params.threshold, classes: job.params.classes, roi: job.params.roi },
     result: job.result
       ? {
           duration_s: +job.result.duration.toFixed(2),

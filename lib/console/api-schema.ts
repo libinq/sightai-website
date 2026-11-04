@@ -13,19 +13,11 @@ export const analyzeSchema = z.object({
   input: z.union([
     z.object({ url: z.string().url() }),
     z.object({ source_id: z.string().min(1) }),
+    // AI Avatar capabilities: the line to speak
+    z.object({ text: z.string().min(1).max(2000) }),
   ]),
-  params: z
-    .object({
-      threshold: z.number().min(0.3).max(0.99).optional(),
-      sensitivity: z.number().min(0).max(100).optional(),
-      min_size: z.number().min(0).max(100).optional(),
-      classes: z.array(z.string()).optional(),
-      roi: boxSchema.nullable().optional(),
-      privacy_blur: z.boolean().optional(),
-      dwell_seconds: z.number().min(0).max(60).optional(),
-      sample_fps: z.number().min(1).max(30).optional(),
-    })
-    .optional(),
+  /** capability-specific; validated against content/capability-params in the route */
+  params: z.record(z.string(), z.unknown()).optional(),
   webhook: z.string().url().optional(),
 });
 
