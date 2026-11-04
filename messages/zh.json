@@ -927,7 +927,9 @@
       "settings": "设置",
       "groupOperate": "运营",
       "groupBuild": "开发",
-      "groupAccount": "账户"
+      "groupAccount": "账户",
+      "playground": "在线体验",
+      "jobs": "批处理任务"
     },
     "topbar": {
       "search": "搜索能力、视频源、事件…",
@@ -972,7 +974,8 @@
         "subscribe": "订阅一项能力",
         "source": "接入视频源",
         "key": "创建 API 密钥",
-        "analytics": "查看行业看板"
+        "analytics": "查看行业看板",
+        "playground": "用自己的视频试用能力"
       },
       "empty": "还没有订阅能力，先去能力市场开通一项吧。"
     },
@@ -1021,7 +1024,8 @@
         "notSubscribed": "尚未订阅该能力",
         "notSubscribedDesc": "订阅后可配置参数、绑定视频源并接收事件。",
         "unbind": "解除绑定",
-        "fullIntro": "查看完整介绍"
+        "fullIntro": "查看完整介绍",
+        "tryIt": "在线体验"
       }
     },
     "analytics": {
@@ -1125,7 +1129,7 @@
     },
     "sources": {
       "title": "视频源",
-      "desc": "管理摄像头、安检门、产线相机与边缘盒子。支持 RTSP / ONVIF / GB28181 / SRT / 文件上传。",
+      "desc": "管理摄像头、安检门、产线相机与边缘网关。RTSP / ONVIF / GB28181 经网关拉流，SRT / RTMP 推流接入，也可直接使用本机摄像头。",
       "add": "接入视频源",
       "search": "按名称或位置搜索",
       "cols": {
@@ -1158,7 +1162,8 @@
       "removed": "已移除「{name}」",
       "empty": "没有匹配的视频源",
       "quota": "视频源配额 {used} / {total}",
-      "unlimited": "不限"
+      "unlimited": "不限",
+      "live": "实时画面"
     },
     "events": {
       "title": "事件中心",
@@ -1320,7 +1325,335 @@
       "markRead": "全部已读",
       "empty": "没有新通知"
     },
-    "title": "控制台"
+    "title": "控制台",
+    "stage": {
+      "live": "直播",
+      "roiHint": "在画面上拖动，框选检测区域",
+      "play": "播放",
+      "pause": "暂停",
+      "seek": "进度",
+      "overlay": "显示 / 隐藏检测框",
+      "snapshot": "下载截图",
+      "fullscreen": "全屏",
+      "errors": {
+        "load": "无法加载该媒体，请检查文件或链接后重试。",
+        "cors": "视频可以播放，但其服务器不允许跨域分析（CORS）。请为视频配置 Access-Control-Allow-Origin，或改为上传文件。",
+        "camDenied": "摄像头权限被拒绝。请在浏览器地址栏中允许访问后重试。",
+        "camMissing": "此设备未检测到摄像头。",
+        "insecure": "浏览器摄像头需要 HTTPS（或 localhost）环境。"
+      }
+    },
+    "params": {
+      "classes": "检测类别",
+      "threshold": "置信度阈值",
+      "thresholdHint": "低于阈值的结果将被过滤。",
+      "sensitivity": "灵敏度",
+      "sensitivityHint": "越高越能捕捉细小变化，误报也会相应增加。",
+      "minSize": "最小目标尺寸",
+      "dwell": "触发时长",
+      "dwellHint": "目标在检测区域内持续停留多久后产生事件。",
+      "sampleFps": "分析帧率",
+      "roi": "检测区域（ROI）",
+      "roiPresets": {
+        "full": "全画面",
+        "left": "左半区",
+        "right": "右半区",
+        "center": "中心区域",
+        "bottom": "下半区",
+        "custom": "自定义"
+      },
+      "drawRoi": "框选",
+      "privacy": "隐私脱敏",
+      "privacyHint": "对预览画面和留存截图中的检测区域做模糊处理。"
+    },
+    "playground": {
+      "title": "在线体验",
+      "desc": "为已订阅的能力选择示例视频、上传自有视频、接入摄像头或使用本机摄像头，调整参数后实时查看识别效果；满意后可保存为默认配置、下发到摄像头，或对整段视频发起批处理。",
+      "capability": "能力",
+      "engineNote": "预览引擎说明：运动分析、目标跟踪、ROI 与脱敏都会在浏览器本地对您的画面实时计算，视频不会上传；类别标签与置信度为模拟值。正式模型运行在 SightAI 云端或您的边缘网关上，实际精度会有差异。",
+      "inputLabel": "输入源",
+      "inputs": {
+        "sample": "示例视频",
+        "upload": "上传文件",
+        "camera": "已接入摄像头",
+        "webcam": "本机摄像头",
+        "url": "视频链接"
+      },
+      "samples": {
+        "roadDefect": "道路巡检",
+        "packaging": "包装产线",
+        "bullying": "校园走廊",
+        "behavior": "教室",
+        "contraband": "安检通道",
+        "shelf": "门店货架",
+        "refcam": "裁判视角"
+      },
+      "dropTitle": "拖入视频或图片",
+      "dropHint": "支持 MP4 / WebM / MOV / JPG / PNG，单个不超过 500 MB；文件只在本地浏览器中处理。",
+      "choose": "选择文件",
+      "errType": "仅支持视频或图片文件。",
+      "errSize": "文件超过 500 MB。",
+      "pickCamera": "选择摄像头…",
+      "connectCamera": "接入摄像头",
+      "relayNote": "{protocol} 视频流由边缘网关通过 WebRTC 中继到浏览器；演示环境以示例画面代替真实视频流。",
+      "webcamHint": "将本机摄像头作为实时视频源。画面在浏览器本地分析，不会上传。",
+      "webcamStart": "打开摄像头",
+      "webcamStop": "关闭摄像头",
+      "webcamLabel": "本机摄像头",
+      "errUrl": "请输入有效的 http(s) 链接。",
+      "load": "加载",
+      "urlHint": "填写 MP4 / WebM 直链；如需在此分析，视频服务器须允许跨域（CORS）。",
+      "empty": {
+        "sample": "请选择一个示例视频。",
+        "upload": "上传视频或图片，用您自己的画面预览识别效果。",
+        "camera": "选择一路摄像头，查看实时画面。",
+        "webcam": "打开摄像头即可实时预览。",
+        "url": "粘贴视频链接后点击「加载」。"
+      },
+      "stats": {
+        "objects": "当前目标数",
+        "events": "已触发事件",
+        "fps": "分析帧率",
+        "latency": "单帧耗时"
+      },
+      "results": "结果",
+      "resultTabs": {
+        "detections": "检测结果",
+        "events": "事件",
+        "json": "返回 JSON",
+        "code": "API 调用代码"
+      },
+      "cols": {
+        "track": "跟踪 ID",
+        "class": "类别",
+        "confidence": "置信度",
+        "box": "坐标（x, y, w×h）",
+        "roi": "在 ROI 内"
+      },
+      "noDetections": "当前帧暂无检测结果。",
+      "inRoi": "位于 ROI 内",
+      "forward": "同步推送到事件中心",
+      "noEvents": "暂无事件。目标在检测区域内停留超过触发时长后会产生事件。",
+      "paramsTitle": "参数",
+      "paramsDesc": "修改后立即作用于预览",
+      "deployTitle": "应用配置",
+      "deployDesc": "将当前参数设为默认、下发到摄像头，或对整段视频批量分析。",
+      "saveDefault": "保存为该能力的默认配置",
+      "savedDefault": "已保存为该能力的默认配置",
+      "applyCameras": "下发到摄像头…",
+      "runBatch": "对此视频发起批处理",
+      "batchDisabled": "批处理适用于示例视频、上传视频和视频链接，不适用于实时流或图片。",
+      "jobStarted": "批处理任务已创建",
+      "viewJobs": "查看批处理任务",
+      "noSubs": "还没有订阅任何能力",
+      "noSubsDesc": "订阅能力后，即可在这里用自己的视频在线体验。",
+      "browse": "浏览能力",
+      "codeTitle": "语言",
+      "copy": "复制",
+      "copied": "已复制",
+      "applyTitle": "下发到摄像头",
+      "applyDesc": "选中的摄像头会绑定到该能力，并使用当前参数与检测区域。",
+      "noCameras": "还没有摄像头，请先接入。",
+      "rebind": "将从「{name}」改绑",
+      "cancel": "取消",
+      "applyConfirm": "下发到 {count} 路摄像头",
+      "applied": "已下发到 {count} 路摄像头"
+    },
+    "jobs": {
+      "title": "批处理任务",
+      "desc": "在线体验或 API 发起的整段视频分析任务。结果可下载为 JSON，格式与 API 返回一致。",
+      "new": "新建任务",
+      "cols": {
+        "input": "输入",
+        "capability": "能力",
+        "status": "状态",
+        "created": "创建时间",
+        "duration": "时长",
+        "objects": "目标数",
+        "events": "事件数"
+      },
+      "empty": "暂无批处理任务。",
+      "emptyCta": "前往在线体验，对示例视频发起一次任务",
+      "kinds": {
+        "sample": "示例",
+        "file": "上传",
+        "url": "链接"
+      },
+      "status": {
+        "succeeded": "已完成",
+        "failed": "失败"
+      },
+      "errors": {
+        "cors": "视频服务器禁止跨域分析",
+        "interrupted": "任务运行时页面被刷新，已中断",
+        "duration": "无法读取视频时长",
+        "load": "视频加载失败"
+      },
+      "download": "下载 JSON",
+      "remove": "删除",
+      "frames": "共分析 {count} 帧",
+      "byClass": "按类别统计",
+      "timeline": "事件时间线",
+      "doneToast": "批处理完成：{name}",
+      "failedToast": "批处理失败：{name}"
+    },
+    "sourceDetail": {
+      "back": "返回视频源",
+      "notFound": "该视频源不存在或已被移除。",
+      "openPlayground": "在线调参",
+      "confirmRemove": "确定移除该视频源？历史事件会保留。",
+      "roiSaved": "检测区域已保存",
+      "offline": "该视频源当前离线。",
+      "reconnecting": "正在重连…",
+      "reconnect": "重新连接",
+      "reconnected": "视频源已恢复在线",
+      "editRoi": "框选检测区域",
+      "clearRoi": "清除检测区域",
+      "liveStats": "{objects} 个目标 · {fps} fps · {ms} ms",
+      "noCapability": "尚未绑定能力：画面正常播放，但不会做分析。请在右侧绑定能力。",
+      "simNote": "演示环境以示例画面代替视频流；正式环境由边缘网关通过 WebRTC 中继真实画面。",
+      "capability": "绑定能力",
+      "bound": "绑定已更新",
+      "tuneParams": "配置该能力",
+      "stream": "流信息",
+      "info": {
+        "protocol": "协议",
+        "url": "地址",
+        "codec": "编码",
+        "resolution": "分辨率",
+        "fps": "帧率",
+        "via": "接入方式"
+      },
+      "via": {
+        "browser": "本机浏览器",
+        "push": "推流接入",
+        "direct": "直连（公网地址）"
+      },
+      "health": "流健康度（近 4 小时）",
+      "bitrate": "码率",
+      "fpsLabel": "帧率",
+      "events": "该视频源的近期事件"
+    },
+    "wizard": {
+      "title": "接入视频源",
+      "desc": "选择接入方式并测试连接，然后绑定能力即可开始分析。",
+      "progress": "进度",
+      "steps": {
+        "method": "接入方式",
+        "connect": "连接与测试",
+        "finish": "命名与绑定"
+      },
+      "quotaFull": "当前套餐的视频源配额已满（{total} 路），请升级套餐或先移除部分视频源。",
+      "methods": {
+        "rtsp": {
+          "name": "RTSP 摄像头",
+          "desc": "IP 摄像头或 NVR 通道，由内网边缘网关拉流。"
+        },
+        "onvif": {
+          "name": "ONVIF 自动发现",
+          "desc": "由网关扫描局域网，列出可接入的 ONVIF 设备。"
+        },
+        "gb28181": {
+          "name": "GB28181 平台",
+          "desc": "国标设备注册，或下级平台级联接入。"
+        },
+        "push": {
+          "name": "SRT / RTMP 推流",
+          "desc": "编码器、无人机、RefCam、OBS 等推流到接入点。"
+        },
+        "webcam": {
+          "name": "本机摄像头",
+          "desc": "使用当前电脑的摄像头，在浏览器本地分析，适合试用。"
+        }
+      },
+      "gateway": "边缘网关",
+      "direct": "不使用网关（摄像头有公网地址）",
+      "gatewayHint": "内网摄像头需经网关接入；可在「视频源」页的「边缘网关」区域添加网关。",
+      "discovery": "已发现设备",
+      "scan": "扫描网络",
+      "scanning": "扫描中…",
+      "scanHint": "选择网关后点击扫描，网关将在所在网段发送 ONVIF WS-Discovery 探测。",
+      "url": "流地址",
+      "username": "用户名",
+      "password": "密码",
+      "transport": "传输方式",
+      "credHint": "凭据加密下发到网关保存，控制台中不会再次显示。",
+      "gbIntro": "请在设备或下级平台上填写以下 SIP 参数，然后输入设备的 20 位国标编码。",
+      "gb": {
+        "serverId": "SIP 服务器编号",
+        "domain": "SIP 域",
+        "host": "SIP 服务器地址",
+        "password": "注册密码",
+        "deviceId": "设备国标编码（20 位）"
+      },
+      "pushProto": "推流协议",
+      "pushIntro": "在编码器中填写以下推流地址，收到视频流后会自动识别。",
+      "ingestUrl": "推流地址",
+      "streamKey": "推流密钥",
+      "webcamIntro": "浏览器会请求摄像头权限。画面只在本机分析，不会上传。",
+      "waitStream": "等待视频流",
+      "test": "连接测试",
+      "listen": "开始监听",
+      "runTest": "测试连接",
+      "checks": {
+        "reach": "网络可达",
+        "auth": "鉴权通过",
+        "probe": "流探测",
+        "decode": "解码成功",
+        "receive": "收到视频流"
+      },
+      "fail": {
+        "webcam": "无法打开摄像头，请检查浏览器权限。",
+        "url": "流地址格式不正确，应为 rtsp://主机[:端口]/路径。",
+        "deviceId": "国标编码须为 20 位数字。",
+        "private": "这是内网地址，请选择一个边缘网关进行接入。",
+        "auth": "摄像头拒绝了用户名或密码。"
+      },
+      "probed": "探测结果",
+      "name": "名称",
+      "location": "位置",
+      "capability": "绑定能力",
+      "none": "暂不绑定",
+      "summary": {
+        "protocol": "协议",
+        "codec": "编码",
+        "resolution": "分辨率",
+        "fps": "帧率"
+      },
+      "cancel": "取消",
+      "back": "上一步",
+      "next": "下一步",
+      "submit": "完成接入",
+      "added": "已接入「{name}」",
+      "copy": "复制",
+      "webcamName": "WEBCAM-01"
+    },
+    "gateways": {
+      "title": "边缘网关",
+      "desc": "部署在您内网的轻量服务：负责 RTSP / ONVIF / GB28181 拉流、就地推理，并通过仅出站连接回传云端。",
+      "add": "添加网关",
+      "empty": "还没有网关。",
+      "cameras": "{count} 路摄像头",
+      "remove": "移除",
+      "confirmRemove": "有 {count} 路摄像头经此网关接入，移除后将离线。确定移除？",
+      "status": {
+        "online": "在线",
+        "pending": "等待连接",
+        "offline": "离线"
+      },
+      "addTitle": "添加边缘网关",
+      "addDesc": "以 Docker 容器运行在摄像头所在网络中的任意 x86 / ARM Linux 主机上，也可部署在 SightAI 边缘盒子上。",
+      "name": "网关名称",
+      "site": "站点",
+      "generate": "生成安装命令",
+      "stepHw": "准备一台已安装 Docker、能访问摄像头的 Linux 主机（4 核 8 GB 约可接入 16 路 1080p）。",
+      "stepRun": "在该主机上执行以下命令（令牌仅可使用一次）。",
+      "stepWait": "保持此窗口打开，网关连接成功后会自动显示。",
+      "copy": "复制命令",
+      "connected": "网关已连接，来源 IP {ip}",
+      "waiting": "等待网关连接…",
+      "done": "完成"
+    }
   },
   "capabilityPage": {
     "includedIn": "{plan}可用",

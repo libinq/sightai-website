@@ -927,7 +927,9 @@
       "settings": "Settings",
       "groupOperate": "Operate",
       "groupBuild": "Build",
-      "groupAccount": "Account"
+      "groupAccount": "Account",
+      "playground": "Playground",
+      "jobs": "Batch jobs"
     },
     "topbar": {
       "search": "Search capabilities, sources, events…",
@@ -972,7 +974,8 @@
         "subscribe": "Subscribe to a capability",
         "source": "Connect a video source",
         "key": "Create an API key",
-        "analytics": "Open dashboards"
+        "analytics": "Open dashboards",
+        "playground": "Try a capability on your own video"
       },
       "empty": "No capabilities yet — subscribe to one to get started."
     },
@@ -1021,7 +1024,8 @@
         "notSubscribed": "Not subscribed",
         "notSubscribedDesc": "Subscribe to configure, bind sources and receive events.",
         "unbind": "Unbind",
-        "fullIntro": "Full product details"
+        "fullIntro": "Full product details",
+        "tryIt": "Try it"
       }
     },
     "analytics": {
@@ -1125,7 +1129,7 @@
     },
     "sources": {
       "title": "Video sources",
-      "desc": "Cameras, screening gates, line cameras and edge appliances. RTSP / ONVIF / GB28181 / SRT / file upload.",
+      "desc": "Cameras, screening gates, line cameras and edge gateways. Pull RTSP / ONVIF / GB28181 through a gateway, push SRT / RTMP, or use this browser's camera.",
       "add": "Connect source",
       "search": "Search by name or location",
       "cols": {
@@ -1158,7 +1162,8 @@
       "removed": "Removed “{name}”",
       "empty": "No matching sources",
       "quota": "Source quota {used} / {total}",
-      "unlimited": "unlimited"
+      "unlimited": "unlimited",
+      "live": "Live view"
     },
     "events": {
       "title": "Events",
@@ -1320,7 +1325,335 @@
       "markRead": "Mark all read",
       "empty": "No new notifications"
     },
-    "title": "Console"
+    "title": "Console",
+    "stage": {
+      "live": "Live",
+      "roiHint": "Drag on the frame to draw the region of interest",
+      "play": "Play",
+      "pause": "Pause",
+      "seek": "Seek",
+      "overlay": "Show / hide detections",
+      "snapshot": "Download snapshot",
+      "fullscreen": "Full screen",
+      "errors": {
+        "load": "This media couldn't be loaded. Check the file or URL and try again.",
+        "cors": "The video plays, but its server doesn't allow cross-origin analysis (CORS). Host it with Access-Control-Allow-Origin, or upload the file instead.",
+        "camDenied": "Camera access was blocked. Allow it in the browser's address bar and try again.",
+        "camMissing": "No camera was found on this device.",
+        "insecure": "Browser cameras need HTTPS (or localhost)."
+      }
+    },
+    "params": {
+      "classes": "Classes",
+      "threshold": "Confidence threshold",
+      "thresholdHint": "Detections below this are dropped.",
+      "sensitivity": "Sensitivity",
+      "sensitivityHint": "Higher picks up smaller or subtler changes — and more noise.",
+      "minSize": "Minimum object size",
+      "dwell": "Trigger after",
+      "dwellHint": "How long an object must stay in the ROI before an event fires.",
+      "sampleFps": "Analysis rate",
+      "roi": "Region of interest",
+      "roiPresets": {
+        "full": "Whole frame",
+        "left": "Left half",
+        "right": "Right half",
+        "center": "Center",
+        "bottom": "Bottom half",
+        "custom": "Custom"
+      },
+      "drawRoi": "Draw",
+      "privacy": "Privacy blur",
+      "privacyHint": "Blurs detected regions in the preview and in stored snapshots."
+    },
+    "playground": {
+      "title": "Playground",
+      "desc": "Feed a subscribed capability a sample clip, your own video, a connected camera or this browser's webcam. Tune the parameters and watch the result live — then save them, push them to cameras or run a batch job.",
+      "capability": "Capability",
+      "engineNote": "Preview engine: motion analysis, tracking, ROI and blur run on your own footage, here in the browser, and nothing is uploaded. Class labels and confidence are simulated. Production models run in the SightAI cloud or on your edge gateway, and accuracy will differ.",
+      "inputLabel": "Input",
+      "inputs": {
+        "sample": "Sample clips",
+        "upload": "Upload",
+        "camera": "Camera",
+        "webcam": "Webcam",
+        "url": "Video URL"
+      },
+      "samples": {
+        "roadDefect": "Road survey",
+        "packaging": "Packaging line",
+        "bullying": "Campus corridor",
+        "behavior": "Classroom",
+        "contraband": "Screening gate",
+        "shelf": "Store shelf",
+        "refcam": "RefCam"
+      },
+      "dropTitle": "Drop a video or image here",
+      "dropHint": "MP4 / WebM / MOV / JPG / PNG, up to 500 MB. It stays in your browser.",
+      "choose": "Choose file",
+      "errType": "Only video or image files are supported.",
+      "errSize": "The file is larger than 500 MB.",
+      "pickCamera": "Pick a camera…",
+      "connectCamera": "Connect a camera",
+      "relayNote": "{protocol} streams reach the browser through the edge gateway's WebRTC relay. This demo plays a stand-in clip for the stream.",
+      "webcamHint": "Use this computer's camera as a live source. Frames are analyzed in the browser and aren't uploaded.",
+      "webcamStart": "Start camera",
+      "webcamStop": "Stop camera",
+      "webcamLabel": "Webcam",
+      "errUrl": "Enter a valid http(s) URL.",
+      "load": "Load",
+      "urlHint": "Direct MP4 / WebM link. To analyze it here, its server must allow CORS.",
+      "empty": {
+        "sample": "Pick a sample clip.",
+        "upload": "Upload a video or image to preview the capability on your own footage.",
+        "camera": "Pick a camera to open its live view.",
+        "webcam": "Start the camera to preview live.",
+        "url": "Paste a video URL and press Load."
+      },
+      "stats": {
+        "objects": "Objects in frame",
+        "events": "Events fired",
+        "fps": "Analysis fps",
+        "latency": "Frame latency"
+      },
+      "results": "Results",
+      "resultTabs": {
+        "detections": "Detections",
+        "events": "Events",
+        "json": "Response JSON",
+        "code": "API code"
+      },
+      "cols": {
+        "track": "Track",
+        "class": "Class",
+        "confidence": "Confidence",
+        "box": "Box (x, y, w×h)",
+        "roi": "In ROI"
+      },
+      "noDetections": "Nothing detected in this frame yet.",
+      "inRoi": "Inside ROI",
+      "forward": "Also send these events to the Event center",
+      "noEvents": "No events yet. An event fires when an object stays in the ROI past the trigger time.",
+      "paramsTitle": "Parameters",
+      "paramsDesc": "Changes apply to the preview immediately",
+      "deployTitle": "Use these settings",
+      "deployDesc": "Make this tuning the default, push it to cameras, or process a whole file.",
+      "saveDefault": "Save as capability default",
+      "savedDefault": "Saved as the default for this capability",
+      "applyCameras": "Apply to cameras…",
+      "runBatch": "Run batch job on this video",
+      "batchDisabled": "Batch jobs work on clips, uploads and URLs, not live streams or images.",
+      "jobStarted": "Batch job started",
+      "viewJobs": "View batch jobs",
+      "noSubs": "No subscribed capabilities yet",
+      "noSubsDesc": "Subscribe to a capability first. Then you can try it on your own video here.",
+      "browse": "Browse capabilities",
+      "codeTitle": "Language",
+      "copy": "Copy",
+      "copied": "Copied",
+      "applyTitle": "Apply to cameras",
+      "applyDesc": "Selected cameras are bound to this capability and use these parameters and ROI.",
+      "noCameras": "No cameras yet. Connect one first.",
+      "rebind": "moves from “{name}”",
+      "cancel": "Cancel",
+      "applyConfirm": "{count, plural, =0 {Apply} one {Apply to # camera} other {Apply to # cameras}}",
+      "applied": "{count, plural, one {Applied to # camera} other {Applied to # cameras}}"
+    },
+    "jobs": {
+      "title": "Batch jobs",
+      "desc": "Whole-file analysis runs started from the Playground or the API. Download results as JSON in the same format the API returns.",
+      "new": "New job",
+      "cols": {
+        "input": "Input",
+        "capability": "Capability",
+        "status": "Status",
+        "created": "Created",
+        "duration": "Duration",
+        "objects": "Objects",
+        "events": "Events"
+      },
+      "empty": "No batch jobs yet.",
+      "emptyCta": "Open the Playground and run one on a clip",
+      "kinds": {
+        "sample": "sample",
+        "file": "upload",
+        "url": "URL"
+      },
+      "status": {
+        "succeeded": "Succeeded",
+        "failed": "Failed"
+      },
+      "errors": {
+        "cors": "The video's server blocks cross-origin analysis",
+        "interrupted": "Interrupted: the page was reloaded while the job was running",
+        "duration": "Couldn't read the video's duration",
+        "load": "Couldn't load the video"
+      },
+      "download": "Download JSON",
+      "remove": "Delete",
+      "frames": "{count} frames analyzed",
+      "byClass": "Objects by class",
+      "timeline": "Event timeline",
+      "doneToast": "Batch job finished: {name}",
+      "failedToast": "Batch job failed: {name}"
+    },
+    "sourceDetail": {
+      "back": "Back to video sources",
+      "notFound": "This source doesn't exist or was removed.",
+      "openPlayground": "Tune in Playground",
+      "confirmRemove": "Remove this source? Its past events are kept.",
+      "roiSaved": "ROI saved",
+      "offline": "This source is offline.",
+      "reconnecting": "Reconnecting…",
+      "reconnect": "Reconnect",
+      "reconnected": "Source is back online",
+      "editRoi": "Draw ROI",
+      "clearRoi": "Clear ROI",
+      "liveStats": "{objects} objects · {fps} fps · {ms} ms",
+      "noCapability": "No capability is bound, so the stream plays but isn't analyzed. Bind one on the right.",
+      "simNote": "Demo: a stand-in clip plays for the stream. In production the edge gateway relays the real camera over WebRTC.",
+      "capability": "Bound capability",
+      "bound": "Binding updated",
+      "tuneParams": "Configure capability",
+      "stream": "Stream",
+      "info": {
+        "protocol": "Protocol",
+        "url": "Address",
+        "codec": "Codec",
+        "resolution": "Resolution",
+        "fps": "Frame rate",
+        "via": "Connected via"
+      },
+      "via": {
+        "browser": "This browser",
+        "push": "Push ingest",
+        "direct": "Direct (public address)"
+      },
+      "health": "Stream health, last 4 h",
+      "bitrate": "Bitrate",
+      "fpsLabel": "Frame rate",
+      "events": "Recent events from this source"
+    },
+    "wizard": {
+      "title": "Connect a video source",
+      "desc": "Pick how the stream reaches SightAI, test the connection, then bind a capability.",
+      "progress": "Progress",
+      "steps": {
+        "method": "Connection type",
+        "connect": "Connect & test",
+        "finish": "Name & bind"
+      },
+      "quotaFull": "Your plan's source quota is full ({total}). Upgrade or remove a source first.",
+      "methods": {
+        "rtsp": {
+          "name": "RTSP camera",
+          "desc": "IP camera or NVR channel, pulled through an edge gateway on your network."
+        },
+        "onvif": {
+          "name": "ONVIF discovery",
+          "desc": "Let the gateway scan the LAN and list ONVIF devices."
+        },
+        "gb28181": {
+          "name": "GB28181 platform",
+          "desc": "Register a GB/T 28181 device or cascade a lower-level platform."
+        },
+        "push": {
+          "name": "SRT / RTMP push",
+          "desc": "Encoders, drones, RefCam and OBS push to our ingest endpoint."
+        },
+        "webcam": {
+          "name": "Browser camera",
+          "desc": "This computer's camera, analyzed in the browser. Good for trials."
+        }
+      },
+      "gateway": "Edge gateway",
+      "direct": "None: camera has a public address",
+      "gatewayHint": "Cameras on a private network need a gateway. You can add one under Edge gateways on the Video sources page.",
+      "discovery": "Devices found",
+      "scan": "Scan network",
+      "scanning": "Scanning…",
+      "scanHint": "Pick a gateway and scan. The gateway sends an ONVIF WS-Discovery probe on its subnet.",
+      "url": "Stream URL",
+      "username": "Username",
+      "password": "Password",
+      "transport": "Transport",
+      "credHint": "Credentials go to the gateway, encrypted, and are never shown again in the console.",
+      "gbIntro": "Enter these SIP settings on the device or lower-level platform, then fill in its 20-digit device ID.",
+      "gb": {
+        "serverId": "SIP server ID",
+        "domain": "SIP domain",
+        "host": "SIP server address",
+        "password": "Registration password",
+        "deviceId": "Device ID (20 digits)"
+      },
+      "pushProto": "Push protocol",
+      "pushIntro": "Set your encoder to push here. We'll detect the stream as soon as it arrives.",
+      "ingestUrl": "Ingest URL",
+      "streamKey": "Stream key",
+      "webcamIntro": "The browser will ask for permission. Video is analyzed on this device and nothing is uploaded.",
+      "waitStream": "Waiting for the stream",
+      "test": "Connection test",
+      "listen": "Start listening",
+      "runTest": "Test connection",
+      "checks": {
+        "reach": "Reachable",
+        "auth": "Authenticated",
+        "probe": "Stream probed",
+        "decode": "Frame decoded",
+        "receive": "Stream received"
+      },
+      "fail": {
+        "webcam": "Couldn't open the camera. Check the browser permission.",
+        "url": "That doesn't look like an RTSP URL (rtsp://host[:port]/path).",
+        "deviceId": "The device ID must be 20 digits.",
+        "private": "That's a private-network address. Pick an edge gateway to reach it.",
+        "auth": "The camera rejected the username or password."
+      },
+      "probed": "Detected",
+      "name": "Name",
+      "location": "Location",
+      "capability": "Bind capability",
+      "none": "Not now",
+      "summary": {
+        "protocol": "Protocol",
+        "codec": "Codec",
+        "resolution": "Resolution",
+        "fps": "FPS"
+      },
+      "cancel": "Cancel",
+      "back": "Back",
+      "next": "Next",
+      "submit": "Connect source",
+      "added": "Connected “{name}”",
+      "copy": "Copy",
+      "webcamName": "WEBCAM-01"
+    },
+    "gateways": {
+      "title": "Edge gateways",
+      "desc": "A small service on your network. It pulls RTSP / ONVIF / GB28181 streams, can run models on site, and relays to the cloud over an outbound-only connection.",
+      "add": "Add gateway",
+      "empty": "No gateways yet.",
+      "cameras": "{count, plural, one {# camera} other {# cameras}}",
+      "remove": "Remove",
+      "confirmRemove": "{count, plural, one {# camera uses this gateway and will go offline.} other {# cameras use this gateway and will go offline.}} Remove it?",
+      "status": {
+        "online": "Online",
+        "pending": "Waiting to connect",
+        "offline": "Offline"
+      },
+      "addTitle": "Add an edge gateway",
+      "addDesc": "Runs as a Docker container on any x86 / ARM Linux box on the camera network, including the SightAI edge appliance.",
+      "name": "Gateway name",
+      "site": "Site",
+      "generate": "Generate install command",
+      "stepHw": "Prepare a Linux host with Docker that can reach the cameras (4 cores / 8 GB covers about 16 streams at 1080p).",
+      "stepRun": "Run this command on it. The token can be used once.",
+      "stepWait": "Keep this window open. The gateway shows up here once it connects.",
+      "copy": "Copy command",
+      "connected": "Gateway connected from {ip}",
+      "waiting": "Waiting for the gateway to connect…",
+      "done": "Done"
+    }
   },
   "capabilityPage": {
     "includedIn": "Available on {plan}",

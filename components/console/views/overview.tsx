@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowRight, Cctv, KeyRound, LayoutGrid, TrendingUp } from "lucide-react";
+import { ArrowRight, Cctv, FlaskConical, KeyRound, LayoutGrid, TrendingUp } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { INDUSTRIES, getCapability, pick } from "@/content/industries";
@@ -168,7 +168,8 @@ export function OverviewView() {
           <ul className="space-y-2">
             {[
               { href: "/console/capabilities", icon: LayoutGrid, key: "subscribe" },
-              { href: "/console/sources", icon: Cctv, key: "source" },
+              { href: "/console/playground", icon: FlaskConical, key: "playground" },
+              { href: "/console/sources?add=1", icon: Cctv, key: "source" },
               { href: "/console/api-keys", icon: KeyRound, key: "key" },
               { href: "/console/analytics", icon: TrendingUp, key: "analytics" },
             ].map(({ href, icon: Icon, key }) => (

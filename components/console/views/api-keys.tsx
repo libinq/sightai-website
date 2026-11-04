@@ -40,13 +40,14 @@ export function ApiKeysView() {
   if (!ready) return <PageSkeleton />;
 
   const capId = user.subscriptions[0] ?? "mfg-defect";
-  const sample = `curl -X POST https://api.sightai.example/v1/infer \\
+  const origin = typeof window === "undefined" ? "https://api.sightai.example" : window.location.origin;
+  const sample = `curl -X POST ${origin}/api/v1/analyze \\
   -H "Authorization: Bearer $SIGHTAI_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "capability": "${capId}",
-    "source": { "url": "rtsp://10.0.0.21/stream1" },
-    "options": { "threshold": 0.8 }
+    "input": { "source_id": "${store.sources[0]?.id ?? "src_…"}" },
+    "params": { "threshold": 0.8 }
   }'`;
   const dateFmt = new Intl.DateTimeFormat(locale === "en" ? "en-US" : "zh-CN", { dateStyle: "medium" });
 
