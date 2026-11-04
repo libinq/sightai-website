@@ -151,7 +151,7 @@ function dilate(mask: Uint8Array, w: number, h: number) {
 }
 
 /** Merge boxes that overlap or nearly touch (people split into pieces by the mask). */
-function mergeBoxes(boxes: Box[], gap = 0.015) {
+function mergeBoxes(boxes: Box[], gap = 0.01) {
   const list = boxes.slice();
   let merged = true;
   while (merged) {
@@ -163,7 +163,10 @@ function mergeBoxes(boxes: Box[], gap = 0.015) {
         if (a.x - gap < b.x + b.w && b.x - gap < a.x + a.w && a.y - gap < b.y + b.h && b.y - gap < a.y + a.h) {
           const x = Math.min(a.x, b.x);
           const y = Math.min(a.y, b.y);
-          list[i] = { x, y, w: Math.max(a.x + a.w, b.x + b.w) - x, h: Math.max(a.y + a.h, b.y + b.h) - y };
+          const m = { x, y, w: Math.max(a.x + a.w, b.x + b.w) - x, h: Math.max(a.y + a.h, b.y + b.h) - y };
+          // only merge fragments of one object — not two neighbours that would make a mostly-empty box
+          if (m.w * m.h > 1.8 * (a.w * a.h + b.w * b.h)) continue;
+          list[i] = m;
           list.splice(j, 1);
           merged = true;
           break outer;
@@ -259,7 +262,7 @@ export class PreviewEngine {
       .filter((c) => c.n >= 3)
       .map((c) => ({ x: c.x0 / w, y: c.y0 / h, w: (c.x1 - c.x0 + 1) / w, h: (c.y1 - c.y0 + 1) / h }));
     return mergeBoxes(raw)
-      .filter((b) => b.w * b.h * 100 >= p.minSize && b.w * b.h < 0.7)
+      .filter((b) => b.w * b.h * 100 >= p.minSize && b.w * b.h < 0.4)
       .sort((a, b) => b.w * b.h - a.w * a.h)
       .slice(0, 12);
   }
